@@ -99,7 +99,7 @@ function tan_main(X::IntervalBox)
 
 end
 
-tan! = periodic(tan_main, 2*half_pi)
+tan! = periodic(tan_main, IntervalArithmetic.pi_interval(Float64))
 
 doc"""
     sin_rev(y::Interval, x::Interval)
