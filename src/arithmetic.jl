@@ -41,6 +41,20 @@ end
 
 mul_rev(a,b,c) = mul_rev(promote(a,b,c)...)
 
+"""
+Reverse division
+"""
+function div_rev(a::Interval, b::Interval, c::Interval)  # a = b / c
+
+    b = b ∩ (a * c)
+    c = c ∩ (b / a)
+
+    return a, b, c
+end
+
+div_rev(a,b,c) = div_rev(promote(a,b,c)...)
+
+
 
 """
 Reverse power
