@@ -132,6 +132,9 @@ end
 sqr_rev(c) = sqr_rev(c, -∞..∞)
 
 """
+
+According to the IEEE-1788 standard:
+
 ∘_rev1(b, c, x) is the subset of x such that x ∘ b is defined and in c
 ∘_rev2(a, c, x) is the subset of x such that a ∘ x is defined and in c
 
