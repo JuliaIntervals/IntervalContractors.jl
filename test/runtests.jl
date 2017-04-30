@@ -1,4 +1,5 @@
 using IntervalContractors
+using IntervalArithmetic
 using Base.Test
 
 import Documenter
