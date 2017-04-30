@@ -35,20 +35,46 @@ Returns an `IntervalBox` contracted down to the set $y = \sin(x)$.
 """
 sin! = periodic(sin_main, two_pi) ∪ periodic(sin_reverse, two_pi)
 
+cos! = translate(sin!, half_pi)
 
 # Reverse function for sin; does not alter y
 doc"""
     sin_rev(y::Interval, x::Interval)
 
-Reverse function for `sin`; main branch, from -pi/2 to pi/2.
-
-Find the subset of `x` such that $y = \sin(x)$ for the given `y`.
+Reverse function for `sin`:
+- find the subset of `x` such that $y = \sin(x)$ for the given `y`.
 """
 function sin_rev(y::Interval, x::Interval)
 
     X = IntervalBox(x, y)
 
-    X_new = sin!(X)  #
+    X_new = sin!(X)
 
     return X_new[2], X_new[1]   # return in order y, x
 end
+
+# Reverse function for cos; does not alter y
+doc"""
+    cos_rev(y::Interval, x::Interval)
+
+Reverse function for `cos`:
+- find the subset of `x` such that $y = \cos(x)$ for the given `y`.
+"""
+function cos_rev(y::Interval, x::Interval)
+
+    x += half_pi
+
+    # X = IntervalBox(x, y)
+
+    y, x_new = sin_rev(y, x)
+
+    x_new -= half_pi
+
+    # X_new = cos!(X)  #
+
+    #return X_new[2], X_new[1]   # return in order y, x
+
+    return y, x_new
+end
+
+# cos_rev(y, x) = sin_rev(y, x - half_pi)
