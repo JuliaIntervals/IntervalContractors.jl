@@ -78,3 +78,40 @@ function cos_rev(y::Interval, x::Interval)
 end
 
 # cos_rev(y, x) = sin_rev(y, x - half_pi)
+
+"""
+Contractor for "main branch" of tan, from x = -π/2 to π/2.
+"""
+function tan_main(X::IntervalBox)
+
+    x, y = X
+
+    x_range = Interval(-half_pi.lo, half_pi.lo)
+
+    x = x ∩ x_range
+
+    isempty(x) && return IntervalBox(x, y)
+
+    y = y ∩ tan(x)
+    x = x ∩ atan(y)
+
+    return IntervalBox(x, y)
+
+end
+
+tan! = periodic(tan_main, 2*half_pi)
+
+doc"""
+    sin_rev(y::Interval, x::Interval)
+
+Reverse function for `sin`:
+- find the subset of `x` such that $y = \sin(x)$ for the given `y`.
+"""
+function tan_rev(y::Interval, x::Interval)
+
+    X = IntervalBox(x, y)
+
+    X_new = tan!(X)
+
+    return X_new[2], X_new[1]   # return in order y, x
+end
