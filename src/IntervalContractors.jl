@@ -1,17 +1,14 @@
 module IntervalContractors
 
-"""
-    test_function()
+using IntervalArithmetic
+using Compat
 
-Return 1
+const half_pi = IntervalArithmetic.half_pi(Float64)
 
-```jldoctest
-julia> import IntervalContractors
+Base.:∪(f::Function, g::Function) = X -> ( f(X) ∪ g(X) )
+Base.:∩(f::Function, g::Function) = X -> ( f(X) ∩ g(X) )  # or f(g(X)) for contractors
 
-julia> IntervalContractors.test_function()
-2
-```
-"""
-test_function() = 1
+
+include("trig.jl")
 
 end
