@@ -1,4 +1,11 @@
 
+function constant_contractor(X, y_val)
+    x, y = X
+    y = y ∩ Interval(y_val)
+    return IntervalBox(x, y)
+end
+
+
 "Contractor for y = x^2, x >= 0"
 function square0(X::IntervalBox)
 
@@ -28,7 +35,6 @@ function cube0(X::IntervalBox)  # contractor for y=x^3, x>=0
 
     return x × y
 end
-
 
 
 odd(X::IntervalBox) = ( (x,y) = X; IntervalBox(-x, -y) )

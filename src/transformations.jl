@@ -28,8 +28,12 @@ function reflect_x(x_mirror)
 end
 
 
-"""Shift (translate) a 2D `IntervalBox` in `x` (the first coordinate)."""
-function shift(α)
+"""
+    translate(α)
+
+Returns a function that shifts (translates) a 2D `IntervalBox` in `x` (the first coordinate).
+"""
+function translate(α)
     X -> begin
         x, y = X
         return IntervalBox(x - α, y)
@@ -43,7 +47,7 @@ end
 Translation of a Contractor `C` by `α`.
 Uses `inv(op) ∘ C ∘ op`
 """
-trans(C, α) = shift(-α) ∘ C ∘ shift(α)
+translate(C, α) = translate(-α) ∘ C ∘ translate(α)
 
 
 """
