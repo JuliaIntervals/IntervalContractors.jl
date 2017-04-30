@@ -4,6 +4,9 @@ export plus_rev, minus_rev, mul_rev,
 # export sqr
 # sqr(x) = x^2
 
+"""
+Dictionary mapping functions to their reverse functions.
+"""
 const rev_ops = Dict(
                     :+     => :plus_rev,
                     :-     => :minus_rev,
@@ -14,7 +17,9 @@ const rev_ops = Dict(
                     :()    => :()
                     )
 
-
+"""
+Reverse plus
+"""
 function plus_rev(a::Interval, b::Interval, c::Interval)  # a = b + c
     # a = a ∩ (b + c)  # add this line for plus contractor (as opposed to reverse function)
     b = b ∩ (a - c)
@@ -25,6 +30,9 @@ end
 
 plus_rev(a,b,c) = plus_rev(promote(a,b,c)...)
 
+"""
+Reverse minus
+"""
 function minus_rev(a::Interval, b::Interval, c::Interval)  # a = b - c
     # a = a ∩ (b - c)
     b = b ∩ (a + c)
@@ -37,6 +45,10 @@ minus_rev(a,b,c) = minus_rev(promote(a,b,c)...)
 
 minus_rev(a::Interval, b::Interval) = (b = -a; return (a, b))     # a = -b
 
+
+"""
+Reverse multiplication
+"""
 function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
     # a = a ∩ (b * c)
     b = b ∩ (a / c)
@@ -48,6 +60,9 @@ end
 mul_rev(a,b,c) = mul_rev(promote(a,b,c)...)
 
 
+"""
+Reverse power
+"""
 function power_rev(a::Interval, b::Interval, c::Integer)  # a = b^c,  log(a) = c.log(b),  b = a^(1/c)
 
     if c == 2  # a = b^2
@@ -86,6 +101,9 @@ end
 power_rev(a, b, c) = power_rev(promote(a, b, c)...)
 
 
+"""
+Reverse square root
+"""
 function sqrt_rev(a::Interval, b::Interval)  # a = sqrt(b)
     # a1 = a ∩ √b
     # a2 = a ∩ (-(√b))
@@ -101,6 +119,9 @@ sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
 
 # IEEE-1788 style
 
+"""
+Reverse sqr
+"""
 function sqr_rev(c, x)   # c = x^2;  refine x
     x1 = sqrt(c) ∩ x
     x2 = -(sqrt(c)) ∩ x
