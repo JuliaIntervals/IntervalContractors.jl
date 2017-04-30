@@ -1,5 +1,12 @@
 module IntervalContractors
 
+export plus_rev, minus_rev,
+        mul_rev,
+        power_rev,
+        sqr_rev,
+        sqrt_rev
+        
+
 using IntervalArithmetic
 using Compat
 
