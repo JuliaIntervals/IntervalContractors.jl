@@ -1,7 +1,9 @@
 
 
 ## sin contractor: alters x and y
-"Contractor for "main branch" of sin, from x = -π/2 to π/2"
+"""
+Contractor for "main branch" of sin, from x = -π/2 to π/2.
+"""
 function sin_main(X::IntervalBox)
 
     x, y = X
@@ -22,9 +24,9 @@ function sin_main(X::IntervalBox)
 end
 
 # TODO: Be careful with the pi constants if using e.g. BigFloats
-sin_reverse = symmetrise(sin_main, reflect_x(half_pi)
+sin_reverse = symmetrise(sin_main, reflect_x(half_pi))
 
-"""
+doc"""
     sin!(X::IntervalBox)
 
 Contractor for `sin`.
@@ -35,7 +37,7 @@ sin! = periodic(sin_main, two_pi) ∪ periodic(sin_reverse, two_pi)
 
 
 # Reverse function for sin; does not alter y
-"""
+doc"""
     sin_rev(y::Interval, x::Interval)
 
 Reverse function for `sin`; main branch, from -pi/2 to pi/2.
@@ -48,5 +50,5 @@ function sin_rev(y::Interval, x::Interval)
 
     X_new = sin!(X)  #
 
-    return X_new[1]
+    return X_new[2], X_new[1]   # return in order y, x
 end

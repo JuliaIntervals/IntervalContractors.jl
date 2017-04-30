@@ -1,3 +1,5 @@
+__precompile__(true)
+
 module IntervalContractors
 
 export plus_rev, minus_rev,
@@ -22,5 +24,22 @@ include("arithmetic.jl")
 include("transformations.jl")
 include("powers.jl")
 include("trig.jl")
+
+
+
+"""
+Dictionary mapping functions to their reverse functions.
+"""
+const rev_ops = Dict(
+                    :+     => :plus_rev,
+                    :-     => :minus_rev,
+                    :*     => :mul_rev,
+                    :^     => :power_rev,
+                    :sqrt  => :sqrt_rev,
+                    :sqr   => :sqr_rev,
+                    :sin   => :sin_rev,
+                    :()    => :()   # empty operation
+                    )
+
 
 end

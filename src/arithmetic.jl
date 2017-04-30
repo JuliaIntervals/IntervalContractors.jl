@@ -1,21 +1,3 @@
-export plus_rev, minus_rev, mul_rev,
-    power_rev, sqrt_rev, sqr_rev # export due to quoting issue
-
-# export sqr
-# sqr(x) = x^2
-
-"""
-Dictionary mapping functions to their reverse functions.
-"""
-const rev_ops = Dict(
-                    :+     => :plus_rev,
-                    :-     => :minus_rev,
-                    :*     => :mul_rev,
-                    :^     => :power_rev,
-                    :sqrt  => :sqrt_rev,
-                    :sqr   => :sqr_rev,
-                    :()    => :()
-                    )
 
 """
 Reverse plus
@@ -34,7 +16,7 @@ plus_rev(a,b,c) = plus_rev(promote(a,b,c)...)
 Reverse minus
 """
 function minus_rev(a::Interval, b::Interval, c::Interval)  # a = b - c
-    # a = a ∩ (b - c)
+
     b = b ∩ (a + c)
     c = c ∩ (b - a)
 
@@ -50,7 +32,7 @@ minus_rev(a::Interval, b::Interval) = (b = -a; return (a, b))     # a = -b
 Reverse multiplication
 """
 function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
-    # a = a ∩ (b * c)
+
     b = b ∩ (a / c)
     c = c ∩ (a / b)
 
@@ -90,8 +72,6 @@ end
 
 function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
 
-    # log(a) = c.log(b),  b = a^(1/c)
-
     b = b ∩ ( a^(inv(c) ))
     c = c ∩ (log(a) / log(b))
 
@@ -105,9 +85,6 @@ power_rev(a, b, c) = power_rev(promote(a, b, c)...)
 Reverse square root
 """
 function sqrt_rev(a::Interval, b::Interval)  # a = sqrt(b)
-    # a1 = a ∩ √b
-    # a2 = a ∩ (-(√b))
-    # a = hull(a1, a2)
 
     b = b ∩ (a^2)
 
@@ -138,7 +115,7 @@ According to the IEEE-1788 standard:
 ∘_rev1(b, c, x) is the subset of x such that x ∘ b is defined and in c
 ∘_rev2(a, c, x) is the subset of x such that a ∘ x is defined and in c
 
-If these agree (∘ is commutative) then call it ∘_rev(b, c, x)
+If these agree (i.e. when ∘ is commutative) then just call it ∘_rev(b, c, x)
 """
 
 function mul_rev_new(b, c, x)   # c = b*x
