@@ -8,6 +8,7 @@ export plus_rev, minus_rev,
         sqr_rev,
         sqrt_rev,
         sin_rev, cos_rev, tan_rev
+        asin_rev
 
 using IntervalArithmetic
 using Compat
@@ -23,13 +24,13 @@ include("arithmetic.jl")
 include("transformations.jl")
 include("powers.jl")
 include("trig.jl")
-
+include("inverse_trig.jl")
 
 
 """
 Dictionary mapping functions to their reverse functions.
 """
-const rev_ops = Dict(
+const reverse_operations = Dict(
                     :+     => :plus_rev,
                     :-     => :minus_rev,
                     :*     => :mul_rev,
@@ -38,8 +39,10 @@ const rev_ops = Dict(
                     :()    => :()   # empty operation
                     )
 
-for f in (:sqrt, :sqr, :sin, :cos, :tan)
-    rev_ops[f] = Symbol(f, "_rev")
+for f in (  :sqrt, :sqr,
+            :sin, :cos, :tan,
+            :asin)
+    reverse_operations[f] = Symbol(f, "_rev")
 end
 
 end
