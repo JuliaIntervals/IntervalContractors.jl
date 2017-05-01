@@ -3,7 +3,7 @@ __precompile__(true)
 module IntervalContractors
 
 export plus_rev, minus_rev,
-        mul_rev,
+        mul_rev, div_rev,
         power_rev,
         sqr_rev,
         sqrt_rev,
@@ -33,6 +33,7 @@ const rev_ops = Dict(
                     :+     => :plus_rev,
                     :-     => :minus_rev,
                     :*     => :mul_rev,
+                    :/     => :div_rev,
                     :^     => :power_rev,
                     :()    => :()   # empty operation
                     )
