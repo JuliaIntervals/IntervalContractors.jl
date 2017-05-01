@@ -7,7 +7,7 @@ export plus_rev, minus_rev,
         power_rev,
         sqr_rev,
         sqrt_rev,
-        sin_rev, cos_rev
+        sin_rev, cos_rev, tan_rev
 
 using IntervalArithmetic
 using Compat
@@ -38,7 +38,7 @@ const rev_ops = Dict(
                     :()    => :()   # empty operation
                     )
 
-for f in (:sqrt, :sqr, :sin, :cos)
+for f in (:sqrt, :sqr, :sin, :cos, :tan)
     rev_ops[f] = Symbol(f, "_rev")
 end
 
