@@ -5,9 +5,8 @@ module IntervalContractors
 export plus_rev, minus_rev,
         mul_rev, div_rev,
         power_rev,
-        sqr_rev,
-        sqrt_rev,
-        sin_rev, cos_rev, tan_rev
+        sqr_rev, sqrt_rev, abs_rev,
+        sin_rev, cos_rev, tan_rev,
         asin_rev
 
 using IntervalArithmetic
@@ -39,7 +38,7 @@ const reverse_operations = Dict(
                     :()    => :()   # empty operation
                     )
 
-for f in (  :sqrt, :sqr,
+for f in (  :sqrt, :sqr, :abs,
             :sin, :cos, :tan,
             :asin)
     reverse_operations[f] = Symbol(f, "_rev")

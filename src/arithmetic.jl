@@ -123,6 +123,19 @@ end
 sqr_rev(c) = sqr_rev(c, -∞..∞)
 
 """
+Reverse abs
+"""
+function abs_rev(y, x)   # y = abs(x); refine x
+
+    y_new = y ∩ (0..∞)
+
+    x1 = y_new ∩ x
+    x2 = -(y_new ∩ (-x))
+
+    return (y, hull(x1, x2))
+end
+
+"""
 
 According to the IEEE-1788 standard:
 
