@@ -8,7 +8,7 @@ function sin_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = Interval(-half_pi.lo, half_pi.lo)
+    x_range = Interval(-half_pi.hi, half_pi.hi)
     y_range = -1..1
 
     x = x ∩ x_range
@@ -53,6 +53,43 @@ function sin_rev(y::Interval, x::Interval)
     return X_new[2], X_new[1]   # return in order y, x
 end
 
+
+## cos contractor: alters x and y
+"""
+Contractor for "main branch" of cos, from x = 0 to π.
+"""
+function cos_main(X::IntervalBox)
+
+    x, y = X
+
+    x_range = Interval(0, IntervalArithmetic.pi_interval(Float64).lo)
+    y_range = -1..1
+
+    x = x ∩ x_range
+    y = y ∩ y_range
+
+    isempty(IntervalBox(x, y)) && return IntervalBox(x, y)
+
+    y = y ∩ cos(x)
+    x = x ∩ acos(y)
+
+    return IntervalBox(x, y)
+
+end
+
+# TODO: Be careful with the pi constants if using e.g. BigFloats
+cos_reverse = symmetrise(cos_main, reflect_x(0.0))
+
+doc"""
+    sin!(X::IntervalBox)
+
+Contractor for `sin`.
+Takes an `IntervalBox` containing the `x` and `y` component intervals.
+Returns an `IntervalBox` contracted down to the set $y = \sin(x)$.
+"""
+cos! = periodic(cos_main, two_pi) ∪ periodic(cos_reverse, two_pi)
+
+
 # Reverse function for cos; does not alter y
 doc"""
     cos_rev(y::Interval, x::Interval)
@@ -62,22 +99,13 @@ Reverse function for `cos`:
 """
 function cos_rev(y::Interval, x::Interval)
 
-    x += half_pi
+    X = IntervalBox(x, y)
 
-    # X = IntervalBox(x, y)
+    X_new = cos!(X)
 
-    y, x_new = sin_rev(y, x)
-
-    x_new -= half_pi
-
-    # X_new = cos!(X)  #
-
-    #return X_new[2], X_new[1]   # return in order y, x
-
-    return y, x_new
+    return X_new[2], X_new[1]   # return in order y, x
 end
 
-# cos_rev(y, x) = sin_rev(y, x - half_pi)
 
 """
 Contractor for "main branch" of tan, from x = -π/2 to π/2.
@@ -86,7 +114,7 @@ function tan_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = Interval(-half_pi.lo, half_pi.lo)
+    x_range = Interval(-half_pi.hi, half_pi.hi)
 
     x = x ∩ x_range
 
