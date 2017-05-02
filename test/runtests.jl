@@ -15,7 +15,8 @@ Documenter.makedocs(
     authors = "David Sanders"
 )
 
-# write your own tests here
+include("abs_rev.jl")
+include("libieeep1788_rev.jl")
 
 @testset "power_rev for odd power" begin
     x = -∞..∞
