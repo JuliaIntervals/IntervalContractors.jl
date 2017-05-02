@@ -39,6 +39,10 @@ function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
     return a, b, c
 end
 
+function mul_rev_IEEE1788(b, c, x)  # c = b*x
+    return x ∩ (c / b)
+end
+
 mul_rev(a,b,c) = mul_rev(promote(a,b,c)...)
 
 """

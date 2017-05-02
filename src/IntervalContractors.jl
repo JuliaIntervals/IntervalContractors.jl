@@ -7,7 +7,8 @@ export plus_rev, minus_rev,
         power_rev,
         sqr_rev, sqrt_rev, abs_rev,
         sin_rev, cos_rev, tan_rev,
-        asin_rev
+        asin_rev,
+        mul_rev_IEEE1788
 
 using IntervalArithmetic
 using Compat
