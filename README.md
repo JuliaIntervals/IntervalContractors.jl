@@ -25,7 +25,11 @@
 
 `IntervalContractors.jl` provides contractors and reverse functions (also called backward functions or relational functions) for interval arithmetic.
 
-For example, `sin_rev(Y::Interval, X::Interval)` returns the (interval hull of) those `x ∈ X` such that `sin(x) ∈ Y`. This can also be thought of as an inverse function, returning `sin⁻¹(Y) ∩ X`.
+For example, `sin_rev(Y::Interval, X::Interval)` calculates the (interval hull of) those `x ∈ X` such that `sin(x) ∈ Y`. This can also be thought of as an inverse function, calculating `X_new := sin⁻¹(Y) ∩ X`.
+
+The return value is `(Y, X_new)`.
+
+Functions such as `mul_rev(C::Interval, A::Interval, B::Interval)` take three arguments, and correspond to `C = A * B`; they return `(C, A_new, B_new)`, with `A_new` and `B_new` similarly defined to be the corresponding inverse images of the multiplication operator in each component.
 
 The list of available functions may be found in the documentation.
 
