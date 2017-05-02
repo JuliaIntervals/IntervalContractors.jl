@@ -2,20 +2,21 @@ using IntervalContractors
 using IntervalArithmetic
 using Base.Test
 
-import Documenter
-Documenter.makedocs(
-    modules = [IntervalContractors],
-    format = :html,
-    sitename = "IntervalContractors.jl",
-    root = joinpath(dirname(dirname(@__FILE__)), "docs"),
-    pages = Any["Home" => "index.md"],
-    strict = true,
-    linkcheck = true,
-    checkdocs = :exports,
-    authors = "David Sanders"
-)
+# import Documenter
+# Documenter.makedocs(
+#     modules = [IntervalContractors],
+#     format = :html,
+#     sitename = "IntervalContractors.jl",
+#     root = joinpath(dirname(dirname(@__FILE__)), "docs"),
+#     pages = Any["Home" => "index.md"],
+#     strict = true,
+#     linkcheck = true,
+#     checkdocs = :exports,
+#     authors = "David Sanders"
+# )
 
-# write your own tests here
+include("abs_rev.jl")
+include("libieeep1788_rev.jl")
 
 @testset "power_rev for odd power" begin
     x = -∞..∞
