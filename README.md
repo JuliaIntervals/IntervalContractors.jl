@@ -21,11 +21,11 @@
 [documenter_stable]: https://dpsanders.github.io/IntervalContractors.jl/stable
 [documenter_latest]: https://dpsanders.github.io/IntervalContractors.jl/latest
 
-`IntervalContractors.jl` provides contractors and reverse functions for interval arithmetic.
+## About `IntervalContractors.jl`
 
-For example, `sin_rev(Y::Interval, X::Interval)` returns the (interval hull of) those `x ∈ X` such that `sin(x) ∈ Y`.
+`IntervalContractors.jl` provides contractors and reverse functions (also called backward functions or relational functions) for interval arithmetic.
 
-This can be thought of as an inverse function, returning $\sin^{-1}(Y) \cap X$.
+For example, `sin_rev(Y::Interval, X::Interval)` returns the (interval hull of) those `x ∈ X` such that `sin(x) ∈ Y`. This can also be thought of as an inverse function, returning `sin⁻¹(Y) ∩ X`.
 
 The list of available functions may be found in the documentation.
 
@@ -46,4 +46,4 @@ Departamento de Física, Facultad de Ciencias, Universidad Nacional Autónoma de
 
 
 ## Acknowledements
-Financial support is acknowledged from DGAPA-UNAM PAPIIT grant IN-117117. The author thanks Luc Jaulin and Jordan Ninin for the [IAMOOC](http://iamooc.ensta-bretagne.fr/) online course, which introduced him to this subject.
+Financial support is acknowledged from DGAPA-UNAM PAPIIT grant IN-117117. The author thanks Luc Jaulin and Jordan Ninin for the [IAMOOC](http://iamooc.ensta-bretagne.fr/) online course, which introduced him to this subject, and Zenna Tavares for a helpful conversation.
