@@ -19,9 +19,8 @@ function square_pos(X::IntervalBox)
     return IntervalBox(x, y)
 end
 
-square_neg = symmetrise(square0, reflect_x(0.0))
+square_neg = symmetrise(square_pos, reflect_x(0.0))
 square!(X::IntervalBox) = square_pos(X) ∪ square_neg(X)
-
 
 
 function cube_pos(X::IntervalBox)  # contractor for y=x^3, x>=0
@@ -36,8 +35,5 @@ function cube_pos(X::IntervalBox)  # contractor for y=x^3, x>=0
     return x × y
 end
 
-
-odd(X::IntervalBox) = ( (x,y) = X; IntervalBox(-x, -y) )
-
 cube_neg = symmetrise(cube_pos, odd)
-cube(X::IntervalBox) = cube_pos(X) ∪ cube_neg(X)
+cube!(X::IntervalBox) = cube_pos(X) ∪ cube_neg(X)

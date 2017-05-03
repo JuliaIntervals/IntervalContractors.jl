@@ -40,8 +40,11 @@ function translate(α)
     end
 end
 
+odd(X::IntervalBox) = ( (x,y) = X; IntervalBox(-x, -y) )
 
-# Transformations on Contractors
+
+
+## Transformations on Contractors
 
 """
 Translation of a Contractor `C` by `α`.
