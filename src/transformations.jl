@@ -60,7 +60,7 @@ symmetrise(C, op) = op ∘ C ∘ op
 
 
 "Periodize the contractor C"
-function periodic(C, period)
+function periodise(C, period)
 
     X -> begin
         x, y = X
