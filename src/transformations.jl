@@ -40,8 +40,11 @@ function translate(α)
     end
 end
 
+odd(X::IntervalBox) = ( (x,y) = X; IntervalBox(-x, -y) )
 
-# Transformations on Contractors
+
+
+## Transformations on Contractors
 
 """
 Translation of a Contractor `C` by `α`.
@@ -60,7 +63,7 @@ symmetrise(C, op) = op ∘ C ∘ op
 
 
 "Periodize the contractor C"
-function periodic(C, period)
+function periodise(C, period)
 
     X -> begin
         x, y = X

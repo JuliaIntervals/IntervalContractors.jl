@@ -2,19 +2,6 @@ using IntervalContractors
 using IntervalArithmetic
 using Base.Test
 
-# import Documenter
-# Documenter.makedocs(
-#     modules = [IntervalContractors],
-#     format = :html,
-#     sitename = "IntervalContractors.jl",
-#     root = joinpath(dirname(dirname(@__FILE__)), "docs"),
-#     pages = Any["Home" => "index.md"],
-#     strict = true,
-#     linkcheck = true,
-#     checkdocs = :exports,
-#     authors = "David Sanders"
-# )
-
 include("abs_rev.jl")
 include("libieeep1788_rev.jl")
 

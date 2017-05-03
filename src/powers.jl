@@ -7,7 +7,7 @@ end
 
 
 "Contractor for y = x^2, x >= 0"
-function square0(X::IntervalBox)
+function square_pos(X::IntervalBox)
 
     x, y = X
 
@@ -19,12 +19,11 @@ function square0(X::IntervalBox)
     return IntervalBox(x, y)
 end
 
-square_neg = symmetrise(square0, reflect_x(0.0))
-square = square_neg ∪ square0
+square_neg = symmetrise(square_pos, reflect_x(0.0))
+square!(X::IntervalBox) = square_pos(X) ∪ square_neg(X)
 
 
-
-function cube0(X::IntervalBox)  # contractor for y=x^3, x>=0
+function cube_pos(X::IntervalBox)  # contractor for y=x^3, x>=0
 
     x, y = X
 
@@ -36,8 +35,5 @@ function cube0(X::IntervalBox)  # contractor for y=x^3, x>=0
     return x × y
 end
 
-
-odd(X::IntervalBox) = ( (x,y) = X; IntervalBox(-x, -y) )
-
-cube_neg = symmetrise(cube0, odd)
-cube = cube0 ∪ cube_neg
+cube_neg = symmetrise(cube_pos, odd)
+cube!(X::IntervalBox) = cube_pos(X) ∪ cube_neg(X)

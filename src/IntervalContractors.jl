@@ -16,9 +16,9 @@ using Compat
 const half_pi = IntervalArithmetic.half_pi(Float64)  # interval
 const two_pi = IntervalArithmetic.two_pi(Float64)  # interval
 
-
-Base.:∪(f::Function, g::Function) = X -> ( f(X) ∪ g(X) )
-Base.:∩(f::Function, g::Function) = X -> ( f(X) ∩ g(X) )  # or f(g(X)) for contractors
+#
+# Base.:∪(f::Function, g::Function) = X -> ( f(X) ∪ g(X) )
+# Base.:∩(f::Function, g::Function) = X -> ( f(X) ∩ g(X) )  # or f(g(X)) for contractors
 
 include("arithmetic.jl")
 include("transformations.jl")

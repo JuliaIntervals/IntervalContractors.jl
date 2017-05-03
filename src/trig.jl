@@ -33,9 +33,7 @@ Contractor for `sin`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
 Returns an `IntervalBox` contracted down to the set $y = \sin(x)$.
 """
-sin! = periodic(sin_main, two_pi) ∪ periodic(sin_reverse, two_pi)
-
-cos! = translate(sin!, half_pi)
+sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ∪ periodise(sin_reverse, two_pi)(X)
 
 # Reverse function for sin; does not alter y
 doc"""
@@ -56,7 +54,7 @@ end
 
 ## cos contractor: alters x and y
 """
-Contractor for "main branch" of cos, from x = 0 to π.
+Contractor for main branch of cos, from x = 0 to π.
 """
 function cos_main(X::IntervalBox)
 
@@ -81,13 +79,13 @@ end
 cos_reverse = symmetrise(cos_main, reflect_x(0.0))
 
 doc"""
-    sin!(X::IntervalBox)
+    cos!(X::IntervalBox)
 
-Contractor for `sin`.
+Contractor for `cos`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
-Returns an `IntervalBox` contracted down to the set $y = \sin(x)$.
+Returns an `IntervalBox` contracted down to the set $y = \cos(x)$.
 """
-cos! = periodic(cos_main, two_pi) ∪ periodic(cos_reverse, two_pi)
+cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ∪ periodise(cos_reverse, two_pi)(X)
 
 
 # Reverse function for cos; does not alter y
@@ -127,13 +125,13 @@ function tan_main(X::IntervalBox)
 
 end
 
-tan! = periodic(tan_main, IntervalArithmetic.pi_interval(Float64))
+tan!(X::IntervalBox) = periodise(tan_main, IntervalArithmetic.pi_interval(Float64))(X)
 
 doc"""
-    sin_rev(y::Interval, x::Interval)
+    tan_rev(y::Interval, x::Interval)
 
-Reverse function for `sin`:
-- find the subset of `x` such that $y = \sin(x)$ for the given `y`.
+Reverse function for `tan`:
+- find the subset of `x` such that $y = \tan(x)$ for the given `y`.
 """
 function tan_rev(y::Interval, x::Interval)
 

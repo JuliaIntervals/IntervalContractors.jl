@@ -39,10 +39,6 @@ function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
     return a, b, c
 end
 
-function mul_rev_IEEE1788(b, c, x)  # c = b*x
-    return x ∩ (c / b)
-end
-
 mul_rev(a,b,c) = mul_rev(promote(a,b,c)...)
 
 """
@@ -139,17 +135,19 @@ function abs_rev(y, x)   # y = abs(x); refine x
     return (y, hull(x1, x2))
 end
 
-"""
 
+## IEEE-1788 versions:
+
+"""
 According to the IEEE-1788 standard:
 
-∘_rev1(b, c, x) is the subset of x such that x ∘ b is defined and in c
-∘_rev2(a, c, x) is the subset of x such that a ∘ x is defined and in c
+- `∘_rev1(b, c, x)` is the subset of `x` such that `x ∘ b` is defined and in `c`;
+- `∘_rev2(a, c, x)` is the subset of `x` such that `a ∘ x` is defined and in `c`
 
-If these agree (i.e. when ∘ is commutative) then just call it ∘_rev(b, c, x)
+When `∘` is commutative, these agree and we write `∘_rev(b, c, x)`.
 """
 
-function mul_rev_new(b, c, x)   # c = b*x
+function mul_rev_IEEE1788(b, c, x)   # c = b*x
     return x ∩ (c / b)
 end
 
