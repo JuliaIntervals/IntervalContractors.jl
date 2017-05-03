@@ -1,7 +1,7 @@
 import Documenter
 
 Documenter.deploydocs(
-    repo = "github.com/dpsanders/IntervalContractors.jl.git",
+    repo = "github.com/JuliaIntervals/IntervalContractors.jl.git",
     target = "build",
     deps = nothing,
     make = nothing
