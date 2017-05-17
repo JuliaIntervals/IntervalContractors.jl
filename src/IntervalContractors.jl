@@ -6,6 +6,7 @@ export plus_rev, minus_rev,
         mul_rev, div_rev,
         power_rev,
         sqr_rev, sqrt_rev, abs_rev,
+        exp_rev, log_rev,
         sin_rev, cos_rev, tan_rev,
         asin_rev,
         mul_rev_IEEE1788
@@ -23,6 +24,7 @@ const two_pi = IntervalArithmetic.two_pi(Float64)  # interval
 include("arithmetic.jl")
 include("transformations.jl")
 include("powers.jl")
+include("exponential.jl")
 include("trig.jl")
 include("inverse_trig.jl")
 
@@ -40,6 +42,7 @@ const reverse_operations = Dict(
                     )
 
 for f in (  :sqrt, :sqr, :abs,
+            :exp, :log,
             :sin, :cos, :tan,
             :asin)
     reverse_operations[f] = Symbol(f, "_rev")
