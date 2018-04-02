@@ -12,7 +12,6 @@ export plus_rev, minus_rev,
         mul_rev_IEEE1788
 
 using IntervalArithmetic
-using Compat
 
 const half_pi = IntervalArithmetic.half_pi(Float64)  # interval
 const two_pi = IntervalArithmetic.two_pi(Float64)  # interval
