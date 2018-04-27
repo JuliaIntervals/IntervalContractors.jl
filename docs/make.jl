@@ -15,6 +15,7 @@ Documenter.makedocs(
 
 
 Documenter.deploydocs(
+    julia = "nightly",
     repo = "github.com/JuliaIntervals/IntervalContractors.jl.git",
     target = "build",
     deps = nothing,
