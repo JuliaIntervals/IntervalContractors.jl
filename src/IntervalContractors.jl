@@ -28,8 +28,6 @@ include("trig.jl")
 include("inverse_trig.jl")
 include("hyperbolic.jl")
 include("inverse_hyperbolic.jl")
-include("extrema.jl")
-
 
 """
 Dictionary mapping functions to their reverse functions.
