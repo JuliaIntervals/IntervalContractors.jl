@@ -1,10 +1,11 @@
 module IntervalContractors
 
-export plus_rev, minus_rev,
+export plus_rev, minus_rev, inv_rev,
        mul_rev, div_rev, power_rev,
+       sign_rev, max_rev, min_rev,
         sqr_rev, sqrt_rev, abs_rev,
-        exp_rev, exp2_rev, exp10_rev,
-        log_rev, log2_rev, log10_rev,
+        exp_rev, exp2_rev, exp10_rev, exp1m_rev,
+        log_rev, log2_rev, log10_rev, log1p_rev,
         sin_rev, cos_rev, tan_rev,
         asin_rev, acos_rev, atan_rev,
         sinh_rev, cosh_rev, tanh_rev,
@@ -47,7 +48,8 @@ for f in (  :sqrt, :sqr, :abs,
             :sin, :cos, :tan,
             :asin, :acos, :atan,
             :sinh, :cosh, :tanh,
-            :asinh, :acosh, :atanh)
+            :asinh, :acosh, :atanh,
+            :inv, :sign, :max, :min)
     reverse_operations[f] = Symbol(f, "_rev")
 end
 
@@ -65,43 +67,11 @@ end
     - Style guide for doc strings? Right now I'm just guessing at this...
 
 TO DO LIST:
-(X,X,X,X), () exp2,
-(X,X,X,X), () exp10,
-(X,X,X,X), () log2,
-(X,X,X,X), () log10,
-(X,X,X,X), (X) sinh,
-(X,X,X,X), (X) cosh,
-(X,X,X,X), () tanh,
-(X,X,X,X), () asinh,
-(X,X,X,X), () acosh,
-(X,X,X,X), () atanh
-(X,X,X,X), () acos,
-(X,X,X,X), () atan,
-
-(,,,), () min,
-(,,,), () max
-(,,,), () inv,
-
-erf
-erfc
-erfinv
-erfcinv
-abs2
-atan2,
-
-sec,
-csc,
-cot,
-asec,
-acsc,
-acot,
-
-csch,
-sech,
-coth,
-csch,
-sech,
-coth
+         min, max, sign,
+         erf, erfc, erfinv, erfcinv
+         abs2, atan2,
+         sec, csc, cot, asec, acsc, acot,
+         csch, sech, coth, csch, sech, coth
 
 Scaled function versions available in DiffRules
 =#

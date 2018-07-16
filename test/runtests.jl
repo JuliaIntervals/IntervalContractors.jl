@@ -5,6 +5,11 @@ using Base.Test
 include("abs_rev.jl")
 include("libieeep1788_rev.jl")
 
+include("hyperbolic.jl")
+include("exponential.jl")
+include("inv_rev.jl")
+include("trig.jl")
+
 @testset "power_rev for odd power" begin
     x = -∞..∞
     a = -8..27

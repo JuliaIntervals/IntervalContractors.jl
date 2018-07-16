@@ -26,11 +26,20 @@ function exp10!(X::IntervalBox)
     return IntervalBox(x, y)
 end
 
+function expm1!(X::IntervalBox)
+    x, y = X
+
+    y = y ∩ expm1(x)
+    x = x ∩ log1p(y)
+
+    return IntervalBox(x, y)
+end
+
 doc"""
 Reverse function for `exp`.
 """
 function exp_rev(y::Interval, x::Interval)
-    y_new = y ∩ (0..∞)
+    y_new = y ∩ (0.0..∞)
     x_new = x ∩ log(y_new)
 
     return y, x
@@ -40,7 +49,8 @@ doc"""
 Reverse function for `exp2`.
 """
 function exp2_rev(y::Interval, x::Interval)
-    y_new = y ∩ (0..∞)
+    y_new = y ∩ (0.0..∞)
+    println("y_new: $(y_new)")
     x_new = x ∩ log2(y_new)
 
     return y, x
@@ -50,11 +60,22 @@ doc"""
 Reverse function for `exp10`.
 """
 function exp10_rev(y::Interval, x::Interval)
-    y_new = y ∩ (0..∞)
+    y_new = y ∩ (0.0..∞)
     x_new = x ∩ log10(y_new)
 
     return y, x
 end
+
+doc"""
+Reverse function for `expm1`.
+"""
+function expm1_rev(y::Interval, x::Interval)
+    y = y ∩ expm1(x)
+    x = x ∩ log1p(y)
+
+    return IntervalBox(x, y)
+end
+
 
 function log!(X::IntervalBox)  # y = log(x)
     x, y = X
@@ -83,6 +104,14 @@ function log10!(X::IntervalBox)  # y = log10(x)
     return IntervalBox(x, y)
 end
 
+function log1p_rev(X::IntervalBox) # y = log1p(x)
+    x, y = X
+
+    x_new = x ∩ exp1m(y)
+
+    return y, x_new
+end
+
 doc"""
 Reverse function for `log`: $y = \log(x)$
 """
@@ -107,6 +136,15 @@ Reverse function for `log10`: $y = \log10(x)$
 """
 function log10_rev(y::Interval, x::Interval)
     x_new = x ∩ exp10(y)
+
+    return y, x_new
+end
+
+doc"""
+Reverse function for `log1p`: $y = \log1p(x)$
+"""
+function log1p_rev(y::Interval, x::Interval)
+    x_new = x ∩ exp1m(y)
 
     return y, x_new
 end

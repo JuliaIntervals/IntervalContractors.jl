@@ -72,3 +72,5 @@ end
     @test atanh_rev(Interval(0.0, 25.0), -∞..∞)[2] == Interval(0, 1)
     @test isapprox(atanh_rev(Interval(-1.0, 25.0), -∞..∞)[2], Interval(-0.761595, 1))
 end
+
+# Interval box tests
