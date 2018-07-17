@@ -18,10 +18,8 @@ isapprox(x::Interval,y::Interval) = isapprox(x.lo,y.lo,atol=1E-4) && isapprox(x.
     @test inv_rev(∅, entireinterval(Float64))[2] == ∅
     @test inv_rev(Interval(0.0, 1.0), ∅)[2] == ∅
     @test inv_rev(∅, Interval(0.0, 1.0))[2] == ∅
-    @test inv_rev(Interval(-2.0, -1.0), entireinterval(Float64))[2] == ∅
-    @test inv_rev(Interval(1.0, 1.0), entireinterval(Float64))[2] == Interval(-1.0, 1.0)
-    @test inv_rev(entireinterval(Float64), entireinterval(Float64))[2] == Interval(0.0, Inf)
-    @test inv_rev(Interval(-Inf, 0.0), entireinterval(Float64))[2] == Interval(0.0, 0.0)
+    @test inv_rev(Interval(-2.0, -1.0), entireinterval(Float64))[2] == Interval(-1.0, -0.5)
+    @test inv_rev(Interval(1.0, 1.0), entireinterval(Float64))[2] == Interval(1.0, 1.0)
+    @test inv_rev(entireinterval(Float64), entireinterval(Float64))[2] == Interval(-∞, ∞)
+    @test inv_rev(Interval(-Inf, 0.0), entireinterval(Float64))[2] == Interval(-∞, 0.0)
 end
-
-# interval box tests

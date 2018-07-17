@@ -59,9 +59,9 @@ Reverse inverse
 """
 function inv_rev(a::Interval, b::Interval)  # a = b / c
 
-    c = c ∩ inv(a)
+    b = b ∩ inv(a)
 
-    return a, b, c
+    return a, b
 end
 
 inv_rev(a,b) = inv_rev(promote(a,b)...)
@@ -144,7 +144,7 @@ function abs_rev(y, x)   # y = abs(x); refine x
 
     return (y, hull(x1, x2))
 end
-
+#=
 """
 Reverse sign
 """
@@ -157,7 +157,7 @@ function sign_rev(a::Interval, b::Interval)  # a = sqrt(b)
     return a, b
 end
 sign_rev(a,b) = sign_rev(promote(a,b)...)
-
+=#
 ## IEEE-1788 versions:
 
 """
