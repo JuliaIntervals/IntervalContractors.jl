@@ -57,7 +57,7 @@ div_rev(a,b,c) = div_rev(promote(a,b,c)...)
 """
 Reverse inverse
 """
-function inv_rev(a::Interval, b::Interval)  # a = b / c
+function inv_rev(a::Interval, b::Interval)  # a = inv(b)
 
     b = b ∩ inv(a)
 

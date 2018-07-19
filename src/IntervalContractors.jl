@@ -1,3 +1,5 @@
+__precompile__(true)
+
 module IntervalContractors
 
 export plus_rev, minus_rev, inv_rev,
@@ -55,24 +57,3 @@ for f in (  :sqrt, :sqr, :abs,
 end
 
 end
-
-
-#=
-# CHECKLIST FOR ADDING NEW FUNCTIONS
-    - Initial commit:
-        - exp_rev operators,
-        - intervalbox operators,
-        - add export,
-        - add to reverse_operations
-    - ADD testing after initial commit Testing?
-    - Style guide for doc strings? Right now I'm just guessing at this...
-
-TO DO LIST:
-         min, max, sign,
-         erf, erfc, erfinv, erfcinv
-         abs2, atan2,
-         sec, csc, cot, asec, acsc, acot,
-         csch, sech, coth, csch, sech, coth
-
-Scaled function versions available in DiffRules
-=#
