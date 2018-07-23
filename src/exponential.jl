@@ -11,7 +11,7 @@ doc"""
 Reverse function for `exp`.
 """
 function exp_rev(y::Interval, x::Interval)
-    y_new = y ∩ exp(x)
+    y_new = y ∩ (0..∞)
     x_new = x ∩ log(y)
     return y_new, x_new
 end
@@ -20,7 +20,7 @@ doc"""
 Reverse function for `exp2`.
 """
 function exp2_rev(y::Interval, x::Interval)
-    y_new = y ∩ exp2(x)
+    y_new = y ∩ (0..∞)
     x_new = x ∩ log2(y)
 
     return y_new, x_new
@@ -30,7 +30,7 @@ doc"""
 Reverse function for `exp10`.
 """
 function exp10_rev(y::Interval, x::Interval)
-    y_new = y ∩ exp10(x)
+    y_new = y ∩ (0..∞)
     x_new = x ∩ log10(y)
 
     return y_new, x_new
@@ -40,7 +40,7 @@ doc"""
 Reverse function for `expm1`.
 """
 function expm1_rev(y::Interval, x::Interval)
-    y_new = y ∩ expm1(x)
+    y_new = y ∩ (-1.0..∞)
     x_new = x ∩ log1p(y)
 
     return y_new, x_new
