@@ -148,6 +148,9 @@ When `∘` is commutative, these agree and we write `∘_rev(b, c, x)`.
 """
 
 function mul_rev_IEEE1788(b, c, x)   # c = b*x
+    if b == c == (0..0)
+        return x
+    end
     return x ∩ (c / b)
 end
 
