@@ -1,0 +1,6 @@
+include("Non1788tests/inv_hyperbolic.jl")
+include("Non1788tests/hyperbolic.jl")
+include("Non1788tests/extrema.jl")
+include("Non1788tests/exponential.jl")
+include("Non1788tests/inv_rev.jl")
+include("Non1788tests/inv_trig.jl")

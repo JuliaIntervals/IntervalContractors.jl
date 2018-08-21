@@ -33,8 +33,8 @@ Reverse multiplication
 """
 function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
 
-    b = b ∩ (a / c)
-    c = c ∩ (a / b)
+    ((0.0 ∉ a) ||  (0.0 ∉ b)) && (c = c ∩ (a / b))
+    ((0.0 ∉ a) ||  (0.0 ∉ c)) && (b = b ∩ (a / c))
 
     return a, b, c
 end
@@ -54,7 +54,17 @@ end
 
 div_rev(a,b,c) = div_rev(promote(a,b,c)...)
 
+"""
+Reverse inverse
+"""
+function inv_rev(a::Interval, b::Interval)  # a = inv(b)
 
+    b = b ∩ inv(a)
+
+    return a, b
+end
+
+inv_rev(a,b) = inv_rev(promote(a,b)...)
 
 """
 Reverse power
@@ -134,8 +144,20 @@ function abs_rev(y, x)   # y = abs(x); refine x
 
     return (y, hull(x1, x2))
 end
+#=
+"""
+Reverse sign
+"""
+function sign_rev(a::Interval, b::Interval)  # a = sqrt(b)
 
+    (a == 1.0) && b = b ∩ (0..∞)
+    (a == 0.0) && b = b ∩ (0.0..0.0)
+    (a == -1.0) && b = b ∩ (-∞..0.0)
 
+    return a, b
+end
+sign_rev(a,b) = sign_rev(promote(a,b)...)
+=#
 ## IEEE-1788 versions:
 
 """

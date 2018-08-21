@@ -4,6 +4,7 @@ using Base.Test
 
 include("abs_rev.jl")
 include("libieeep1788_rev.jl")
+include("Non1788tests.jl")
 
 @testset "power_rev for odd power" begin
     x = -∞..∞
