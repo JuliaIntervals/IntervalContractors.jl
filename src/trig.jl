@@ -31,7 +31,7 @@ sin_reverse = symmetrise(sin_main, reflect_x(half_pi))
 
 Contractor for `sin`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
-Returns an `IntervalBox` contracted down to the set $y = \sin(x)$.
+Returns an `IntervalBox` contracted down to the set ``y = \\sin(x)``.
 """
 sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ∪ periodise(sin_reverse, two_pi)(X)
 
@@ -40,7 +40,7 @@ sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ∪ periodise(sin_reverse,
     sin_rev(y::Interval, x::Interval)
 
 Reverse function for `sin`:
-- find the subset of `x` such that $y = \sin(x)$ for the given `y`.
+- find the subset of `x` such that ``y = \\sin(x)`` for the given `y`.
 """
 function sin_rev(y::Interval, x::Interval)
 
@@ -83,7 +83,7 @@ cos_reverse = symmetrise(cos_main, reflect_x(0.0))
 
 Contractor for `cos`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
-Returns an `IntervalBox` contracted down to the set $y = \cos(x)$.
+Returns an `IntervalBox` contracted down to the set ``y = \\cos(x)``.
 """
 cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ∪ periodise(cos_reverse, two_pi)(X)
 
@@ -93,7 +93,7 @@ cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ∪ periodise(cos_reverse,
     cos_rev(y::Interval, x::Interval)
 
 Reverse function for `cos`:
-- find the subset of `x` such that $y = \cos(x)$ for the given `y`.
+- find the subset of `x` such that ``y = \\cos(x)`` for the given `y`.
 """
 function cos_rev(y::Interval, x::Interval)
 
@@ -131,7 +131,7 @@ tan!(X::IntervalBox) = periodise(tan_main, IntervalArithmetic.pi_interval(Float6
     tan_rev(y::Interval, x::Interval)
 
 Reverse function for `tan`:
-- find the subset of `x` such that $y = \tan(x)$ for the given `y`.
+- find the subset of `x` such that ``y = \\tan(x)`` for the given `y`.
 """
 function tan_rev(y::Interval, x::Interval)
 
