@@ -1,5 +1,5 @@
 
-doc"""
+"""
     integer_contractor(x::Interval)
 
 Return the integers enclosed in the interval `x`.

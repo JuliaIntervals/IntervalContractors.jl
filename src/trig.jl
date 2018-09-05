@@ -26,7 +26,7 @@ end
 # TODO: Be careful with the pi constants if using e.g. BigFloats
 sin_reverse = symmetrise(sin_main, reflect_x(half_pi))
 
-doc"""
+"""
     sin!(X::IntervalBox)
 
 Contractor for `sin`.
@@ -36,7 +36,7 @@ Returns an `IntervalBox` contracted down to the set $y = \sin(x)$.
 sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ∪ periodise(sin_reverse, two_pi)(X)
 
 # Reverse function for sin; does not alter y
-doc"""
+"""
     sin_rev(y::Interval, x::Interval)
 
 Reverse function for `sin`:
@@ -78,7 +78,7 @@ end
 # TODO: Be careful with the pi constants if using e.g. BigFloats
 cos_reverse = symmetrise(cos_main, reflect_x(0.0))
 
-doc"""
+"""
     cos!(X::IntervalBox)
 
 Contractor for `cos`.
@@ -89,7 +89,7 @@ cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ∪ periodise(cos_reverse,
 
 
 # Reverse function for cos; does not alter y
-doc"""
+"""
     cos_rev(y::Interval, x::Interval)
 
 Reverse function for `cos`:
@@ -127,7 +127,7 @@ end
 
 tan!(X::IntervalBox) = periodise(tan_main, IntervalArithmetic.pi_interval(Float64))(X)
 
-doc"""
+"""
     tan_rev(y::Interval, x::Interval)
 
 Reverse function for `tan`:
