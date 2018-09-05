@@ -1,6 +1,6 @@
 using IntervalContractors
 using IntervalArithmetic
-using Base.Test
+using Test
 
 include("abs_rev.jl")
 include("libieeep1788_rev.jl")
