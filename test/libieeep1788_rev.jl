@@ -22,7 +22,7 @@
 #Language imports
 
 #Test library imports
-using Base.Test
+using Test
 
 #Arithmetic library imports
 using IntervalArithmetic

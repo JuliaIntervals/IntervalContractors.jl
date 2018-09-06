@@ -1,4 +1,4 @@
-doc"""
+"""
 Reverse function for `asinh`.
 """
 function asinh_rev(y::Interval,x::Interval)
@@ -7,7 +7,7 @@ function asinh_rev(y::Interval,x::Interval)
     return y, x
 end
 
-doc"""
+"""
 Reverse function for `acosh`.
 """
 function acosh_rev(y::Interval,x::Interval)
@@ -17,7 +17,7 @@ function acosh_rev(y::Interval,x::Interval)
     return y_new, x
 end
 
-doc"""
+"""
 Reverse function for `atanh`.
 """
 function atanh_rev(y::Interval,x::Interval)

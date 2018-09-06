@@ -1,4 +1,4 @@
-doc"""
+"""
 Reverse function for `sinh`.
 """
 function sinh_rev(y::Interval, x::Interval)
@@ -7,7 +7,7 @@ function sinh_rev(y::Interval, x::Interval)
     return y, x
 end
 
-doc"""
+"""
 Reverse function for `cosh`.
 """
 function cosh_rev(y::Interval,x::Interval)
@@ -17,7 +17,7 @@ function cosh_rev(y::Interval,x::Interval)
     return y_new, x
 end
 
-doc"""
+"""
 Reverse function for `tanh`.
 """
 function tanh_rev(y::Interval,x::Interval)

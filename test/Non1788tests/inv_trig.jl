@@ -1,6 +1,6 @@
 # ADD TEST SET FOR ACOS, ATAN
 
-using Base.Test
+using Test
 
 #Arithmetic library imports
 using IntervalArithmetic
