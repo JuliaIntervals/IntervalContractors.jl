@@ -1,4 +1,9 @@
 
+import Base: ^
+
+^(x::Interval{Float64}, r::Rational) = x^(convert(Interval{Float64}, r))
+
+
 """
 Reverse plus
 """
@@ -96,7 +101,7 @@ function power_rev(a::Interval, b::Interval, n::Integer)  # a = b^n,  log(a) = n
 
     b = hull(b1, b2)
 
-    return (a, b, c)
+    return (a, b, n)
 end
 
 
