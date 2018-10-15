@@ -1,13 +1,18 @@
 
+import Base: ^
+
+^(x::Interval{Float64}, r::Rational) = x^(convert(Interval{Float64}, r))
+
+
 """
 Reverse plus
 """
 function plus_rev(a::Interval, b::Interval, c::Interval)  # a = b + c
     # a = a ∩ (b + c)  # add this line for plus contractor (as opposed to reverse function)
-    b = b ∩ (a - c)
-    c = c ∩ (a - b)
+    b_new = b ∩ (a - c)
+    c_new = c ∩ (a - b)
 
-    return a, b, c
+    return a, b_new, c_new
 end
 
 plus_rev(a,b,c) = plus_rev(promote(a,b,c)...)
@@ -17,15 +22,18 @@ Reverse minus
 """
 function minus_rev(a::Interval, b::Interval, c::Interval)  # a = b - c
 
-    b = b ∩ (a + c)
-    c = c ∩ (b - a)
+    b_new = b ∩ (a + c)
+    c_new = c ∩ (b - a)
 
-    return a, b, c
+    return a, b_new, c_new
 end
 
 minus_rev(a,b,c) = minus_rev(promote(a,b,c)...)
 
-minus_rev(a::Interval, b::Interval) = (b = -a; return (a, b))     # a = -b
+function minus_rev(a::Interval, b::Interval)  # a = -b
+    b_new = b ∩ (-a)
+    return (a, b_new)
+end
 
 
 """
@@ -33,8 +41,8 @@ Reverse multiplication
 """
 function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
 
-    ((0.0 ∉ a) ||  (0.0 ∉ b)) && (c = c ∩ (a / b))
-    ((0.0 ∉ a) ||  (0.0 ∉ c)) && (b = b ∩ (a / c))
+    ((0.0 ∉ a) || (0.0 ∉ b)) && (c = c ∩ (a / b))
+    ((0.0 ∉ a) || (0.0 ∉ c)) && (b = b ∩ (a / c))
 
     return a, b, c
 end
@@ -59,9 +67,9 @@ Reverse inverse
 """
 function inv_rev(a::Interval, b::Interval)  # a = inv(b)
 
-    b = b ∩ inv(a)
+    b_new = b ∩ inv(a)
 
-    return a, b
+    return a, b_new
 end
 
 inv_rev(a,b) = inv_rev(promote(a,b)...)
@@ -69,37 +77,40 @@ inv_rev(a,b) = inv_rev(promote(a,b)...)
 """
 Reverse power
 """
-function power_rev(a::Interval, b::Interval, c::Integer)  # a = b^c,  log(a) = c.log(b),  b = a^(1/c)
+function power_rev(a::Interval, b::Interval, n::Integer)  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
 
-    if c == 2  # a = b^2
-        b1 = b ∩ √a
-        b2 = b ∩ (-√a)
+    if n == 2  # a = b^2
+        root = √a
+        b1 = b ∩ root
+        b2 = b ∩ (-root)
 
-        b = hull(b1, b2)
+    elseif iseven(n)
+        root = a^(1//n)
 
-    elseif iseven(c)
-        b1 = b ∩ ( a^(inv(c) ))
-        b2 = b ∩ ( -( a^(inv(c)) ) )
+        b1 = b ∩ root
+        b2 = b ∩ (-root)
 
-        b = hull(b1, b2)
+    elseif isodd(n)
+        pos_root = (a ∩ (0..∞)) ^ (1//n)
+        neg_root = -( ( (-a) ∩ (0..∞) ) ^ (1//n) )
 
-    elseif isodd(c)
-        b1 = b ∩ ( (a ∩ (0..∞)) ^(inv(c) ))   # positive part
-        b2 = b ∩ (- ( (-(a ∩ (-∞..0)))^(inv(c)) ) )  # negative part
+        b1 = b ∩ pos_root
+        b2 = b ∩ neg_root
 
-        b = hull(b1, b2)
     end
 
-    return (a, b, c)
+    b = hull(b1, b2)
+
+    return (a, b, n)
 end
 
 
 function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
 
-    b = b ∩ ( a^(inv(c) ))
-    c = c ∩ (log(a) / log(b))
+    b_new = b ∩ ( a^(inv(c) ))
+    c_new = c ∩ (log(a) / log(b))
 
-    return a, b, c
+    return a, b_new, c_new
 end
 
 power_rev(a, b, c) = power_rev(promote(a, b, c)...)
@@ -110,9 +121,9 @@ Reverse square root
 """
 function sqrt_rev(a::Interval, b::Interval)  # a = sqrt(b)
 
-    b = b ∩ (a^2)
+    b_new = b ∩ (a^2)
 
-    return a, b
+    return a, b_new
 end
 
 sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
@@ -124,8 +135,11 @@ sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
 Reverse sqr
 """
 function sqr_rev(c, x)   # c = x^2;  refine x
-    x1 = sqrt(c) ∩ x
-    x2 = -(sqrt(c)) ∩ x
+
+    root = sqrt(c)
+
+    x1 = x ∩ root
+    x2 = x ∩ (-root)
 
     return (c, hull(x1, x2))
 end
@@ -174,7 +188,7 @@ function mul_rev_IEEE1788(b, c, x)   # c = b*x
 end
 
 function pow_rev1(b, c, x)   # c = x^b
-    return x ∩ c^(1/b)
+    return x ∩ c^(1/b)  # replace by 1//b
 end
 
 function pow_rev2(a, c, x)   # c = a^x
