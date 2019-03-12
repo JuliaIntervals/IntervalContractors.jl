@@ -84,6 +84,9 @@ function power_rev(a::Interval, b::Interval, n::Integer)  # a = b^n,  log(a) = n
         b1 = b ∩ root
         b2 = b ∩ (-root)
 
+    elseif n == 0
+        return (a, b, n)   # b is unaffected  (intersected with -Inf..Inf)
+
     elseif iseven(n)
         root = a^(1//n)
 
