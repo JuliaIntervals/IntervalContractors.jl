@@ -32,7 +32,10 @@ function acos_rev(y::Interval, x::Interval)
 end
 
 """
-Reverse `atan`.
+    atan_rev(y::Interval, x::Interval)
+
+Inverse of `y = atan(x)`.
+Returns the new `y` and `x`.
 """
 function atan_rev(y::Interval, x::Interval)
         y_new = y ∩ Interval(-half_pi.hi, half_pi.hi)
