@@ -35,7 +35,7 @@ end
 Reverse `atan`.
 """
 function atan_rev(y::Interval, x::Interval)
-        y_new = y ∩ Interval(-half_pi.lo,half_pi.hi)
+        y_new = y ∩ Interval(-half_pi.hi, half_pi.hi)
         x_new = x ∩ tan(y_new)
 
         return y_new, x_new
