@@ -6,7 +6,12 @@ Return the integers enclosed in the interval `x`.
 """
 
 function integer_contractor(x::Interval)
-    a = floor(x.lo)+1
+
+    if isinteger(x.lo)
+        a = x.lo
+    else
+        a = floor(x.lo)+1
+    end
     b = floor(x.hi)
 
     a > b && return emptyinterval(x)
@@ -57,7 +62,7 @@ translate(C, α) = translate(-α) ∘ C ∘ translate(α)
 Symmetric part of a Contractor, via an involution `op`
 (i.e. such that `inv(op) == op`).
 """
-symmetrise(C, op) = op ∘ C ∘ op
+symmetrise(C, op) = X -> C(X) ∪ (op ∘ C ∘ op)(X)
 
 
 
