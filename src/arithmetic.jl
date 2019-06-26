@@ -1,10 +1,4 @@
 
-#=
-import Base: ^
-
-^(x::Interval{Float64}, r::Rational) = x^(convert(Interval{Float64}, r))
-=#
-
 """
 Reverse plus
 """
