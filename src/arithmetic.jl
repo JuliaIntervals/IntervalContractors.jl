@@ -36,10 +36,28 @@ Reverse multiplication
 """
 function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
 
-    ((0.0 ∉ a) || (0.0 ∉ b)) && (c = c ∩ (a / b))
-    ((0.0 ∉ a) || (0.0 ∉ c)) && (b = b ∩ (a / c))
+    # ((0.0 ∉ a) || (0.0 ∉ b)) && (c = c ∩ (a / b))
+    # ((0.0 ∉ a) || (0.0 ∉ c)) && (b = b ∩ (a / c))
 
-    return a, b, c
+    # a = a ∩ (b * c)  # ?
+
+    if 0 ∈ b
+        temp = c .∩ extended_div(a, b)
+        c′ = union(temp[1], temp[2])
+
+    else
+        c′ = c ∩ (a / b)
+    end
+
+    if 0 ∈ c
+        temp = b .∩ extended_div(a, c)
+        b′ = union(temp[1], temp[2])
+
+    else
+        b′ = b ∩ (a / c)
+    end
+
+    return a, b′, c′
 end
 
 mul_rev(a,b,c) = mul_rev(promote(a,b,c)...)
