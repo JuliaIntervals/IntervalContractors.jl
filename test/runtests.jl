@@ -18,6 +18,6 @@ using Test
         y = -1..1
         z = 2..10
 
-        @test_broken mul_rev(z, x, y) == (2..10, 2..5, 0.4..1.0)  # fix once extended_div is corrected
+        @test mul_rev(z, x, y) == (2..10, 2..5, 0.4..1.0)
     end
 end
