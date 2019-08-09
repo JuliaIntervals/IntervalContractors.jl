@@ -20,4 +20,8 @@ using Test
 
         @test mul_rev(z, x, y) == (2..10, 2..5, 0.4..1.0)
     end
+
+    @testset "Exponents with integer values but not types" begin
+        @test power_rev(-Inf..Inf, -4..4, 2.0) ==  (-∞..∞, -4..4, 2.0)
+    end
 end
