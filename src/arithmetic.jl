@@ -120,6 +120,10 @@ end
 
 function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
 
+    if isinteger(c)
+        return power_rev(a, b, Int(inf(c)))
+    end
+
     b_new = b ∩ ( a^(inv(c) ))
     c_new = c ∩ (log(a) / log(b))
 
