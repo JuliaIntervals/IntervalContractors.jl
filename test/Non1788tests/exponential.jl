@@ -39,8 +39,8 @@ end
     @test expm1_rev(∅, Interval(0.0, 1.0))[2] == ∅
     @test expm1_rev(Interval(-2.0, -1.0), entireinterval(Float64))[2] == ∅
     @test isapprox(expm1_rev(Interval(1.0, 1.0), entireinterval(Float64))[2],Interval(0.693147, 0.693148))
-    @test expm1_rev(entireinterval(Float64), entireinterval(Float64))[2] == Interval(0.0, ∞)
-    @test expm1_rev(Interval(-Inf, 0.0), entireinterval(Float64))[2] == ∅
+    @test expm1_rev(entireinterval(Float64), entireinterval(Float64))[2] == Interval(-∞, ∞)
+    @test expm1_rev(Interval(-Inf, -1.0), entireinterval(Float64))[2] == ∅
 end
 
 @testset "log2_rev_test" begin
