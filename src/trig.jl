@@ -60,7 +60,7 @@ function cos_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = Interval(0, IntervalArithmetic.pi_interval(Float64).lo)
+    x_range = Interval(0, Interval{Float64}(π).lo)
     y_range = -1..1
 
     x = x ∩ x_range
@@ -125,7 +125,7 @@ function tan_main(X::IntervalBox)
 
 end
 
-tan!(X::IntervalBox) = periodise(tan_main, IntervalArithmetic.pi_interval(Float64))(X)
+tan!(X::IntervalBox) = periodise(tan_main, Interval{Float64}(π))(X)
 
 """
     tan_rev(y::Interval, x::Interval)

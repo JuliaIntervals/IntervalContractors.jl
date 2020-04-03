@@ -1,12 +1,12 @@
 name = "IntervalContractors"
 uuid = "15111844-de3b-5229-b4ba-526f2f385dc9"
-version = "0.4.1"
+version = "0.4.2"
 
 [deps]
 IntervalArithmetic = "d1acc4aa-44c8-5952-acd4-ba5d80a2a253"
 
 [compat]
-IntervalArithmetic = "≥ 0.16"
+IntervalArithmetic = "≥ 0.16.3"
 julia = "≥ 1.1"
 
 [extras]
