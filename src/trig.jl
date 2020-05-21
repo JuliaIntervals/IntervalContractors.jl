@@ -104,6 +104,8 @@ function cos_rev(y::Interval, x::Interval)
     return X_new[2], X_new[1]   # return in order y, x
 end
 
+cos_rev(y) = cos_rev(y,-∞..∞)
+
 
 """
 Contractor for "main branch" of tan, from x = -π/2 to π/2.
@@ -141,3 +143,5 @@ function tan_rev(y::Interval, x::Interval)
 
     return X_new[2], X_new[1]   # return in order y, x
 end
+
+tan_rev(y) = tan_rev(y,-∞..∞)

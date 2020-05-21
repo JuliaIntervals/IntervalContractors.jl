@@ -1,7 +1,7 @@
-single_input_functions =(
-    :sqr_rev , :abs_rev, :sin_rev)
+reverse_functions =(
+    :sqr_rev , :abs_rev, :sin_rev, :cos_rev, :tan_rev)
 
-for f in single_input_functions
+for f in reverse_functions
     @eval function $(f)(xx::DecoratedInterval{T}) where T
         x = interval_part(xx)
         r = $f(x)[2]
@@ -10,10 +10,8 @@ for f in single_input_functions
     end
 end
 
-two_input_functions =(
-    :sqr_rev, :abs_rev, :sin_rev)
 
-for f in two_input_functions
+for f in reverse_functions
     @eval function $(f)(xx::DecoratedInterval, yy::DecoratedInterval)
         x = interval_part(xx)
         y = interval_part(yy)
