@@ -176,6 +176,8 @@ function abs_rev(y, x)   # y = abs(x); refine x
 
     return (y, hull(x1, x2))
 end
+
+abs_rev(c) = abs_rev(c, -∞..∞)
 #=
 """
 Reverse sign

@@ -51,7 +51,7 @@ function sin_rev(y::Interval, x::Interval)
     return X_new[2], X_new[1]   # return in order y, x
 end
 
-
+sin_rev(y) = sin_rev(y,-∞..∞)
 ## cos contractor: alters x and y
 """
 Contractor for main branch of cos, from x = 0 to π.
