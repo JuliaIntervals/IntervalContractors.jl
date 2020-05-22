@@ -27,12 +27,12 @@ end
 @testset "cosh_rev_test" begin
     @test isapprox(cosh_rev(∅, -∞..∞)[2], ∅)
     @test isapprox(cosh_rev(Interval(-10.0, -1.0), -∞..∞)[2], ∅)
-    @test isapprox(cosh_rev(Interval(0.0, Inf), -∞..∞)[2], Interval(0.0, ∞))
+    @test isapprox(cosh_rev(Interval(0.0, Inf), -∞..∞)[2], Interval(-∞, ∞))
     @test isapprox(cosh_rev(Interval(0.0, 1.0), -∞..∞)[2], Interval(0, 0))
     @test isapprox(cosh_rev(Interval(-0.5, 1.0), -∞..∞)[2], Interval(0, 0))
     @test isapprox(cosh_rev(Interval(-1000.0, 1.0), -∞..∞)[2], Interval(0, 0))
-    @test isapprox(cosh_rev(Interval(0.0, 25.0), -∞..∞)[2], Interval(0, 3.91163))
-    @test isapprox(cosh_rev(Interval(-1.0, 25.0), -∞..∞)[2], Interval(0, 3.91163))
+    @test isapprox(cosh_rev(Interval(0.0, 25.0), -∞..∞)[2], Interval(-3.91163, 3.91163))
+    @test isapprox(cosh_rev(Interval(-1.0, 25.0), -∞..∞)[2], Interval(-3.91163, 3.91163))
 end
 
 @testset "tanh_rev_test" begin

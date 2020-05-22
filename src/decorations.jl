@@ -4,7 +4,7 @@ Decorated interval extension; the result is decorated as `trv`,
 following the IEEE-1788 Standard (see Sect. 11.7.1, pp 47).
 """ 
 reverse_functions =(
-    :sqr_rev , :abs_rev, :sin_rev, :cos_rev, :tan_rev)
+    :sqr_rev , :abs_rev, :sin_rev, :cos_rev, :tan_rev, :cosh_rev)
 
 for f in reverse_functions
     @eval function $(f)(xx::DecoratedInterval{T}) where T

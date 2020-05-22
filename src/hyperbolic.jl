@@ -10,12 +10,19 @@ end
 """
 Reverse function for `cosh`.
 """
-function cosh_rev(y::Interval,x::Interval)
-    y_new = y ∩ Interval(1.,∞)
-    x = x ∩ acosh(y)
+cosh_main(y::Interval,x::Interval) = x ∩ acosh(y)
 
-    return y_new, x
+function cosh_rev(x::Interval, y::Interval)
+    y1 = y ∩ Interval(-Inf,1)
+    y2 = y ∩ Interval(1,Inf)
+
+    x_new = x ∩ Interval(1.,∞)
+    
+    z = -cosh_main(x,-y1) ∪ cosh_main(x,y2)
+    return x_new, z
 end
+
+cosh_rev(x) = cosh_rev(x, -Inf..Inf) 
 
 """
 Reverse function for `tanh`.

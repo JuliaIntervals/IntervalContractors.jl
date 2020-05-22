@@ -418,4 +418,48 @@ end
 end
 
 
+@testset "minimal_cosh_rev_test" begin
+    @test cosh_rev(∅)[2] == ∅
+    @test cosh_rev(Interval(1.0, Inf))[2] == entireinterval(Float64)
+    @test cosh_rev(Interval(0.0, Inf))[2] == entireinterval(Float64)
+    @test cosh_rev(Interval(1.0, 1.0))[2] == Interval(0.0, 0.0)
+    @test cosh_rev(Interval(0x1.8b07551d9f55p+0, 0x1.89bca168970c6p+432))[2] == Interval(-0x1.2c903022dd7abp+8, 0x1.2c903022dd7abp+8)
+end
+
+@testset "minimal_cosh_revBin_test" begin
+    @test cosh_rev(∅, Interval(0.0, Inf))[2] == ∅
+    @test cosh_rev(Interval(1.0, Inf), Interval(0.0, Inf))[2] == Interval(0.0, Inf)
+    @test cosh_rev(Interval(0.0, Inf), Interval(1.0, 2.0))[2] == Interval(1.0, 2.0)
+    @test cosh_rev(Interval(1.0, 1.0), Interval(1.0, Inf))[2] == ∅
+    @test cosh_rev(Interval(0x1.8b07551d9f55p+0, 0x1.89bca168970c6p+432), Interval(-Inf, 0.0))[2] == Interval(-0x1.2c903022dd7abp+8, -0x1.fffffffffffffp-1)
+end
+
+@testset "minimal_coshRev_dec_test" begin
+    @test cosh_rev(DecoratedInterval(∅, trv)) == DecoratedInterval(∅, trv)
+    @test decoration(cosh_rev(DecoratedInterval(∅, trv))) == decoration(DecoratedInterval(∅, trv))
+    @test cosh_rev(DecoratedInterval(Interval(1.0, Inf), dac)) == DecoratedInterval(entireinterval(Float64), trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(1.0, Inf), dac))) == decoration(DecoratedInterval(entireinterval(Float64), trv))
+    @test cosh_rev(DecoratedInterval(Interval(0.0, Inf), dac)) == DecoratedInterval(entireinterval(Float64), trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(0.0, Inf), dac))) == decoration(DecoratedInterval(entireinterval(Float64), trv))
+    @test cosh_rev(DecoratedInterval(Interval(1.0, 1.0), def)) == DecoratedInterval(Interval(0.0, 0.0), trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(1.0, 1.0), def))) == decoration(DecoratedInterval(Interval(0.0, 0.0), trv))
+    @test cosh_rev(DecoratedInterval(Interval(0x1.8b07551d9f55p+0, 0x1.89bca168970c6p+432), com)) == DecoratedInterval(Interval(-0x1.2c903022dd7abp+8, 0x1.2c903022dd7abp+8), trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(0x1.8b07551d9f55p+0, 0x1.89bca168970c6p+432), com))) == decoration(DecoratedInterval(Interval(-0x1.2c903022dd7abp+8, 0x1.2c903022dd7abp+8), trv))
+end
+
+@testset "minimal_coshRev_dec_bin_test" begin
+    @test cosh_rev(DecoratedInterval(∅, trv), DecoratedInterval(Interval(0.0, Inf), dac)) == DecoratedInterval(∅, trv)
+    @test decoration(cosh_rev(DecoratedInterval(∅, trv), DecoratedInterval(Interval(0.0, Inf), dac))) == decoration(DecoratedInterval(∅, trv))
+    @test cosh_rev(DecoratedInterval(Interval(1.0, Inf), def), DecoratedInterval(Interval(0.0, Inf), dac)) == DecoratedInterval(Interval(0.0, Inf), trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(1.0, Inf), def), DecoratedInterval(Interval(0.0, Inf), dac))) == decoration(DecoratedInterval(Interval(0.0, Inf), trv))
+    @test cosh_rev(DecoratedInterval(Interval(0.0, Inf), def), DecoratedInterval(Interval(1.0, 2.0), com)) == DecoratedInterval(Interval(1.0, 2.0), trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(0.0, Inf), def), DecoratedInterval(Interval(1.0, 2.0), com))) == decoration(DecoratedInterval(Interval(1.0, 2.0), trv))
+    @test cosh_rev(DecoratedInterval(Interval(1.0, 1.0), dac), DecoratedInterval(Interval(1.0, Inf), def)) == DecoratedInterval(∅, trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(1.0, 1.0), dac), DecoratedInterval(Interval(1.0, Inf), def))) == decoration(DecoratedInterval(∅, trv))
+    @test cosh_rev(DecoratedInterval(Interval(0x1.8b07551d9f55p+0, 0x1.89bca168970c6p+432), com), DecoratedInterval(Interval(-Inf, 0.0), dac)) == DecoratedInterval(Interval(-0x1.2c903022dd7abp+8, -0x1.fffffffffffffp-1), trv)
+    @test decoration(cosh_rev(DecoratedInterval(Interval(0x1.8b07551d9f55p+0, 0x1.89bca168970c6p+432), com), DecoratedInterval(Interval(-Inf, 0.0), dac))) == decoration(DecoratedInterval(Interval(-0x1.2c903022dd7abp+8, -0x1.fffffffffffffp-1), trv))
+end
+
+
+
 # FactCheck.exitstatus()
