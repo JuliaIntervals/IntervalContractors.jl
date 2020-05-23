@@ -25,3 +25,21 @@ for f in reverse_functions
         DecoratedInterval(r, d)
     end
 end
+
+function mul_rev_IEEE1788(xx::DecoratedInterval, yy::DecoratedInterval)
+    x = interval_part(xx)
+    y = interval_part(yy)
+    r = mul_rev_IEEE1788(x, y)
+    d = min(decoration(x), decoration(y), decoration(r), trv)
+    DecoratedInterval(r, d)
+end
+
+
+function mul_rev_IEEE1788(xx::DecoratedInterval, yy::DecoratedInterval, zz::DecoratedInterval)
+    x = interval_part(xx)
+    y = interval_part(yy)
+    z = interval_part(zz)
+    r = mul_rev_IEEE1788(x, y, z)
+    d = min(decoration(x), decoration(y), decoration(z), decoration(r), trv)
+    DecoratedInterval(r, d)
+end
