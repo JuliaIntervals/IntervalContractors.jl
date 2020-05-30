@@ -51,7 +51,7 @@ function sin_rev(y::Interval, x::Interval)
     return X_new[2], X_new[1]   # return in order y, x
 end
 
-sin_rev(y) = sin_rev(y,-∞..∞)
+sin_rev(y::Interval{T}) where T<:Real = sin_rev(y, entireinterval(T))
 ## cos contractor: alters x and y
 """
 Contractor for main branch of cos, from x = 0 to π.
@@ -104,7 +104,7 @@ function cos_rev(y::Interval, x::Interval)
     return X_new[2], X_new[1]   # return in order y, x
 end
 
-cos_rev(y) = cos_rev(y,-∞..∞)
+cos_rev(y::Interval{T}) where T<:Real = cos_rev(y, entireinterval(T))
 
 
 """
@@ -144,4 +144,4 @@ function tan_rev(y::Interval, x::Interval)
     return X_new[2], X_new[1]   # return in order y, x
 end
 
-tan_rev(y) = tan_rev(y,-∞..∞)
+tan_rev(y::Interval{T}) where T<:Real = tan_rev(y, entireinterval(T))

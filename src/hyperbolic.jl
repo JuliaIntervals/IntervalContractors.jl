@@ -22,7 +22,7 @@ function cosh_rev(x::Interval, y::Interval)
     return x_new, z
 end
 
-cosh_rev(x) = cosh_rev(x, -Inf..Inf) 
+cosh_rev(x::Interval{T}) where T<:Real = cosh_rev(x, entireinterval(T)) 
 
 """
 Reverse function for `tanh`.

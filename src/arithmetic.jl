@@ -162,7 +162,7 @@ function sqr_rev(c, x)   # c = x^2;  refine x
     return (c, hull(x1, x2))
 end
 
-sqr_rev(c) = sqr_rev(c, -∞..∞)
+sqr_rev(c::Interval{T}) where T<:Real = sqr_rev(c, entireinterval(T))
 
 """
 Reverse abs
@@ -177,7 +177,7 @@ function abs_rev(y, x)   # y = abs(x); refine x
     return (y, hull(x1, x2))
 end
 
-abs_rev(c) = abs_rev(c, -∞..∞)
+abs_rev(c::Interval{T}) where T<:Real = abs_rev(c, entireinterval(T))
 #=
 """
 Reverse sign
@@ -203,11 +203,12 @@ According to the IEEE-1788 standard:
 When `∘` is commutative, these agree and we write `∘_rev(b, c, x)`.
 """
 
-function mul_rev_IEEE1788(b, c, x)   
-    return x ∩ (extended_div(c,b)[1] ∪ extended_div(c,b)[2])
+function mul_rev_IEEE1788(b, c, x) 
+    temp = extended_div(c, b)  
+    return x ∩ (temp[1] ∪ temp[2])
 end
 
-mul_rev_IEEE1788(b, c) = mul_rev_IEEE1788(b, c, -∞..∞)
+mul_rev_IEEE1788(b::Interval{T}, c::Interval{T}) where T<:Real = mul_rev_IEEE1788(b, c, entireinterval(T))
 
 function pow_rev1(b, c, x)   # c = x^b
     return x ∩ c^(1/b)  # replace by 1//b
