@@ -97,6 +97,10 @@ function power_rev(a::Interval, b::Interval, n::Integer)  # a = b^n,  log(a) = n
         b1 = b ∩ root
         b2 = b ∩ (-root)
 
+    elseif n == 0
+        b_new = Interval(1, 1)
+        return(a, isempty(a ∩ b_new) ? ∅ : b, n)
+
     elseif iseven(n)
         root = a^(1//n)
 
@@ -133,7 +137,7 @@ end
 
 power_rev(a, b, c) = power_rev(promote(a, b, c)...)
 
-
+power_rev(a::Interval{T}, c) where T<:Real = power_rev(a, entireinterval(T), c)
 """
 Reverse square root
 """

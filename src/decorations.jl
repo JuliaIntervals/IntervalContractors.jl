@@ -43,3 +43,18 @@ function mul_rev_IEEE1788(xx::DecoratedInterval, yy::DecoratedInterval, zz::Deco
     d = min(decoration(x), decoration(y), decoration(z), decoration(r), trv)
     DecoratedInterval(r, d)
 end
+
+function power_rev(xx::DecoratedInterval, nn::Integer)
+    x = interval_part(xx)
+    r = power_rev(x, nn)[2]
+    d = min(decoration(x), decoration(r), trv)
+    DecoratedInterval(r, d)
+end
+
+function power_rev(xx::DecoratedInterval, yy::DecoratedInterval, nn::Integer)
+    x = interval_part(xx)
+    y = interval_part(yy)
+    r = power_rev(x, y, nn)[2]
+    d = min(decoration(x), decoration(r), decoration(y), trv)
+    DecoratedInterval(r, d)
+end
