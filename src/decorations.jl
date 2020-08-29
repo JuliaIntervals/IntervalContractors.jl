@@ -8,7 +8,7 @@ reverse_functions =(
 
 for f in reverse_functions
     @eval function $(f)(xx::DecoratedInterval{T}) where T
-        x = interval_part(xx)
+        x = xx.interval
         r = $f(x)[2]
         d = min(decoration(r), decoration(xx), trv)
         DecoratedInterval(r, d)
@@ -18,8 +18,8 @@ end
 
 for f in reverse_functions
     @eval function $(f)(xx::DecoratedInterval, yy::DecoratedInterval)
-        x = interval_part(xx)
-        y = interval_part(yy)
+        x = xx.interval
+        y = yy.interval
         r = $f(x,y)[2]
         d = min(decoration(x), decoration(y), decoration(r), trv)
         DecoratedInterval(r, d)
@@ -27,8 +27,8 @@ for f in reverse_functions
 end
 
 function mul_rev_IEEE1788(xx::DecoratedInterval, yy::DecoratedInterval)
-    x = interval_part(xx)
-    y = interval_part(yy)
+    x = xx.interval
+    y = yy.interval
     r = mul_rev_IEEE1788(x, y)
     d = min(decoration(x), decoration(y), decoration(r), trv)
     DecoratedInterval(r, d)
@@ -36,24 +36,24 @@ end
 
 
 function mul_rev_IEEE1788(xx::DecoratedInterval, yy::DecoratedInterval, zz::DecoratedInterval)
-    x = interval_part(xx)
-    y = interval_part(yy)
-    z = interval_part(zz)
+    x = xx.interval
+    y = yy.interval
+    z = zz.interval
     r = mul_rev_IEEE1788(x, y, z)
     d = min(decoration(x), decoration(y), decoration(z), decoration(r), trv)
     DecoratedInterval(r, d)
 end
 
 function power_rev(xx::DecoratedInterval, nn::Integer)
-    x = interval_part(xx)
+    x = xx.interval
     r = power_rev(x, nn)[2]
     d = min(decoration(x), decoration(r), trv)
     DecoratedInterval(r, d)
 end
 
 function power_rev(xx::DecoratedInterval, yy::DecoratedInterval, nn::Integer)
-    x = interval_part(xx)
-    y = interval_part(yy)
+    x = xx.interval
+    y = yy.interval
     r = power_rev(x, y, nn)[2]
     d = min(decoration(x), decoration(r), decoration(y), trv)
     DecoratedInterval(r, d)
