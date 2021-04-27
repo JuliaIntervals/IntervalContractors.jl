@@ -1,25 +1,14 @@
 # IntervalContractors
 
-[![travis badge][travis_badge]][travis_url]
-[![appveyor badge][appveyor_badge]][appveyor_url]
+[![CI status][gh_badge]][gh_url]
 [![codecov badge][codecov_badge]][codecov_url]
 
-## Documentation
-
-- [**STABLE**][documenter_stable] &mdash; **most recently tagged version of the documentation.**
-- [**LATEST**][documenter_latest] &mdash; *in-development version of the documentation.*
-
-[travis_badge]: https://travis-ci.org/JuliaIntervals/IntervalContractors.jl.svg?branch=master
-[travis_url]: https://travis-ci.org/JuliaIntervals/IntervalContractors.jl
-
-[appveyor_badge]: https://ci.appveyor.com/api/projects/status/github/JuliaIntervals/IntervalContractors.jl?svg=true&branch=master
-[appveyor_url]: https://ci.appveyor.com/project/JuliaIntervals/intervalcontractors-jl
+[gh_badge]: https://github.com/JuliaIntervals/IntervalContractors.jl/workflows/CI/badge.svg
+[gh_url]: https://github.com/JuliaIntervals/IntervalArithmetic.jl/actions/workflows/CI.yml
 
 [codecov_badge]: http://codecov.io/github/JuliaIntervals/IntervalContractors.jl/coverage.svg?branch=master
 [codecov_url]: http://codecov.io/github/JuliaIntervals/IntervalContractors.jl?branch=master
 
-[documenter_stable]: https://juliaintervals.github.io/IntervalContractors.jl/stable
-[documenter_latest]: https://juliaintervals.github.io/IntervalContractors.jl/latest
 
 ## About `IntervalContractors.jl`
 
