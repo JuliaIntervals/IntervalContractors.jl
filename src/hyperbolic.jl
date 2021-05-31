@@ -12,7 +12,7 @@ Reverse function for `cosh`.
 """
 function cosh_rev(y::Interval,x::Interval)
     y_new = y ∩ Interval(1.,∞)
-    x = x ∩ acosh(y)
+    x = (x ∩ acosh(y)) ∪ (x ∩ -acosh(y))
 
     return y_new, x
 end

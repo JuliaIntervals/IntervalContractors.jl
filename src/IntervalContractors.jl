@@ -12,7 +12,8 @@ export plus_rev, minus_rev, inv_rev,
         asin_rev, acos_rev, atan_rev,
         sinh_rev, cosh_rev, tanh_rev,
         asinh_rev, acosh_rev, atanh_rev,
-        mul_rev_IEEE1788
+        mul_rev_IEEE1788, mul_rev_to_pair,
+        pow_rev1, pow_rev2
 
 using IntervalArithmetic
 
@@ -32,6 +33,7 @@ include("inverse_trig.jl")
 include("hyperbolic.jl")
 include("inverse_hyperbolic.jl")
 include("extrema.jl")
+include("decorated.jl")
 
 """
 Dictionary mapping functions to their reverse functions.
