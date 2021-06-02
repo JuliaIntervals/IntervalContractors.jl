@@ -1322,25 +1322,25 @@ end
 
     @test mul_rev_IEEE1788(interval(-2.0, -0.1), interval(-2.1, 0.0)) == Interval(0.0, 0x1.5P+4)
 
-    @test_skip mul_rev_IEEE1788(interval(-2.0, 0.0), interval(-2.1, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-2.0, 0.0), interval(-2.1, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, 1.1), interval(-2.1, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 1.1), interval(-2.1, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 1.1), interval(-2.1, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(-2.1, 0.0)) == Interval(-0x1.A400000000001P+7, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(-2.1, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(-2.1, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(-2.1, 0.0)) == Interval(0.0, 0x1.5P+4)
 
-    @test_skip mul_rev_IEEE1788(interval(-Inf, 0.0), interval(-2.1, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-Inf, 0.0), interval(-2.1, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, 1.1), interval(-2.1, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, Inf), interval(-2.1, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, Inf), interval(-2.1, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, Inf), interval(-2.1, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, Inf), interval(-2.1, 0.0)) == Interval(-0x1.A400000000001P+7, 0.0)
 
@@ -1356,7 +1356,7 @@ end
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(-2.1, 0.12)) == Interval(-0x1.A400000000001P+7 , 0x1.8P+3)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(-2.1, 0.12)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(-2.1, 0.12)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(-2.1, 0.12)) == Interval(-0x1.3333333333333P+0, 0x1.5P+4)
 
@@ -1374,25 +1374,25 @@ end
 
     @test mul_rev_IEEE1788(interval(-2.0, -0.1), interval(0.0, 0.12)) == Interval(-0x1.3333333333333P+0, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(-2.0, 0.0), interval(0.0, 0.12)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-2.0, 0.0), interval(0.0, 0.12)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, 1.1), interval(0.0, 0.12)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 1.1), interval(0.0, 0.12)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 1.1), interval(0.0, 0.12)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(0.0, 0.12)) == Interval(0.0, 0x1.8P+3)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(0.0, 0.12)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(0.0, 0.12)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(0.0, 0.12)) == Interval(-0x1.3333333333333P+0, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(-Inf, 0.0), interval(0.0, 0.12)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-Inf, 0.0), interval(0.0, 0.12)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, 1.1), interval(0.0, 0.12)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, Inf), interval(0.0, 0.12)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, Inf), interval(0.0, 0.12)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, Inf), interval(0.0, 0.12)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, Inf), interval(0.0, 0.12)) == Interval(0.0, 0x1.8P+3)
 
@@ -1426,29 +1426,29 @@ end
 
     @test mul_rev_IEEE1788(interval(-2.0, -0.1), interval(0.0, 0.0)) == Interval(0.0, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(-2.0, 0.0), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-2.0, 0.0), interval(0.0, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(-2.0, 1.1), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-2.0, 1.1), interval(0.0, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 1.1), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 1.1), interval(0.0, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(0.0, 0.0)) == Interval(0.0, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(0.0, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(0.0, 0.0)) == Interval(0.0, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(-Inf, 0.0), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-Inf, 0.0), interval(0.0, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(-Inf, 1.1), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-Inf, 1.1), interval(0.0, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(-2.0, Inf), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-2.0, Inf), interval(0.0, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, Inf), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, Inf), interval(0.0, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, Inf), interval(0.0, 0.0)) == Interval(0.0, 0.0)
 
-    @test_skip mul_rev_IEEE1788(entireinterval(), interval(0.0, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(entireinterval(), interval(0.0, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, -0.1), interval(-Inf, -0.1)) == Interval(0x1.999999999999AP-5, Inf)
 
@@ -1478,25 +1478,25 @@ end
 
     @test mul_rev_IEEE1788(interval(-2.0, -0.1), interval(-Inf, 0.0)) == Interval(0.0, Inf)
 
-    @test_skip mul_rev_IEEE1788(interval(-2.0, 0.0), interval(-Inf, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-2.0, 0.0), interval(-Inf, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, 1.1), interval(-Inf, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 1.1), interval(-Inf, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 1.1), interval(-Inf, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(-Inf, 0.0)) == Interval(-Inf, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(-Inf, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(-Inf, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(-Inf, 0.0)) == Interval(0.0, Inf)
 
-    @test_skip mul_rev_IEEE1788(interval(-Inf, 0.0), interval(-Inf, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-Inf, 0.0), interval(-Inf, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, 1.1), interval(-Inf, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, Inf), interval(-Inf, 0.0)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, Inf), interval(-Inf, 0.0)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, Inf), interval(-Inf, 0.0)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, Inf), interval(-Inf, 0.0)) == Interval(-Inf, 0.0)
 
@@ -1512,7 +1512,7 @@ end
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(-Inf, 0.3)) == Interval(-Inf, 0x1.EP+4)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(-Inf, 0.3)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(-Inf, 0.3)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(-Inf, 0.3)) == Interval(-0x1.8P+1, Inf)
 
@@ -1538,7 +1538,7 @@ end
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(-0.21, Inf)) == Interval(-0x1.5P+4, Inf)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(-0.21, Inf)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(-0.21, Inf)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(-0.21, Inf)) == Interval(-Inf, 0x1.0CCCCCCCCCCCDP+1)
 
@@ -1556,25 +1556,25 @@ end
 
     @test mul_rev_IEEE1788(interval(-2.0, -0.1), interval(0.0, Inf)) == Interval(-Inf, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(-2.0, 0.0), interval(0.0, Inf)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-2.0, 0.0), interval(0.0, Inf)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, 1.1), interval(0.0, Inf)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 1.1), interval(0.0, Inf)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 1.1), interval(0.0, Inf)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), interval(0.0, Inf)) == Interval(0.0, Inf)
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), interval(0.0, Inf)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), interval(0.0, Inf)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), interval(0.0, Inf)) == Interval(-Inf, 0.0)
 
-    @test_skip mul_rev_IEEE1788(interval(-Inf, 0.0), interval(0.0, Inf)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(-Inf, 0.0), interval(0.0, Inf)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, 1.1), interval(0.0, Inf)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-2.0, Inf), interval(0.0, Inf)) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, Inf), interval(0.0, Inf)) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, Inf), interval(0.0, Inf)) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(0.01, Inf), interval(0.0, Inf)) == Interval(0.0, Inf)
 
@@ -1616,7 +1616,7 @@ end
 
     @test mul_rev_IEEE1788(interval(0.01, 1.1), entireinterval()) == entireinterval()
 
-    @test_skip mul_rev_IEEE1788(interval(0.0, 0.0), entireinterval()) == entireinterval()
+    @test mul_rev_IEEE1788(interval(0.0, 0.0), entireinterval()) == entireinterval()
 
     @test mul_rev_IEEE1788(interval(-Inf, -0.1), entireinterval()) == entireinterval()
 

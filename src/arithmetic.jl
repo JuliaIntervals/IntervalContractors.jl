@@ -205,9 +205,7 @@ According to the IEEE-1788 standard:
 When `∘` is commutative, these agree and we write `∘_rev(b, c, x)`.
 """
 
-function mul_rev_IEEE1788(b, c, x)   # c = b*x
-    return x ∩ (c / b)
-end
+mul_rev_IEEE1788(b, c, x) = mul_rev(c, x, b)[2]
 
 function pow_rev1(b, c, x)   # c = x^b
     return x ∩ c^(1/b)  # replace by 1//b
