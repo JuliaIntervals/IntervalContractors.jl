@@ -1,6 +1,16 @@
 
 """
-Reverse plus
+    plus_rev(a::Interval, b::Interval[, c::Interval])
+
+Reverse addition. Calculates the preimage of `a = b + c` for `b` and `c`.
+
+### Output
+
+The triplet `(a, b_new, c_new)` where
+
+- `a` remains unchanged
+- `b_new` is the interval hull of the set ``{x ∈ b : ∃ y ∈ c, x + y ∈ a}``
+- `c_new` is the interval hull of the set ``{y ∈ c : ∃ x ∈ b, x + y ∈ a}``
 """
 function plus_rev(a::Interval, b::Interval, c::Interval)  # a = b + c
     # a = a ∩ (b + c)  # add this line for plus contractor (as opposed to reverse function)
@@ -13,7 +23,17 @@ end
 plus_rev(a,b,c) = plus_rev(promote(a,b,c)...)
 
 """
-Reverse minus
+    minus_rev(a::Interval, b::Interval[, c::Interval])
+
+Reverse subtraction. Calculates the preimage of `a = b - c` for `b` and `c`.
+
+### Output
+
+The triplet `(a, b_new, c_new)` where
+
+- `a` remains unchanged
+- `b_new` is the interval hull of the set ``{x ∈ b : ∃ y ∈ c, x - y ∈ a}``
+- `c_new` is the interval hull of the set ``{y ∈ c : ∃ x ∈ b, x - y ∈ a}``
 """
 function minus_rev(a::Interval, b::Interval, c::Interval)  # a = b - c
 
@@ -76,7 +96,16 @@ end
 div_rev(a,b,c) = div_rev(promote(a,b,c)...)
 
 """
-Reverse inverse
+    inv_rev(a::Interval, b::Interval)
+
+Reverse inverse. Calculates the interval hull of the preimage of a = b⁻¹
+
+### Output
+
+Pair `(a, b_new)` where
+
+- `a` is unchanged
+- `b_new` is the interval hull of the set ``{x ∈ b : x⁻¹ ∈ a}``
 """
 function inv_rev(a::Interval, b::Interval)  # a = inv(b)
 
@@ -88,7 +117,16 @@ end
 inv_rev(a,b) = inv_rev(promote(a,b)...)
 
 """
-Reverse power
+    power_rev(a::Interval, b::Interval, n::Integer)
+
+Reverse power. Calculates the preimage of `a = bⁿ`.
+
+### Output
+
+The triplet `(a, b_new, n)` where
+
+- `a` and `n` are unchanged
+- `b_new` is the interval hull of the set ``{x ∈ b : xⁿ ∈ a}``
 """
 function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
 
@@ -141,7 +179,16 @@ power_rev(a, b, c) = power_rev(promote(a, b, c)...)
 
 
 """
-Reverse square root
+    sqrt_rev(a::Interval, b::Interval)
+
+Reverse square root. Calculates the preimage of `a = √b`.
+
+### Output
+
+The pair `(a, b_new)` where
+
+- `a` is unchanged
+- `b_new` is the interval hull of the set ``{x ∈ b : √x ∈ a}``
 """
 function sqrt_rev(a::Interval, b::Interval)  # a = sqrt(b)
 
@@ -204,25 +251,48 @@ According to the IEEE-1788 standard:
 
 When `∘` is commutative, these agree and we write `∘_rev(b, c, x)`.
 """
-
 mul_rev_IEEE1788(b, c, x) = mul_rev(c, x, b)[2]
 
+"""
+    pow_rev1(b::Interval, c::Interval[, x::Interval])
+
+Reverse power 1. Computes the preimage of ``c=xᵇ`` with respect to `x`. If `x` is not
+provided, then it is by default the whole real line ℝ.
+
+### Output
+
+- `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, tʸ ∈ c}
+"""
 function pow_rev1(b, c, x)   # c = x^b
     return x ∩ c^(1/b)  # replace by 1//b
 end
 
+"""
+    pow_rev2(b::Interval, c::Interval[, x::Interval])
+
+Reverse power 2. Computes the preimage of ``c = aˣ`` with respect to `x`. If `x` is not
+provided, then it is by default the whole real line ℝ.
+
+### Output
+
+- `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, tʸ ∈ c}
+"""
 function pow_rev2(a, c, x)   # c = a^x
     return x ∩ (log(c) / log(a))
 end
 
+"""
+    mul_rev_to_pair(b::Interval, c::Interval)
+
+# TODO: add docstring
+"""
 mul_rev_to_pair(b::Interval, c::Interval) = extended_div(c, b)
 
 function mul_rev_to_pair(b::DecoratedInterval{T}, c::DecoratedInterval{T}) where T
     (isnai(b) || isnai(c)) && return (nai(T), nai(T))
 
     0 ∉ b && return (c/b, DecoratedInterval(emptyinterval(T), trv))
-    
+
     x1, x2 = extended_div(interval(c), interval(b))
     return (DecoratedInterval(x1, trv), DecoratedInterval(x2, trv))
 end
-
