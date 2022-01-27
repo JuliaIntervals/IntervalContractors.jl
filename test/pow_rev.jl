@@ -1613,4 +1613,3 @@ end
     @test_broken pow_rev2(interval(2.0, Inf), interval(2.0, Inf), interval(-Inf, 0.0)) === emptyinterval()
 
 end
-

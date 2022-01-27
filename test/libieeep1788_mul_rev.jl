@@ -699,4 +699,3 @@ end
     @test mul_rev_to_pair(DecoratedInterval(entireinterval(), dac), DecoratedInterval(entireinterval(), dac))[1] === DecoratedInterval(entireinterval(), trv) && mul_rev_to_pair(DecoratedInterval(entireinterval(), dac), DecoratedInterval(entireinterval(), dac))[2] === DecoratedInterval(emptyinterval(), trv)
 
 end
-

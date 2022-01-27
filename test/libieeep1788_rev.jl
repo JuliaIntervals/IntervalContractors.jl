@@ -1685,4 +1685,3 @@ end
     @test mul_rev_IEEE1788(DecoratedInterval(interval(-2.0, 1.1), def), DecoratedInterval(interval(0.04, Inf), dac), DecoratedInterval(interval(0.04, Inf), dac)) === DecoratedInterval(Interval(0.04, Inf), trv)
 
 end
-
