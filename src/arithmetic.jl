@@ -119,7 +119,8 @@ inv_rev(a,b) = inv_rev(promote(a,b)...)
 """
     power_rev(a::Interval, b::Interval, n::Integer)
 
-Reverse power. Calculates the preimage of `a = bⁿ`.
+Reverse power. Calculates the preimage of `a = bⁿ`.  See section 10.5.4 of the
+IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -203,7 +204,17 @@ sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
 # IEEE-1788 style
 
 """
-Reverse sqr
+    sqrt_rev(c::Interval[, x::Interval])
+
+Reverse square. Calculates the preimage of `a = x²`. If `x` is not provided, then
+byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+
+### Output
+
+The pair `(c, x_new)` where
+
+- `c` is unchanged
+- `x_new` is the interval hull of the set ``{x ∈ b : x² ∈ a}``
 """
 function sqr_rev(c, x)   # c = x^2;  refine x
 
@@ -216,7 +227,17 @@ function sqr_rev(c, x)   # c = x^2;  refine x
 end
 
 """
-Reverse abs
+    abs_rev(c::Interval[, x::Interval])
+
+Reverse absolute value. Calculates the preimage of `a = |x|`. If `x` is not provided, then
+byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+
+### Output
+
+The pair `(c, x_new)` where
+
+- `c` is unchanged
+- `x_new` is the interval hull of the set ``{x ∈ b : |x| ∈ a}``
 """
 function abs_rev(y, x)   # y = abs(x); refine x
 
@@ -244,20 +265,23 @@ sign_rev(a,b) = sign_rev(promote(a,b)...)
 ## IEEE-1788 versions:
 
 """
-According to the IEEE-1788 standard:
+    mul_rev_IEEE1788(b::Interval, c::Interval[, x::Interval])
 
-- `∘_rev1(b, c, x)` is the subset of `x` such that `x ∘ b` is defined and in `c`;
-- `∘_rev2(a, c, x)` is the subset of `x` such that `a ∘ x` is defined and in `c`
+Reverse multiplication. Computes the preimage of ``c=x * b`` with respect to `x`. If `x` is not provided,
+then byt default ``[-∞, ∞]`` is used.. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
-When `∘` is commutative, these agree and we write `∘_rev(b, c, x)`.
+### Output
+
+- `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, t*y ∈ c}
 """
 mul_rev_IEEE1788(b, c, x) = mul_rev(c, x, b)[2]
 
 """
     pow_rev1(b::Interval, c::Interval[, x::Interval])
 
-Reverse power 1. Computes the preimage of ``c=xᵇ`` with respect to `x`. If `x` is not
-provided, then it is by default the whole real line ℝ.
+Reverse power 1. Computes the preimage of ``c=xᵇ`` with respect to `x`. If `x` is not provided,
+then byt default ``[-∞, ∞]`` is used.. See section 10.5.4 of the
+IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -270,8 +294,8 @@ end
 """
     pow_rev2(b::Interval, c::Interval[, x::Interval])
 
-Reverse power 2. Computes the preimage of ``c = aˣ`` with respect to `x`. If `x` is not
-provided, then it is by default the whole real line ℝ.
+Reverse power 2. Computes the preimage of ``c = aˣ`` with respect to `x`. If `x` is not provided, then
+byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -284,7 +308,21 @@ end
 """
     mul_rev_to_pair(b::Interval, c::Interval)
 
-# TODO: add docstring
+Computes the division c/b, but returns a pair of intervals instead of a single interval.
+If the set corresponding to c/b is composed by two disjoint intervals, then it returns the
+two intervals. If c/b is a single or empty interval, then the second interval in the pair
+is set to empty. See section 10.5.5 of the IEEE 1788-2015 standard for interval arithmetic.
+
+### Example
+
+```jldoctest
+julia> mul_rev_to_pair(-1..1, 1..2)
+([-∞, -1], [1, ∞])
+
+julia> mul_rev_to_pair(1..2, 3..4)
+([1.5, 4], ∅)
+```
+
 """
 mul_rev_to_pair(b::Interval, c::Interval) = extended_div(c, b)
 
