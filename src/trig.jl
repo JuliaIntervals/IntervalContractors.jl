@@ -37,10 +37,17 @@ sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ∪ periodise(sin_reverse,
 
 # Reverse function for sin; does not alter y
 """
-    sin_rev(y::Interval, x::Interval)
+    sin_rev(c::Interval[, x::Interval])
 
-Reverse function for `sin`:
-- find the subset of `x` such that ``y = \\sin(x)`` for the given `y`.
+Reverse sine. Calculates the preimage of `a = sin(x)`. If `x` is not provided, then
+byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+
+### Output
+
+The pair `(c, x_new)` where
+
+- `c` is unchanged
+- `x_new` is the interval hull of the set ``{x ∈ b : sin(x) ∈ a}``
 """
 function sin_rev(y::Interval, x::Interval)
 
@@ -90,10 +97,17 @@ cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ∪ periodise(cos_reverse,
 
 # Reverse function for cos; does not alter y
 """
-    cos_rev(y::Interval, x::Interval)
+    cos_rev(c::Interval[, x::Interval])
 
-Reverse function for `cos`:
-- find the subset of `x` such that ``y = \\cos(x)`` for the given `y`.
+Reverse cosine. Calculates the preimage of `a = cos(x)`. If `x` is not provided, then
+byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+
+### Output
+
+The pair `(c, x_new)` where
+
+- `c` is unchanged
+- `x_new` is the interval hull of the set ``{x ∈ b : cos(x) ∈ a}``
 """
 function cos_rev(y::Interval, x::Interval)
 
@@ -128,10 +142,17 @@ end
 tan!(X::IntervalBox) = periodise(tan_main, Interval{Float64}(π))(X)
 
 """
-    tan_rev(y::Interval, x::Interval)
+    tan_rev(c::Interval[, x::Interval])
 
-Reverse function for `tan`:
-- find the subset of `x` such that ``y = \\tan(x)`` for the given `y`.
+Reverse tangent. Calculates the preimage of `a = tan(x)`. If `x` is not provided, then
+byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+
+### Output
+
+The pair `(c, x_new)` where
+
+- `c` is unchanged
+- `x_new` is the interval hull of the set ``{x ∈ b : tan(x) ∈ a}``
 """
 function tan_rev(y::Interval, x::Interval)
 
