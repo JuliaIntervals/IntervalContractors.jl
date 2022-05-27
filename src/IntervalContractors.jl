@@ -17,8 +17,10 @@ export plus_rev, minus_rev, inv_rev,
 
 using IntervalArithmetic
 
-const half_pi = IntervalArithmetic.half_pi(Float64)  # interval
-const two_pi = IntervalArithmetic.two_pi(Float64)  # interval
+# const half_pi = IntervalArithmetic.half_pi(Float64)  # interval
+# const two_pi = IntervalArithmetic.two_pi(Float64)  # interval
+_half_pi(::Type{T}) where {T<:Real} = IntervalArithmetic.half_pi(Interval{T})  # interval
+_two_pi(::Type{T}) where {T<:Real} = IntervalArithmetic.two_pi(Interval{T})    # interval
 
 #
 # Base.:∪(f::Function, g::Function) = X -> ( f(X) ∪ g(X) )

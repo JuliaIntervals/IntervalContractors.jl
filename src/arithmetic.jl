@@ -1,4 +1,3 @@
-
 """
     plus_rev(a::Interval, b::Interval[, c::Interval])
 
@@ -129,8 +128,8 @@ The triplet `(a, b_new, n)` where
 - `a` and `n` are unchanged
 - `b_new` is the interval hull of the set ``{x ∈ b : xⁿ ∈ a}``
 """
-function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
-
+function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where {T}  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
+    domain = zero(T) .. Inf
     if iszero(n)
         1 ∈ a && return (a, entireinterval(T) ∩ b, n)
         return (a, emptyinterval(T), n)
@@ -148,8 +147,8 @@ function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^
         b2 = b ∩ (-root)
 
     elseif isodd(n)
-        pos_root = (a ∩ (0..∞)) ^ (1//n)
-        neg_root = -( ( (-a) ∩ (0..∞) ) ^ (1//n) )
+        pos_root = (a ∩ domain) ^ (1//n)
+        neg_root = -( ( (-a) ∩ domain ) ^ (1//n) )
 
         b1 = b ∩ pos_root
         b2 = b ∩ neg_root
@@ -161,7 +160,7 @@ function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^
     return (a, b, n)
 end
 
-power_rev(a::Interval{T}, n::Integer) where T = power_rev(a, entireinterval(T), n)
+power_rev(a::Interval{T}, n::Integer) where {T} = power_rev(a, entireinterval(T), n)
 
 function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
 

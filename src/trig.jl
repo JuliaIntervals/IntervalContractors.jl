@@ -4,12 +4,13 @@
 """
 Contractor for "main branch" of sin, from x = -π/2 to π/2.
 """
-function sin_main(X::IntervalBox)
+function sin_main(X::IntervalBox{N,T}) where {N,T}
 
     x, y = X
 
-    x_range = Interval(-half_pi.hi, half_pi.hi)
-    y_range = -1..1
+    h = sup(_half_pi(T))
+    x_range = Interval(-h, h)
+    y_range = -one(T) .. one(T)
 
     x = x ∩ x_range
     y = y ∩ y_range
@@ -24,7 +25,7 @@ function sin_main(X::IntervalBox)
 end
 
 # TODO: Be careful with the pi constants if using e.g. BigFloats
-sin_reverse = symmetrise(sin_main, reflect_x(half_pi))
+sin_reverse(::Type{T}) where {T<:Real} = symmetrise(sin_main, reflect_x(_half_pi(T)))
 
 """
     sin!(X::IntervalBox)
@@ -33,7 +34,7 @@ Contractor for `sin`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
 Returns an `IntervalBox` contracted down to the set ``y = \\sin(x)``.
 """
-sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ∪ periodise(sin_reverse, two_pi)(X)
+sin!(X::IntervalBox{N,T}) where {N,T} = periodise(sin_main, _two_pi(T))(X) ∪ periodise(sin_reverse(T), _two_pi(T))(X)
 
 # Reverse function for sin; does not alter y
 """
@@ -63,12 +64,12 @@ end
 """
 Contractor for main branch of cos, from x = 0 to π.
 """
-function cos_main(X::IntervalBox)
+function cos_main(X::IntervalBox{N,T}) where {N,T}
 
     x, y = X
 
-    x_range = Interval(0, Interval{Float64}(π).lo)
-    y_range = -1..1
+    x_range = Interval(0, inf(Interval{T}(π)))
+    y_range = -one(T) .. one(T)
 
     x = x ∩ x_range
     y = y ∩ y_range
@@ -83,7 +84,7 @@ function cos_main(X::IntervalBox)
 end
 
 # TODO: Be careful with the pi constants if using e.g. BigFloats
-cos_reverse = symmetrise(cos_main, reflect_x(0.0))
+cos_reverse(::Type{T}) where {T<:Real} = symmetrise(cos_main, reflect_x(zero(T)))
 
 """
     cos!(X::IntervalBox)
@@ -92,7 +93,7 @@ Contractor for `cos`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
 Returns an `IntervalBox` contracted down to the set ``y = \\cos(x)``.
 """
-cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ∪ periodise(cos_reverse, two_pi)(X)
+cos!(X::IntervalBox{N,T}) where {N,T} = periodise(cos_main, _two_pi(T))(X) ∪ periodise(cos_reverse(T), _two_pi(T))(X)
 
 
 # Reverse function for cos; does not alter y
@@ -122,12 +123,12 @@ end
 """
 Contractor for "main branch" of tan, from x = -π/2 to π/2.
 """
-function tan_main(X::IntervalBox)
+function tan_main(X::IntervalBox{N,T}) where {N,T}
 
     x, y = X
 
-    x_range = Interval(-half_pi.hi, half_pi.hi)
-
+    h = sup(_half_pi(T))
+    x_range = Interval(-h, h)
     x = x ∩ x_range
 
     isempty(x) && return IntervalBox(x, y)
@@ -139,7 +140,7 @@ function tan_main(X::IntervalBox)
 
 end
 
-tan!(X::IntervalBox) = periodise(tan_main, Interval{Float64}(π))(X)
+tan!(X::IntervalBox{N,T}) where {N,T} = periodise(tan_main, Interval{T}(π))(X)
 
 """
     tan_rev(c::Interval[, x::Interval])
