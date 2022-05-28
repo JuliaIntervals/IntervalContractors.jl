@@ -6,8 +6,8 @@ using IntervalArithmetic
 using IntervalContractors
 
 #Preamble
-setprecision(53)
-setprecision(Interval, Float64)
+# setprecision(53)
+# setprecision(Interval, Float64)
 
 # Using approximate checks for validaty update later?
 import Base.isapprox

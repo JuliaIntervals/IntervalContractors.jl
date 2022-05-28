@@ -20,7 +20,7 @@ using Test
         y = -1..1
         z = 2..10
 
-        @test mul_rev(z, x, y) == (2..10, 2..5, 0.4..1.0)
+        @test mul_rev(z, x, y) == (2..10, 2..5, Interval(0.39999999999999997, 1.0))
     end
 
     @testset "Exponents with integer values but not types" begin
