@@ -32,3 +32,8 @@ end
     @test atan_rev(entireinterval(Float64), entireinterval(Float64))[2] == Interval(-∞, ∞)
     @test atan_rev(Interval(-Inf, 0.0), entireinterval(Float64))[2] == Interval(-∞, ∞)
 end
+
+@testset "Special cases" begin
+    @test sin_rev(0..0, 0..0) == (0..0, 0..0)
+    @test cos_rev(1..1, 0..0) == (1..1, 0..0)
+end
