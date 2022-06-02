@@ -19,7 +19,7 @@ function plus_rev(a::Interval, b::Interval, c::Interval)  # a = b + c
     return a, b_new, c_new
 end
 
-plus_rev(a,b,c) = plus_rev(promote(a,b,c)...)
+plus_rev(a::F, b::F, c) where {T, F<:Interval{T}} = plus_rev(a, b, F(c))
 
 """
     minus_rev(a::Interval, b::Interval[, c::Interval])
@@ -42,7 +42,7 @@ function minus_rev(a::Interval, b::Interval, c::Interval)  # a = b - c
     return a, b_new, c_new
 end
 
-minus_rev(a,b,c) = minus_rev(promote(a,b,c)...)
+minus_rev(a::F, b::F, c) where {T, F<:Interval{T}} = minus_rev(a, b, F(c))
 
 function minus_rev(a::Interval, b::Interval)  # a = -b
     b_new = b ∩ (-a)
@@ -79,7 +79,7 @@ function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
     return a, b′, c′
 end
 
-mul_rev(a,b,c) = mul_rev(promote(a,b,c)...)
+mul_rev(a::F, b::F, c) where {T, F<:Interval{T}} = mul_rev(a, b, F(c))
 
 """
 Reverse division
@@ -92,7 +92,7 @@ function div_rev(a::Interval, b::Interval, c::Interval)  # a = b / c
     return a, b, c
 end
 
-div_rev(a,b,c) = div_rev(promote(a,b,c)...)
+div_rev(a::F, b::F, c) where {T, F<:Interval{T}} = div_rev(a, b, F(c))
 
 """
     inv_rev(a::Interval, b::Interval)
@@ -113,7 +113,7 @@ function inv_rev(a::Interval, b::Interval)  # a = inv(b)
     return a, b_new
 end
 
-inv_rev(a,b) = inv_rev(promote(a,b)...)
+inv_rev(a::F, b) where {T, F<:Interval{T}}= inv_rev(a, F(b))
 
 """
     power_rev(a::Interval, b::Interval, n::Integer)
@@ -128,12 +128,16 @@ The triplet `(a, b_new, n)` where
 - `a` and `n` are unchanged
 - `b_new` is the interval hull of the set ``{x ∈ b : xⁿ ∈ a}``
 """
-function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where {T}  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
-    domain = zero(T) .. Inf
+function power_rev(a::F, b::F, n::Integer) where {T, F<:Interval{T}}  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
     if iszero(n)
         1 ∈ a && return (a, entireinterval(T) ∩ b, n)
         return (a, emptyinterval(T), n)
     end
+
+    # if n < 0
+    #     aa, bb, _ = power_rev(inv(a), b, -n)
+    #     return (a, bb, n)
+    # end
 
     if n == 2  # a = b^2
         root = √a
@@ -141,14 +145,18 @@ function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where {T}  # a = 
         b2 = b ∩ (-root)
 
     elseif iseven(n)
-        root = a^(1//n)
+        # root = a^(1//n)
+        root = nthroot(a, n)
 
         b1 = b ∩ root
         b2 = b ∩ (-root)
 
     elseif isodd(n)
-        pos_root = (a ∩ domain) ^ (1//n)
-        neg_root = -( ( (-a) ∩ domain ) ^ (1//n) )
+        domain = F(0, Inf)
+        # pos_root = (a ∩ domain) ^ (1//n)
+        # neg_root = -( ( (-a) ∩ domain) ^ (1//n) )
+        pos_root = nthroot(a ∩ domain, n)
+        neg_root = - nthroot( (-a) ∩ domain, n)
 
         b1 = b ∩ pos_root
         b2 = b ∩ neg_root
@@ -160,7 +168,7 @@ function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where {T}  # a = 
     return (a, b, n)
 end
 
-power_rev(a::Interval{T}, n::Integer) where {T} = power_rev(a, entireinterval(T), n)
+power_rev(a::F, n::Integer) where {T, F<:Interval{T}} = power_rev(a, entireinterval(F), n)
 
 function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
 
@@ -175,7 +183,7 @@ function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
     return a, b_new, c_new
 end
 
-power_rev(a, b, c) = power_rev(promote(a, b, c)...)
+power_rev(a::F, b::F, c) where {T, F<:Interval{T}} = power_rev(a, b, F(c))
 
 
 """
