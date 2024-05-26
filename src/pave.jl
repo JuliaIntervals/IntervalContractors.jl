@@ -4,13 +4,13 @@ function outer_pave{N,T}(C, working::Vector{IntervalBox{N,T}}, ϵ)
 
     outer_list = SubPaving{N,T}()
 
-    while !isempty(working)
+    while !isempty_interval(working)
 
         X = pop!(working)
 
         contracted = C(X)
 
-        if isempty(contracted)
+        if isempty_interval(contracted)
             continue
         end
 

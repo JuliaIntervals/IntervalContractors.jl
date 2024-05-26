@@ -8,7 +8,7 @@ function sin_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = Interval(-sup(half_pi), sup(half_pi))
+    x_range = interval(-sup(half_pi), sup(half_pi))
     y_range = -1..1
 
     x = x ⊓ x_range
@@ -67,7 +67,7 @@ function cos_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = Interval(0, Interval{Float64}(π).lo)
+    x_range = interval(0, Interval{Float64}(π).lo)
     y_range = -1..1
 
     x = x ⊓ x_range
@@ -126,7 +126,7 @@ function tan_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = Interval(-sup(half_pi), sup(half_pi))
+    x_range = interval(-sup(half_pi), sup(half_pi))
 
     x = x ⊓ x_range
 

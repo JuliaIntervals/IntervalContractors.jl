@@ -5,7 +5,7 @@ for op in (:sqr_rev, :abs_rev, :sin_rev, :cos_rev, :tan_rev, :cosh_rev, :sinh_re
         function $op(a::DecoratedInterval{T}, x::DecoratedInterval{T}) where T 
             ( isnai(a) || isnai(x) ) && return nai(T)
             bare = $op(interval(a), interval(x))
-            return (DecoratedInterval(bare[1], trv), DecoratedInterval(bare[2], trv))
+            return (Decoratedinterval(bare[1], trv), DecoratedInterval(bare[2], trv))
         end
     end 
     @eval $op(a::Interval{T}) where T = $op(a, entireinterval(T))
@@ -15,7 +15,7 @@ end
 function power_rev(a::DecoratedInterval{T}, x::DecoratedInterval{T}, n::Integer) where T
     ( isnai(a) || isnai(x) ) && return nai(T)
     bare = power_rev(interval(a), interval(x), n)
-    return (DecoratedInterval(bare[1], trv), DecoratedInterval(bare[2], trv), n)
+    return (Decoratedinterval(bare[1], trv), DecoratedInterval(bare[2], trv), n)
 end
 
 power_rev(a::DecoratedInterval{T}, n::Integer) where T = power_rev(a, entiredecorated(T), n)
@@ -25,7 +25,7 @@ for op in (:mul_rev_IEEE1788, :pow_rev1, :pow_rev2)
         function $op(b::DecoratedInterval{T}, c::DecoratedInterval{T}, x::DecoratedInterval{T}) where T
             (isnai(b) || isnai(c) || isnai(x) ) && return nai(T)
             bare = $op(interval(b), interval(c), interval(x))
-            return DecoratedInterval(bare, trv)
+            return Decoratedinterval(bare, trv)
         end
     end
 

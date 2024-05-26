@@ -11,7 +11,7 @@ function integer_contractor(x::Interval)
 
     a > b && return emptyinterval(x)
 
-    return Interval(a, b)
+    return interval(a, b)
 end
 
 
@@ -76,7 +76,7 @@ function periodise(C, period)
         # periods where the periodization of x intersects with x2:
         periods = integer_contractor((x - x2) / period)
 
-        isempty(periods) && return(IntervalBox(∅, ∅))
+        isempty_interval(periods) && return(IntervalBox(∅, ∅))
 
         x3 = x2 + periods*period
         x = x ⊓ x3
