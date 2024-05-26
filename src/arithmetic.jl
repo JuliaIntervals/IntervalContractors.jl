@@ -13,9 +13,9 @@ The triplet `(a, b_new, c_new)` where
 - `c_new` is the interval hull of the set ``{y ∈ c : ∃ x ∈ b, x + y ∈ a}``
 """
 function plus_rev(a::Interval, b::Interval, c::Interval)  # a = b + c
-    # a = a ∩ (b + c)  # add this line for plus contractor (as opposed to reverse function)
-    b_new = b ∩ (a - c)
-    c_new = c ∩ (a - b)
+    # a = a ⊓ (b + c)  # add this line for plus contractor (as opposed to reverse function)
+    b_new = b ⊓ (a - c)
+    c_new = c ⊓ (a - b)
 
     return a, b_new, c_new
 end
@@ -37,8 +37,8 @@ The triplet `(a, b_new, c_new)` where
 """
 function minus_rev(a::Interval, b::Interval, c::Interval)  # a = b - c
 
-    b_new = b ∩ (a + c)
-    c_new = c ∩ (b - a)
+    b_new = b ⊓ (a + c)
+    c_new = c ⊓ (b - a)
 
     return a, b_new, c_new
 end
@@ -46,7 +46,7 @@ end
 minus_rev(a,b,c) = minus_rev(promote(a,b,c)...)
 
 function minus_rev(a::Interval, b::Interval)  # a = -b
-    b_new = b ∩ (-a)
+    b_new = b ⊓ (-a)
     return (a, b_new)
 end
 
@@ -56,25 +56,25 @@ Reverse multiplication
 """
 function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
 
-    # ((0.0 ∉ a) || (0.0 ∉ b)) && (c = c ∩ (a / b))
-    # ((0.0 ∉ a) || (0.0 ∉ c)) && (b = b ∩ (a / c))
+    # ((0.0 ∉ a) || (0.0 ∉ b)) && (c = c ⊓ (a / b))
+    # ((0.0 ∉ a) || (0.0 ∉ c)) && (b = b ⊓ (a / c))
 
-    # a = a ∩ (b * c)  # ?
+    # a = a ⊓ (b * c)  # ?
 
     if 0 ∈ b
-        temp = c .∩ extended_div(a, b)
+        temp = c .⊓ extended_div(a, b)
         c′ = union(temp[1], temp[2])
 
     else
-        c′ = c ∩ (a / b)
+        c′ = c ⊓ (a / b)
     end
 
     if 0 ∈ c
-        temp = b .∩ extended_div(a, c)
+        temp = b .⊓ extended_div(a, c)
         b′ = union(temp[1], temp[2])
 
     else
-        b′ = b ∩ (a / c)
+        b′ = b ⊓ (a / c)
     end
 
     return a, b′, c′
@@ -87,8 +87,8 @@ Reverse division
 """
 function div_rev(a::Interval, b::Interval, c::Interval)  # a = b / c
 
-    b = b ∩ (a * c)
-    c = c ∩ (b / a)
+    b = b ⊓ (a * c)
+    c = c ⊓ (b / a)
 
     return a, b, c
 end
@@ -109,7 +109,7 @@ Pair `(a, b_new)` where
 """
 function inv_rev(a::Interval, b::Interval)  # a = inv(b)
 
-    b_new = b ∩ inv(a)
+    b_new = b ⊓ inv(a)
 
     return a, b_new
 end
@@ -132,27 +132,27 @@ The triplet `(a, b_new, n)` where
 function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
 
     if iszero(n)
-        1 ∈ a && return (a, entireinterval(T) ∩ b, n)
+        1 ∈ a && return (a, entireinterval(T) ⊓ b, n)
         return (a, emptyinterval(T), n)
     end
 
     if n == 2  # a = b^2
         root = √a
-        b1 = b ∩ root
-        b2 = b ∩ (-root)
+        b1 = b ⊓ root
+        b2 = b ⊓ (-root)
 
     elseif iseven(n)
         root = a^(1//n)
 
-        b1 = b ∩ root
-        b2 = b ∩ (-root)
+        b1 = b ⊓ root
+        b2 = b ⊓ (-root)
 
     elseif isodd(n)
-        pos_root = (a ∩ (0..∞)) ^ (1//n)
-        neg_root = -( ( (-a) ∩ (0..∞) ) ^ (1//n) )
+        pos_root = (a ⊓ (0..∞)) ^ (1//n)
+        neg_root = -( ( (-a) ⊓ (0..∞) ) ^ (1//n) )
 
-        b1 = b ∩ pos_root
-        b2 = b ∩ neg_root
+        b1 = b ⊓ pos_root
+        b2 = b ⊓ neg_root
 
     end
 
@@ -170,8 +170,8 @@ function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
         return (temp[1], temp[2], interval(temp[3]))
     end
 
-    b_new = b ∩ ( a^(inv(c) ))
-    c_new = c ∩ (log(a) / log(b))
+    b_new = b ⊓ ( a^(inv(c) ))
+    c_new = c ⊓ (log(a) / log(b))
 
     return a, b_new, c_new
 end
@@ -193,7 +193,7 @@ The pair `(a, b_new)` where
 """
 function sqrt_rev(a::Interval, b::Interval)  # a = sqrt(b)
 
-    b_new = b ∩ (a^2)
+    b_new = b ⊓ (a^2)
 
     return a, b_new
 end
@@ -220,8 +220,8 @@ function sqr_rev(c, x)   # c = x^2;  refine x
 
     root = sqrt(c)
 
-    x1 = x ∩ root
-    x2 = x ∩ (-root)
+    x1 = x ⊓ root
+    x2 = x ⊓ (-root)
 
     return (c, hull(x1, x2))
 end
@@ -241,10 +241,10 @@ The pair `(c, x_new)` where
 """
 function abs_rev(y, x)   # y = abs(x); refine x
 
-    y_new = y ∩ (0..∞)
+    y_new = y ⊓ (0..∞)
 
-    x1 = y_new ∩ x
-    x2 = -(y_new ∩ (-x))
+    x1 = y_new ⊓ x
+    x2 = -(y_new ⊓ (-x))
 
     return (y, hull(x1, x2))
 end
@@ -254,9 +254,9 @@ Reverse sign
 """
 function sign_rev(a::Interval, b::Interval)  # a = sqrt(b)
 
-    (a == 1.0) && b = b ∩ (0..∞)
-    (a == 0.0) && b = b ∩ (0.0..0.0)
-    (a == -1.0) && b = b ∩ (-∞..0.0)
+    (a == 1.0) && b = b ⊓ (0..∞)
+    (a == 0.0) && b = b ⊓ (0.0..0.0)
+    (a == -1.0) && b = b ⊓ (-∞..0.0)
 
     return a, b
 end
@@ -288,7 +288,7 @@ IEEE 1788-2015 standard for interval arithmetic.
 - `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, tʸ ∈ c}
 """
 function pow_rev1(b, c, x)   # c = x^b
-    return x ∩ c^(1/b)  # replace by 1//b
+    return x ⊓ c^(1/b)  # replace by 1//b
 end
 
 """
@@ -302,7 +302,7 @@ byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 st
 - `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, tʸ ∈ c}
 """
 function pow_rev2(a, c, x)   # c = a^x
-    return x ∩ (log(c) / log(a))
+    return x ⊓ (log(c) / log(a))
 end
 
 """

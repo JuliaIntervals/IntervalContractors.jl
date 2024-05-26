@@ -11,13 +11,13 @@ function sin_main(X::IntervalBox)
     x_range = Interval(-half_pi.hi, half_pi.hi)
     y_range = -1..1
 
-    x = x ∩ x_range
-    y = y ∩ y_range
+    x = x ⊓ x_range
+    y = y ⊓ y_range
 
     isempty(IntervalBox(x, y)) && return IntervalBox(x, y)
 
-    y = y ∩ sin(x)
-    x = x ∩ asin(y)
+    y = y ⊓ sin(x)
+    x = x ⊓ asin(y)
 
     return IntervalBox(x, y)
 
@@ -33,7 +33,7 @@ Contractor for `sin`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
 Returns an `IntervalBox` contracted down to the set ``y = \\sin(x)``.
 """
-sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ∪ periodise(sin_reverse, two_pi)(X)
+sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ⊔ periodise(sin_reverse, two_pi)(X)
 
 # Reverse function for sin; does not alter y
 """
@@ -70,13 +70,13 @@ function cos_main(X::IntervalBox)
     x_range = Interval(0, Interval{Float64}(π).lo)
     y_range = -1..1
 
-    x = x ∩ x_range
-    y = y ∩ y_range
+    x = x ⊓ x_range
+    y = y ⊓ y_range
 
     isempty(IntervalBox(x, y)) && return IntervalBox(x, y)
 
-    y = y ∩ cos(x)
-    x = x ∩ acos(y)
+    y = y ⊓ cos(x)
+    x = x ⊓ acos(y)
 
     return IntervalBox(x, y)
 
@@ -92,7 +92,7 @@ Contractor for `cos`.
 Takes an `IntervalBox` containing the `x` and `y` component intervals.
 Returns an `IntervalBox` contracted down to the set ``y = \\cos(x)``.
 """
-cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ∪ periodise(cos_reverse, two_pi)(X)
+cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ⊔ periodise(cos_reverse, two_pi)(X)
 
 
 # Reverse function for cos; does not alter y
@@ -128,12 +128,12 @@ function tan_main(X::IntervalBox)
 
     x_range = Interval(-half_pi.hi, half_pi.hi)
 
-    x = x ∩ x_range
+    x = x ⊓ x_range
 
     isempty(x) && return IntervalBox(x, y)
 
-    y = y ∩ tan(x)
-    x = x ∩ atan(y)
+    y = y ⊓ tan(x)
+    x = x ⊓ atan(y)
 
     return IntervalBox(x, y)
 

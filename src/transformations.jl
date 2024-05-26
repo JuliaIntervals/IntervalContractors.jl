@@ -79,7 +79,7 @@ function periodise(C, period)
         isempty(periods) && return(IntervalBox(∅, ∅))
 
         x3 = x2 + periods*period
-        x = x ∩ x3
+        x = x ⊓ x3
 
         return IntervalBox(x, y)
     end

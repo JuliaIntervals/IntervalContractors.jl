@@ -17,12 +17,12 @@ export plus_rev, minus_rev, inv_rev,
 
 using IntervalArithmetic
 
-const half_pi = IntervalArithmetic.half_pi(Float64)  # interval
-const two_pi = IntervalArithmetic.two_pi(Float64)  # interval
+const half_pi = ExactReal(0.5) * interval(pi)
+const two_pi = ExactReal(2.0) * interval(pi)
 
 #
-# Base.:∪(f::Function, g::Function) = X -> ( f(X) ∪ g(X) )
-# Base.:∩(f::Function, g::Function) = X -> ( f(X) ∩ g(X) )  # or f(g(X)) for contractors
+# Base.:⊔(f::Function, g::Function) = X -> ( f(X) ⊔ g(X) )
+# Base.:⊓(f::Function, g::Function) = X -> ( f(X) ⊓ g(X) )  # or f(g(X)) for contractors
 
 include("arithmetic.jl")
 include("transformations.jl")
@@ -33,7 +33,6 @@ include("inverse_trig.jl")
 include("hyperbolic.jl")
 include("inverse_hyperbolic.jl")
 include("extrema.jl")
-include("decorated.jl")
 
 """
 Dictionary mapping functions to their reverse functions.
