@@ -325,12 +325,3 @@ julia> mul_rev_to_pair(1..2, 3..4)
 
 """
 mul_rev_to_pair(b::Interval, c::Interval) = extended_div(c, b)
-
-function mul_rev_to_pair(b::DecoratedInterval{T}, c::DecoratedInterval{T}) where T
-    (isnai(b) || isnai(c)) && return (nai(T), nai(T))
-
-    0 ∉ b && return (c/b, DecoratedInterval(emptyinterval(T), trv))
-
-    x1, x2 = extended_div(interval(c), interval(b))
-    return (DecoratedInterval(x1, trv), DecoratedInterval(x2, trv))
-end
