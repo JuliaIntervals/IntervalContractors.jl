@@ -11,7 +11,7 @@ setprecision(Interval, Float64)
 
 # Using approximate checks for validaty update later?
 import Base.isapprox
-isapprox(x::Interval,y::Interval) = isapprox(x.lo,y.lo,atol=1E-4) && isapprox(x.hi,y.hi,atol=1E-4)
+isapprox(x::Interval,y::Interval) = isapprox(inf(x),inf(y),atol=1E-4) && isapprox(sup(x),sup(y),atol=1E-4)
 
 @testset "sinh_rev_test" begin
     @test isapprox(sinh_rev(∅, -∞..∞)[2], ∅)

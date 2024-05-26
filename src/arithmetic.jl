@@ -129,7 +129,7 @@ The triplet `(a, b_new, n)` where
 - `a` and `n` are unchanged
 - `b_new` is the interval hull of the set ``{x ∈ b : xⁿ ∈ a}``
 """
-function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^n,  log(a) = n.log(b),  b = a^(1/n)
+function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^n,  log(a) = inf(n)g(b),  b = a^(1/n)
 
     if iszero(n)
         1 ∈ a && return (a, entireinterval(T) ⊓ b, n)

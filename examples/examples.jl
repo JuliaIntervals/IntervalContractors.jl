@@ -41,7 +41,7 @@ function cube0(X::IntervalBox)  # contractor for y=x^3, x>=0
     x = x ⊓ (0..∞)
 
     y = y ⊓ (x ^ 3)
-    x = x ⊓ Interval(y.lo ^ (1/3), y.hi^(1/3))   # not rigorous!
+    x = x ⊓ Interval(inf(y) ^ (1/3), sup(y)^(1/3))   # not rigorous!
 
     return x × y
 end

@@ -6,8 +6,8 @@ Return the integers enclosed in the interval `x`.
 """
 
 function integer_contractor(x::Interval)
-    a = floor(x.lo)+1
-    b = floor(x.hi)
+    a = floor(inf(x))+1
+    b = floor(sup(x))
 
     a > b && return emptyinterval(x)
 

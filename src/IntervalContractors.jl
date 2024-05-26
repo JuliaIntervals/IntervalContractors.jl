@@ -15,11 +15,13 @@ export plus_rev, minus_rev, inv_rev,
         mul_rev_IEEE1788, mul_rev_to_pair,
         pow_rev1, pow_rev2
 
-using IntervalArithmetic
+using IntervalArithmetic, IntervalArithmetic.Symbols
+using IntervalBoxes
 
 const half_pi = ExactReal(0.5) * interval(pi)
 const two_pi = ExactReal(2.0) * interval(pi)
 
+const ∞ = Inf
 #
 # Base.:⊔(f::Function, g::Function) = X -> ( f(X) ⊔ g(X) )
 # Base.:⊓(f::Function, g::Function) = X -> ( f(X) ⊓ g(X) )  # or f(g(X)) for contractors
