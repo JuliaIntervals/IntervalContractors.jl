@@ -25,8 +25,8 @@ isapprox(x::Interval,y::Interval) = isapprox(inf(x),inf(y),atol=1E-4) && isappro
 end
 
 @testset "tanh_rev_test" begin
-    @test tanh_rev(∅, -∞..∞)[2] == ∅
-    @test tanh_rev(interval(-10.0, -1.0), -∞..∞)[2] == ∅
+    @test isequal_interval(tanh_rev(∅, -∞..∞)[2], ∅)
+    @test isequal_interval(tanh_rev(interval(-10.0, -1.0), -∞..∞)[2], ∅)
     @test isapprox(tanh_rev(interval(0.0, Inf), -∞..∞)[2], Interval(0.0, ∞))
     @test isapprox(tanh_rev(interval(0.0, 1.0), -∞..∞)[2], Interval(0.0, ∞))
     @test isapprox(tanh_rev(interval(-0.5, 1.0), -∞..∞)[2], Interval(-0.549307, ∞))
