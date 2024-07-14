@@ -13,10 +13,10 @@ function max_rev(a::Interval, b::Interval, c::Interval)  # a = max(b,c)
 
     if isempty_interval(b)
         isempty_interval(c) && (return a, ∅, ∅)
-        return a, ∅, Interval(C_lo,C_hi)
+        return a, ∅, interval(C_lo,C_hi)
     else
         isempty_interval(c) && (return a, interval(B_lo,B_hi), ∅)
-        return a, interval(B_lo,B_hi), Interval(C_lo,C_hi)
+        return a, interval(B_lo,B_hi), interval(C_lo,C_hi)
     end
 end
 max_rev(a,b,c) = max_rev(promote(a,b,c)...)
@@ -36,10 +36,10 @@ function min_rev(a::Interval, b::Interval, c::Interval)
 
     if isempty_interval(b)
         isempty_interval(c) && (return a, ∅, ∅)
-        return a, ∅, Interval(C_lo,C_hi)
+        return a, ∅, interval(C_lo,C_hi)
     else
         isempty_interval(c) && (return a, interval(B_lo,B_hi), ∅)
-        return a, interval(B_lo,B_hi), Interval(C_lo,C_hi)
+        return a, interval(B_lo,B_hi), interval(C_lo,C_hi)
     end
 end
 

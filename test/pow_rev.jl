@@ -34,29 +34,29 @@
 
     @test isequal_interval(pow_rev1(interval(0.0,0.0), interval(1.0,1.0), interval(-Inf,0.0)), emptyinterval())
 
-    @test isequal_interval(pow_rev1(entireinterval(), interval(0.0,0.0), entireinterval()), Interval(0.0,0.0))
+    @test isequal_interval(pow_rev1(entireinterval(), interval(0.0,0.0), entireinterval()), interval(0.0,0.0))
 
-    @test isequal_interval(pow_rev1(entireinterval(), interval(-Inf,0.0), entireinterval()), Interval(0.0,0.0))
+    @test isequal_interval(pow_rev1(entireinterval(), interval(-Inf,0.0), entireinterval()), interval(0.0,0.0))
 
-    @test isequal_interval(pow_rev1(interval(0.0,Inf), interval(-Inf,0.0), entireinterval()), Interval(0.0,0.0))
+    @test isequal_interval(pow_rev1(interval(0.0,Inf), interval(-Inf,0.0), entireinterval()), interval(0.0,0.0))
 
-    @test isequal_interval(pow_rev1(interval(0.0,Inf), interval(0.0,0.0), entireinterval()), Interval(0.0,0.0))
+    @test isequal_interval(pow_rev1(interval(0.0,Inf), interval(0.0,0.0), entireinterval()), interval(0.0,0.0))
 
-    @test isequal_interval(pow_rev1(interval(1.0,2.0), interval(0.0,0.0), entireinterval()), Interval(0.0,0.0))
+    @test isequal_interval(pow_rev1(interval(1.0,2.0), interval(0.0,0.0), entireinterval()), interval(0.0,0.0))
 
-    @test isequal_interval(pow_rev1(interval(1.0,1.0), interval(0.0,0.0), interval(0.0,0.0)), Interval(0.0,0.0))
+    @test isequal_interval(pow_rev1(interval(1.0,1.0), interval(0.0,0.0), interval(0.0,0.0)), interval(0.0,0.0))
 
-    @test isequal_interval(pow_rev1(entireinterval(), interval(1.0,1.0), interval(1.0,1.0)), Interval(1.0,1.0))
+    @test isequal_interval(pow_rev1(entireinterval(), interval(1.0,1.0), interval(1.0,1.0)), interval(1.0,1.0))
 
-    @test_broken pow_rev1(interval(0.0,0.0), interval(1.0,1.0), entireinterval()) === Interval(0.0,Inf)
+    @test_broken pow_rev1(interval(0.0,0.0), interval(1.0,1.0), entireinterval()) === interval(0.0,Inf)
 
-    @test_broken pow_rev1(interval(0.0,0.0), interval(1.0,1.0), interval(2.0,3.0)) === Interval(2.0,3.0)
+    @test_broken pow_rev1(interval(0.0,0.0), interval(1.0,1.0), interval(2.0,3.0)) === interval(2.0,3.0)
 
-    @test_broken pow_rev1(entireinterval(), interval(1.0,1.0), entireinterval()) === Interval(0.0,Inf)
+    @test_broken pow_rev1(entireinterval(), interval(1.0,1.0), entireinterval()) === interval(0.0,Inf)
 
-    @test_broken pow_rev1(entireinterval(), interval(1.0,1.0), interval(20.0,30.0)) === Interval(20.0,30.0)
+    @test_broken pow_rev1(entireinterval(), interval(1.0,1.0), interval(20.0,30.0)) === interval(20.0,30.0)
 
-    @test_broken pow_rev1(interval(0.0,0.0), interval(1.0,1.0), interval(1.0,1.0)) === Interval(1.0,1.0)
+    @test_broken pow_rev1(interval(0.0,0.0), interval(1.0,1.0), interval(1.0,1.0)) === interval(1.0,1.0)
 
     @test isequal_interval(pow_rev1(interval(-4.0,-2.0), interval(0.0,0.5), entireinterval()), interval(0x1.306FE0A31B715p0, Inf))
 

@@ -11,7 +11,7 @@ end
 Reverse function for `acosh`.
 """
 function acosh_rev(y::Interval,x::Interval)
-    y_new = y ⊓ Interval(0.0,∞)
+    y_new = y ⊓ interval(0.0,∞)
     x = x ⊓ cosh(y)
 
     return y_new, x

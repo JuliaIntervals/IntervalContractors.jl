@@ -1,7 +1,7 @@
 
 function constant_contractor(X, y_val)
     x, y = X
-    y = y ⊓ Interval(y_val)
+    y = y ⊓ interval(y_val)
     return IntervalBox(x, y)
 end
 

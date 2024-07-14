@@ -19,16 +19,16 @@ isapprox(x::Interval,y::Interval) = isapprox(inf(x),inf(y),atol=1E-4) && isappro
     @test isequal_interval(acos_rev(interval(0.0, 1.0), ∅)[2], ∅)
     @test isequal_interval(acos_rev(∅, interval(0.0, 1.0))[2], ∅)
     @test isequal_interval(acos_rev(interval(-2.0, -1.0), entireinterval(Float64))[2], ∅)
-    @test isapprox(acos_rev(interval(1.0, 1.0), entireinterval(Float64))[2], Interval(0.540302, 0.540303))
+    @test isapprox(acos_rev(interval(1.0, 1.0), entireinterval(Float64))[2], interval(0.540302, 0.540303))
     @test isequal_interval(acos_rev(entireinterval(Float64), entireinterval(Float64))[2], interval(-1.0, 1.0))
-    @test isequal_interval(acos_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], Interval(1.0, 1.0))
+    @test isequal_interval(acos_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], interval(1.0, 1.0))
 end
 
 @testset "atan_rev_test" begin
     @test isequal_interval(atan_rev(∅, entireinterval(Float64))[2], ∅)
     @test isequal_interval(atan_rev(interval(0.0, 1.0), ∅)[2], ∅)
     @test isequal_interval(atan_rev(∅, interval(0.0, 1.0))[2], ∅)
-    @test isapprox(atan_rev(interval(1.0, 1.0), entireinterval(Float64))[2], Interval(1.5574, 1.55741))
+    @test isapprox(atan_rev(interval(1.0, 1.0), entireinterval(Float64))[2], interval(1.5574, 1.55741))
     @test isequal_interval(atan_rev(entireinterval(Float64), entireinterval(Float64))[2], interval(-∞, ∞))
-    @test isequal_interval(atan_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], Interval(-∞, ∞))
+    @test isequal_interval(atan_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], interval(-∞, ∞))
 end
