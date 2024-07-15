@@ -204,7 +204,7 @@ sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
 # IEEE-1788 style
 
 """
-    sqrt_rev(c::Interval[, x::Interval])
+    sqr_rev(c::Interval[, x::Interval])
 
 Reverse square. Calculates the preimage of `a = x²`. If `x` is not provided, then
 byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
@@ -216,7 +216,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : x² ∈ a}``
 """
-function sqr_rev(c, x)   # c = x^2;  refine x
+function sqr_rev(c, x = entireinterval(c))   # c = x^2;  refine x
 
     root = sqrt(c)
 
