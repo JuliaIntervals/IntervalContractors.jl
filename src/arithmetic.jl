@@ -239,7 +239,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : |x| ∈ a}``
 """
-function abs_rev(y, x)   # y = abs(x); refine x
+function abs_rev(y, x = entireinterval(y))   # y = abs(x); refine x
 
     y_new = y ⊓ (0..∞)
 
