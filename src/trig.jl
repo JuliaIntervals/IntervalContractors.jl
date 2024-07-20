@@ -49,7 +49,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : sin(x) ∈ a}``
 """
-function sin_rev(y::Interval, x::Interval = entireinterval(y)
+function sin_rev(y::Interval, x::Interval = entireinterval(y))
 
     X = IntervalBox(x, y)
 
