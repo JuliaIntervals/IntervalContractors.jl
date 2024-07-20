@@ -49,7 +49,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : sin(x) ∈ a}``
 """
-function sin_rev(y::Interval, x::Interval)
+function sin_rev(y::Interval, x::Interval = entireinterval(y)
 
     X = IntervalBox(x, y)
 
@@ -67,7 +67,7 @@ function cos_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = interval(0, Interval{Float64}(π).lo)
+    x_range = interval(0, inf(interval(π)))
     y_range = -1..1
 
     x = x ⊓ x_range
@@ -109,7 +109,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : cos(x) ∈ a}``
 """
-function cos_rev(y::Interval, x::Interval)
+function cos_rev(y::Interval, x::Interval = entireinterval(y))
 
     X = IntervalBox(x, y)
 
