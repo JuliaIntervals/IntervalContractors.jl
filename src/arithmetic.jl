@@ -61,17 +61,17 @@ function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
 
     # a = a ⊓ (b * c)  # ?
 
-    if 0 ∈ b
+    if in_interval(0.0, b)
         temp = c .⊓ extended_div(a, b)
-        c′ = union(temp[1], temp[2])
+        c′ = hull(temp[1], temp[2])
 
     else
         c′ = c ⊓ (a / b)
     end
 
-    if 0 ∈ c
+    if in_interval(0.0, c)
         temp = b .⊓ extended_div(a, c)
-        b′ = union(temp[1], temp[2])
+        b′ = hull(temp[1], temp[2])
 
     else
         b′ = b ⊓ (a / c)
@@ -262,19 +262,21 @@ function sign_rev(a::Interval, b::Interval)  # a = sqrt(b)
 end
 sign_rev(a,b) = sign_rev(promote(a,b)...)
 =#
+
 ## IEEE-1788 versions:
 
 """
     mul_rev_IEEE1788(b::Interval, c::Interval[, x::Interval])
 
-Reverse multiplication. Computes the preimage of ``c=x * b`` with respect to `x`. If `x` is not provided,
-then byt default ``[-∞, ∞]`` is used.. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+Reverse multiplication. Computes the preimage of ``c = x * b`` with respect to `x`.
+If `x` is not provided, then by default ``[-∞, ∞]`` is used.
+See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
 - `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, t*y ∈ c}
 """
-mul_rev_IEEE1788(b, c, x) = mul_rev(c, x, b)[2]
+mul_rev_IEEE1788(b, c, x = entireinterval(b)) = mul_rev(c, x, b)[2]
 
 """
     pow_rev1(b::Interval, c::Interval[, x::Interval])
@@ -308,10 +310,11 @@ end
 """
     mul_rev_to_pair(b::Interval, c::Interval)
 
-Computes the division c/b, but returns a pair of intervals instead of a single interval.
-If the set corresponding to c/b is composed by two disjoint intervals, then it returns the
-two intervals. If c/b is a single or empty interval, then the second interval in the pair
-is set to empty. See section 10.5.5 of the IEEE 1788-2015 standard for interval arithmetic.
+Computes the division c / b, but returns a pair of intervals instead of a single interval.
+If the set corresponding to c / b is composed of two disjoint intervals, then it returns the
+two intervals. If c / b is a single or empty interval, then the second interval in the pair
+is set to empty.
+See section 10.5.5 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Example
 
@@ -321,7 +324,6 @@ julia> mul_rev_to_pair(-1..1, 1..2)
 
 julia> mul_rev_to_pair(1..2, 3..4)
 ([1.5, 4], ∅)
-```
 
 """
 mul_rev_to_pair(b::Interval, c::Interval) = extended_div(c, b)
