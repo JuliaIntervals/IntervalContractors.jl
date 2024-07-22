@@ -132,7 +132,7 @@ The triplet `(a, b_new, n)` where
 function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^n,  log(a) = inf(n)g(b),  b = a^(1/n)
 
     if iszero(n)
-        1 ∈ a && return (a, entireinterval(T) ⊓ b, n)
+        in_interval(1.0, a) && return (a, entireinterval(T) ⊓ b, n)
         return (a, emptyinterval(T), n)
     end
 
@@ -161,7 +161,7 @@ function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^
     return (a, b, n)
 end
 
-power_rev(a::Interval{T}, n::Integer) where T = power_rev(a, entireinterval(T), n)
+power_rev(a::Interval{T}, n::Integer) where {T} = power_rev(a, entireinterval(T), n)
 
 function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
 
