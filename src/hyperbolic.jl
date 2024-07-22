@@ -11,7 +11,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : sinh(x) ∈ a}``
 """
-function sinh_rev(y::Interval, x::Interval)
+function sinh_rev(y::Interval, x::Interval = entireinterval(y)
     x = x ⊓ asinh(y)
 
     return y, x
@@ -30,7 +30,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : cosh(x) ∈ a}``
 """
-function cosh_rev(y::Interval,x::Interval)
+function cosh_rev(y::Interval, x::Interval = entireinterval(y))
     y_new = y ⊓ interval(1.,∞)
     x = (x ⊓ acosh(y)) ⊔ (x ⊓ -acosh(y))
 
@@ -50,7 +50,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : tanh(x) ∈ a}``
 """
-function tanh_rev(y::Interval,x::Interval)
+function tanh_rev(y::Interval, x::Interval = entireinterval(y))
     y_new = y ⊓ interval(-1.,1.)
     x = x ⊓ atanh(y)
 

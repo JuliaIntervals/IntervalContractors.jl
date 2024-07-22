@@ -139,7 +139,7 @@ function tan_main(X::IntervalBox)
 
 end
 
-tan!(X::IntervalBox) = periodise(tan_main, Interval{Float64}(π))(X)
+tan!(X::IntervalBox) = periodise(tan_main, interval(π))(X)
 
 """
     tan_rev(c::Interval[, x::Interval])
@@ -154,7 +154,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : tan(x) ∈ a}``
 """
-function tan_rev(y::Interval, x::Interval)
+function tan_rev(y::Interval, x::Interval = entireinterval(y))
 
     X = IntervalBox(x, y)
 
