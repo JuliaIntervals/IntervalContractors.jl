@@ -130,7 +130,7 @@ function tan_main(X::IntervalBox)
 
     x = x ⊓ x_range
 
-    isempty(x) && return IntervalBox(x, y)
+    isempty_interval(x) && return IntervalBox(x, y)
 
     y = y ⊓ tan(x)
     x = x ⊓ atan(y)

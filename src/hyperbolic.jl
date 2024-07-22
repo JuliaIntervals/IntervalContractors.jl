@@ -11,7 +11,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : sinh(x) ∈ a}``
 """
-function sinh_rev(y::Interval, x::Interval = entireinterval(y)
+function sinh_rev(y::Interval, x::Interval = entireinterval(y))
     x = x ⊓ asinh(y)
 
     return y, x
