@@ -148,8 +148,8 @@ function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^
         b2 = b ⊓ (-root)
 
     elseif isodd(n)
-        pos_root = (a ⊓ (0..∞)) ^ (1//n)
-        neg_root = -( ( (-a) ⊓ (0..∞) ) ^ (1//n) )
+        pos_root = (a ⊓ interval(0, Inf)) ^ (1//n)
+        neg_root = -( ( (-a) ⊓ (interval(0, Inf)) ) ^ (1//n) )
 
         b1 = b ⊓ pos_root
         b2 = b ⊓ neg_root
@@ -207,7 +207,7 @@ sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
     sqr_rev(c::Interval[, x::Interval])
 
 Reverse square. Calculates the preimage of `a = x²`. If `x` is not provided, then
-byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -230,7 +230,7 @@ end
     abs_rev(c::Interval[, x::Interval])
 
 Reverse absolute value. Calculates the preimage of `a = |x|`. If `x` is not provided, then
-byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -241,7 +241,7 @@ The pair `(c, x_new)` where
 """
 function abs_rev(y, x = entireinterval(y))   # y = abs(x); refine x
 
-    y_new = y ⊓ (0..∞)
+    y_new = y ⊓ (interval(0, Inf))
 
     x1 = y_new ⊓ x
     x2 = -(y_new ⊓ (-x))
@@ -254,9 +254,9 @@ Reverse sign
 """
 function sign_rev(a::Interval, b::Interval)  # a = sqrt(b)
 
-    (a == 1.0) && b = b ⊓ (0..∞)
-    (a == 0.0) && b = b ⊓ (0.0..0.0)
-    (a == -1.0) && b = b ⊓ (-∞..0.0)
+    (a == 1.0) && b = b ⊓ (interval(0, Inf))
+    (a == 0.0) && b = b ⊓ (0.interval(0, 0).0)
+    (a == -1.0) && b = b ⊓ (-interval(Inf, 0).0)
 
     return a, b
 end
@@ -269,7 +269,7 @@ sign_rev(a,b) = sign_rev(promote(a,b)...)
     mul_rev_IEEE1788(b::Interval, c::Interval[, x::Interval])
 
 Reverse multiplication. Computes the preimage of ``c = x * b`` with respect to `x`.
-If `x` is not provided, then by default ``[-∞, ∞]`` is used.
+If `x` is not provided, then by default ``[-Inf, Inf]`` is used.
 See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
@@ -282,7 +282,7 @@ mul_rev_IEEE1788(b, c, x = entireinterval(b)) = mul_rev(c, x, b)[2]
     pow_rev1(b::Interval, c::Interval[, x::Interval])
 
 Reverse power 1. Computes the preimage of ``c=xᵇ`` with respect to `x`. If `x` is not provided,
-then byt default ``[-∞, ∞]`` is used.. See section 10.5.4 of the
+then byt default ``[-Inf, Inf]`` is used.. See section 10.5.4 of the
 IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
@@ -297,7 +297,7 @@ end
     pow_rev2(b::Interval, c::Interval[, x::Interval])
 
 Reverse power 2. Computes the preimage of ``c = aˣ`` with respect to `x`. If `x` is not provided, then
-byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -319,11 +319,11 @@ See section 10.5.5 of the IEEE 1788-2015 standard for interval arithmetic.
 ### Example
 
 ```jldoctest
-julia> mul_rev_to_pair(-1..1, 1..2)
-([-∞, -1], [1, ∞])
+julia> mul_rev_to_pair(-interval(1, 1), interval(1, 2))
+([-Inf, -1], [1, Inf])
 
-julia> mul_rev_to_pair(1..2, 3..4)
-([1.5, 4], ∅)
+julia> mul_rev_to_pair(interval(1, 2), interval(3, 4))
+([1.5, 4], emptyinterval())
 
 """
 mul_rev_to_pair(b::Interval, c::Interval) = extended_div(c, b)

@@ -12,10 +12,10 @@ function max_rev(a::Interval, b::Interval, c::Interval)  # a = max(b,c)
     (sup(b) < sup(c)) && (C_hi = min(sup(c),sup(a)))
 
     if isempty_interval(b)
-        isempty_interval(c) && (return a, ∅, ∅)
-        return a, ∅, interval(C_lo,C_hi)
+        isempty_interval(c) && (return a, emptyinterval(), emptyinterval())
+        return a, emptyinterval(), interval(C_lo,C_hi)
     else
-        isempty_interval(c) && (return a, interval(B_lo,B_hi), ∅)
+        isempty_interval(c) && (return a, interval(B_lo,B_hi), emptyinterval())
         return a, interval(B_lo,B_hi), interval(C_lo,C_hi)
     end
 end
@@ -35,10 +35,10 @@ function min_rev(a::Interval, b::Interval, c::Interval)
     (sup(b) < sup(c)) && (C_hi = min(sup(b),sup(a)))
 
     if isempty_interval(b)
-        isempty_interval(c) && (return a, ∅, ∅)
-        return a, ∅, interval(C_lo,C_hi)
+        isempty_interval(c) && (return a, emptyinterval(), emptyinterval())
+        return a, emptyinterval(), interval(C_lo,C_hi)
     else
-        isempty_interval(c) && (return a, interval(B_lo,B_hi), ∅)
+        isempty_interval(c) && (return a, interval(B_lo,B_hi), emptyinterval())
         return a, interval(B_lo,B_hi), interval(C_lo,C_hi)
     end
 end

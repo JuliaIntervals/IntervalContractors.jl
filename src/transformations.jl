@@ -68,15 +68,15 @@ function periodise(C, period)
     X -> begin
         x, y = X
 
-        x2 = -∞..∞
+        x2 = entireinterval()
         x2, y = C(IntervalBox(x2, y))
 
-        isempty(IntervalBox(x2, y)) && return(IntervalBox(∅, ∅))
+        isempty(IntervalBox(x2, y)) && return(IntervalBox(emptyinterval(), emptyinterval()))
 
         # periods where the periodization of x intersects with x2:
         periods = integer_contractor((x - x2) / period)
 
-        isempty_interval(periods) && return(IntervalBox(∅, ∅))
+        isempty_interval(periods) && return(IntervalBox(emptyinterval(), emptyinterval()))
 
         x3 = x2 + periods*period
         x = x ⊓ x3

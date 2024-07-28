@@ -11,7 +11,7 @@ function square_pos(X::IntervalBox)
 
     x, y = X
 
-    x = x ⊓ (0..∞)
+    x = x ⊓ (interval(0, Inf))
 
     y = y ⊓ (x^2)
     x = x ⊓ √y
@@ -27,7 +27,7 @@ function cube_pos(X::IntervalBox)  # contractor for y=x^3, x>=0
 
     x, y = X
 
-    x = x ⊓ (0..∞)
+    x = x ⊓ (interval(0, Inf))
 
     y = y ⊓ (x ^ 3)
     x = x ⊓ interval(inf(y) ^ (1/3), sup(y)^(1/3))   # not rigorous!

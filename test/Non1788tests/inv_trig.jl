@@ -6,29 +6,21 @@ using Test
 using IntervalArithmetic
 using IntervalContractors
 
-#Preamble
-setprecision(53)
-setprecision(Interval, Float64)
-
-# Using approximate checks for validaty update later?
-import Base.isapprox
-isapprox(x::Interval,y::Interval) = isapprox(inf(x),inf(y),atol=1E-4) && isapprox(sup(x),sup(y),atol=1E-4)
-
 @testset "acos_rev_test" begin
-    @test isequal_interval(acos_rev(∅, entireinterval(Float64))[2], ∅)
-    @test isequal_interval(acos_rev(interval(0.0, 1.0), ∅)[2], ∅)
-    @test isequal_interval(acos_rev(∅, interval(0.0, 1.0))[2], ∅)
-    @test isequal_interval(acos_rev(interval(-2.0, -1.0), entireinterval(Float64))[2], ∅)
-    @test isapprox(acos_rev(interval(1.0, 1.0), entireinterval(Float64))[2], interval(0.540302, 0.540303))
-    @test isequal_interval(acos_rev(entireinterval(Float64), entireinterval(Float64))[2], interval(-1.0, 1.0))
-    @test isequal_interval(acos_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], interval(1.0, 1.0))
+    @test eq(acos_rev(emptyinterval(), entireinterval(Float64))[2], emptyinterval())
+    @test eq(acos_rev(interval(0.0, 1.0), emptyinterval())[2], emptyinterval())
+    @test eq(acos_rev(emptyinterval(), interval(0.0, 1.0))[2], emptyinterval())
+    @test eq(acos_rev(interval(-2.0, -1.0), entireinterval(Float64))[2], emptyinterval())
+    @test approx_eq(acos_rev(interval(1.0, 1.0), entireinterval(Float64))[2], interval(0.540302, 0.540303))
+    @test eq(acos_rev(entireinterval(Float64), entireinterval(Float64))[2], interval(-1.0, 1.0))
+    @test eq(acos_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], interval(1.0, 1.0))
 end
 
 @testset "atan_rev_test" begin
-    @test isequal_interval(atan_rev(∅, entireinterval(Float64))[2], ∅)
-    @test isequal_interval(atan_rev(interval(0.0, 1.0), ∅)[2], ∅)
-    @test isequal_interval(atan_rev(∅, interval(0.0, 1.0))[2], ∅)
-    @test isapprox(atan_rev(interval(1.0, 1.0), entireinterval(Float64))[2], interval(1.5574, 1.55741))
-    @test isequal_interval(atan_rev(entireinterval(Float64), entireinterval(Float64))[2], interval(-∞, ∞))
-    @test isequal_interval(atan_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], interval(-∞, ∞))
+    @test eq(atan_rev(emptyinterval(), entireinterval(Float64))[2], emptyinterval())
+    @test eq(atan_rev(interval(0.0, 1.0), emptyinterval())[2], emptyinterval())
+    @test eq(atan_rev(emptyinterval(), interval(0.0, 1.0))[2], emptyinterval())
+    @test approx_eq(atan_rev(interval(1.0, 1.0), entireinterval(Float64))[2], interval(1.5574, 1.55741))
+    @test eq(atan_rev(entireinterval(Float64), entireinterval(Float64))[2], interval(-Inf, Inf))
+    @test eq(atan_rev(interval(-Inf, 0.0), entireinterval(Float64))[2], interval(-Inf, Inf))
 end

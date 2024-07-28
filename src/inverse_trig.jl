@@ -25,7 +25,7 @@ end
 Reverse `acos`.
 """
 function acos_rev(y::Interval, x::Interval)
-        y_new = y ⊓ interval(0.0,sup(two_pi))
+        y_new = y ⊓ interval(0.0, sup(two_pi))
         x_new = x ⊓ cos(y_new)
 
         return y_new, x_new

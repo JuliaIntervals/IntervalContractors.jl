@@ -20,8 +20,6 @@ using IntervalBoxes
 
 const half_pi = ExactReal(0.5) * interval(pi)
 const two_pi = ExactReal(2.0) * interval(pi)
-
-const ∞ = Inf
 #
 # Base.:⊔(f::Function, g::Function) = X -> ( f(X) ⊔ g(X) )
 # Base.:⊓(f::Function, g::Function) = X -> ( f(X) ⊓ g(X) )  # or f(g(X)) for contractors

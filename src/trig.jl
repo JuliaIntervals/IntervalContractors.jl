@@ -9,7 +9,7 @@ function sin_main(X::IntervalBox)
     x, y = X
 
     x_range = interval(-sup(half_pi), sup(half_pi))
-    y_range = -1..1
+    y_range = interval(-1, 1)
 
     x = x ⊓ x_range
     y = y ⊓ y_range
@@ -40,7 +40,7 @@ sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ⊔ periodise(sin_reverse,
     sin_rev(c::Interval[, x::Interval])
 
 Reverse sine. Calculates the preimage of `a = sin(x)`. If `x` is not provided, then
-byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -68,7 +68,7 @@ function cos_main(X::IntervalBox)
     x, y = X
 
     x_range = interval(0, inf(interval(π)))
-    y_range = -1..1
+    y_range = interval(-1, 1)
 
     x = x ⊓ x_range
     y = y ⊓ y_range
@@ -100,7 +100,7 @@ cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ⊔ periodise(cos_reverse,
     cos_rev(c::Interval[, x::Interval])
 
 Reverse cosine. Calculates the preimage of `a = cos(x)`. If `x` is not provided, then
-byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -145,7 +145,7 @@ tan!(X::IntervalBox) = periodise(tan_main, interval(π))(X)
     tan_rev(c::Interval[, x::Interval])
 
 Reverse tangent. Calculates the preimage of `a = tan(x)`. If `x` is not provided, then
-byt default ``[-∞, ∞]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
