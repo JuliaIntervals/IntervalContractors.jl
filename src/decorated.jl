@@ -8,7 +8,7 @@ for op in (:sqr_rev, :abs_rev, :sin_rev, :cos_rev, :tan_rev, :cosh_rev, :sinh_re
             return (Decoratedinterval(bare[1], trv), Decoratedinterval(bare[2], trv))
         end
     end 
-    @eval $op(a::Interval{T}) where T = $op(a, entireinterval(T))
+    @eval $op(a::IntervalType{T}) where T = $op(a, entireinterval(T))
     @eval $op(a::DecoratedInterval{T}) where T = $op(a, entiredecorated(T)) 
 end
 
@@ -29,7 +29,7 @@ for op in (:mul_rev_IEEE1788, :pow_rev1, :pow_rev2)
         end
     end
 
-    @eval $op(a::Interval{T}, b::Interval{T}) where T = $op(a, b, entireinterval(T))
+    @eval $op(a::IntervalType{T}, b::IntervalType{T}) where T = $op(a, b, entireinterval(T))
     @eval $op(a::DecoratedInterval{T}, b::DecoratedInterval{T}) where T = $op(a, b, entiredecorated(T))
 
 end

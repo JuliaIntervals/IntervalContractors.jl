@@ -8,8 +8,10 @@ function sin_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = interval(-sup(half_pi), sup(half_pi))
-    y_range = interval(-1, 1)
+    h = sup(half_pi(x))
+
+    x_range = _build_interval(x, -h, h)
+    y_range = _build_interval(x, -1, 1)
 
     x = x ⊓ x_range
     y = y ⊓ y_range
@@ -37,7 +39,7 @@ sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ⊔ periodise(sin_reverse,
 
 # Reverse function for sin; does not alter y
 """
-    sin_rev(c::Interval[, x::Interval])
+    sin_rev(c::IntervalType[, x::IntervalType])
 
 Reverse sine. Calculates the preimage of `a = sin(x)`. If `x` is not provided, then
 byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
@@ -49,7 +51,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : sin(x) ∈ a}``
 """
-function sin_rev(y::Interval, x::Interval = entireinterval(y))
+function sin_rev(y::IntervalType, x::IntervalType = entireinterval(y))
 
     X = IntervalBox(x, y)
 
@@ -67,8 +69,8 @@ function cos_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = interval(0, inf(interval(π)))
-    y_range = interval(-1, 1)
+    x_range = _build_interval(x, 0, inf(pi_interval(x)))
+    y_range = _build_interval(x, -1, 1)
 
     x = x ⊓ x_range
     y = y ⊓ y_range
@@ -97,7 +99,7 @@ cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ⊔ periodise(cos_reverse,
 
 # Reverse function for cos; does not alter y
 """
-    cos_rev(c::Interval[, x::Interval])
+    cos_rev(c::IntervalType[, x::IntervalType])
 
 Reverse cosine. Calculates the preimage of `a = cos(x)`. If `x` is not provided, then
 byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
@@ -109,7 +111,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : cos(x) ∈ a}``
 """
-function cos_rev(y::Interval, x::Interval = entireinterval(y))
+function cos_rev(y::IntervalType, x::IntervalType = entireinterval(y))
 
     X = IntervalBox(x, y)
 
@@ -126,7 +128,9 @@ function tan_main(X::IntervalBox)
 
     x, y = X
 
-    x_range = interval(-sup(half_pi), sup(half_pi))
+    h = sup(half_pi)
+
+    x_range = _build_interval(x, -h, h)
 
     x = x ⊓ x_range
 
@@ -142,7 +146,7 @@ end
 tan!(X::IntervalBox) = periodise(tan_main, interval(π))(X)
 
 """
-    tan_rev(c::Interval[, x::Interval])
+    tan_rev(c::IntervalType[, x::IntervalType])
 
 Reverse tangent. Calculates the preimage of `a = tan(x)`. If `x` is not provided, then
 byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
@@ -154,7 +158,7 @@ The pair `(c, x_new)` where
 - `c` is unchanged
 - `x_new` is the interval hull of the set ``{x ∈ b : tan(x) ∈ a}``
 """
-function tan_rev(y::Interval, x::Interval = entireinterval(y))
+function tan_rev(y::IntervalType, x::IntervalType = entireinterval(y))
 
     X = IntervalBox(x, y)
 
@@ -162,3 +166,8 @@ function tan_rev(y::Interval, x::Interval = entireinterval(y))
 
     return X_new[2], X_new[1]   # return in order y, x
 end
+
+
+# build an interval of the corresponding type:
+_build_interval(x::Interval, a, b) = interval(a, b)
+_build_interval(x::BareInterval, a, b) = bareinterval(a, b)

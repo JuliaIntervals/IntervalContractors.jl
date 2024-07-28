@@ -19,7 +19,7 @@ function square_pos(X::IntervalBox)
     return IntervalBox(x, y)
 end
 
-square_neg = symmetrise(square_pos, reflect_x(0.0))
+square_neg = symmetrise(square_pos, reflect_x(zero))
 square!(X::IntervalBox) = square_pos(X) ⊔ square_neg(X)
 
 

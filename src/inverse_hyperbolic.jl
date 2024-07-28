@@ -1,7 +1,7 @@
 """
 Reverse function for `asinh`.
 """
-function asinh_rev(y::Interval, x::Interval = entireinterval(y))
+function asinh_rev(y::IntervalType, x::IntervalType = entireinterval(y))
     x = x ⊓ sinh(y)
 
     return y, x
@@ -10,7 +10,7 @@ end
 """
 Reverse function for `acosh`.
 """
-function acosh_rev(y::Interval, x::Interval = entireinterval(y))
+function acosh_rev(y::IntervalType, x::IntervalType = entireinterval(y))
     y_new = y ⊓ interval(0.0,Inf)
     x = x ⊓ cosh(y)
 
@@ -20,7 +20,7 @@ end
 """
 Reverse function for `atanh`.
 """
-function atanh_rev(y::Interval, x::Interval = entireinterval(y))
+function atanh_rev(y::IntervalType, x::IntervalType = entireinterval(y))
     x = x ⊓ tanh(y)
 
     return y, x

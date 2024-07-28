@@ -1,7 +1,7 @@
 function asin!(X::IntervalBox)
     x, y = X
 
-    h = inf(half_pi)
+    h = inf(half_pi(y))
     y_new = y ⊓ interval(-h, h)  # range of asin
     x_new = sin(y_new)
 
@@ -11,9 +11,8 @@ end
 """
 Reverse `asin`.
 """
-function asin_rev(y::Interval, x::Interval)  # y = asin(x)
-
-    h = inf(half_pi)
+function asin_rev(y::IntervalType, x::IntervalType = entireinterval(y))  # y = asin(x)
+    h = inf(half_pi(y))
     y_new = y ⊓ interval(-h, h)  # range of asin
 
     x_new = sin(y_new)
@@ -24,22 +23,23 @@ end
 """
 Reverse `acos`.
 """
-function acos_rev(y::Interval, x::Interval)
-        y_new = y ⊓ interval(0.0, sup(two_pi))
-        x_new = x ⊓ cos(y_new)
+function acos_rev(y::IntervalType, x::IntervalType = entireinterval(y))
+    y_new = y ⊓ interval(0.0, sup(two_pi(y)))
+    x_new = x ⊓ cos(y_new)
 
-        return y_new, x_new
+    return y_new, x_new
 end
 
 """
-    atan_rev(y::Interval, x::Interval)
+    atan_rev(y::IntervalType, x::IntervalType)
 
 Inverse of `y = atan(x)`.
 Returns the new `y` and `x`.
 """
-function atan_rev(y::Interval, x::Interval)
-        y_new = y ⊓ interval(-sup(half_pi), sup(half_pi))
-        x_new = x ⊓ tan(y_new)
+function atan_rev(y::IntervalType, x::IntervalType = entireinterval(y))
+    h = sup(half_pi(y))
+    y_new = y ⊓ interval(-h, h)
+    x_new = x ⊓ tan(y_new)
 
-        return y_new, x_new
+    return y_new, x_new
 end

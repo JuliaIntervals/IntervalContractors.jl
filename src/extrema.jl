@@ -1,7 +1,7 @@
 """
 Reverse max
 """
-function max_rev(a::Interval, b::Interval, c::Interval)  # a = max(b,c)
+function max_rev(a::IntervalType, b::IntervalType, c::IntervalType)  # a = max(b,c)
 
     B_lo = inf(b);  B_hi = sup(b);
     C_lo = inf(c);  C_hi = sup(c);
@@ -24,7 +24,7 @@ max_rev(a,b,c) = max_rev(promote(a,b,c)...)
 """
 Reverse min
 """
-function min_rev(a::Interval, b::Interval, c::Interval)
+function min_rev(a::IntervalType, b::IntervalType, c::IntervalType)
 
     B_lo = inf(b);  B_hi = sup(b);
     C_lo = inf(c);  C_hi = sup(c);

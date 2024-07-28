@@ -8,8 +8,11 @@ orig_power_mode = IntervalArithmetic.power_mode()
 # set power mode to "slow" (using MPFR for correct rounding):
 IntervalArithmetic.power_mode() = IntervalArithmetic.PowerMode{:slow}()
 
-eq(a, b) = isequal_interval(bareinterval(a), bareinterval(b))
-approx_eq(x::Interval, y::Interval) =
+eq(a::IntervalType, b::IntervalType) = isequal_interval(bareinterval(a), bareinterval(b))
+
+eq(a::Tuple, b::Tuple) = all(eq.(a, b))
+
+approx_eq(x::IntervalType, y::IntervalType) =
     isapprox(inf(x), inf(y), atol=1e-4) && isapprox(sup(x), sup(y), atol=1e-4)
 
 @testset "IntervalContractors tests" begin
@@ -36,6 +39,18 @@ approx_eq(x::Interval, y::Interval) =
     @testset "Exponents with integer values but not types" begin
         @test all(eq.(power_rev(entireinterval(), -interval(4, 4), 2.0),  (entireinterval(), interval(-4, -4), 2.0)))
     end
+end
+
+@testset "Bare intervals" begin
+    x = bareinterval(0, 1)
+    y = bareinterval(0, 2)
+    z = bareinterval(0, 3)
+
+    @test eq(plus_rev(x, y, z),
+        (bareinterval(0, 1), bareinterval(0, 1), bareinterval(0, 1)))
+
+    @test eq(sin_rev(bareinterval(0..1), bareinterval(3..4)),
+        (bareinterval(0, 1), bareinterval(3, 3.1415926535897936)))
 end
 
 # reset power mode:

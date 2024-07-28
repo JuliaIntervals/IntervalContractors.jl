@@ -8,5 +8,4 @@
     - Adds a dependency on the separate `IntervalBoxes.jl` package (to replace the functionality removed from
       `IntervalArithmetic.jl`)
 
-    - Although the user-facing API of `IntervalContractors.jl` has *not changed*
-      in this release, the extra dependency warrants a minor-version bump
+    - `Interval` now refers to a *decorated* interval

@@ -1,5 +1,3 @@
-__precompile__(true)
-
 module IntervalContractors
 
 export plus_rev, minus_rev, inv_rev,
@@ -18,11 +16,25 @@ export plus_rev, minus_rev, inv_rev,
 using IntervalArithmetic, IntervalArithmetic.Symbols
 using IntervalBoxes
 
-const half_pi = ExactReal(0.5) * interval(pi)
-const two_pi = ExactReal(2.0) * interval(pi)
-#
-# Base.:⊔(f::Function, g::Function) = X -> ( f(X) ⊔ g(X) )
-# Base.:⊓(f::Function, g::Function) = X -> ( f(X) ⊓ g(X) )  # or f(g(X)) for contractors
+const IntervalType{T} = Union{Interval{T}, BareInterval{T}}
+
+# @generated
+# half_pi(::Type{T}) where {T <: IntervalType} = :(ExactReal(0.5) * convert($T, ExactReal(pi)))
+# @generated
+# two_pi(::Type{T}) where {T <: IntervalType} = :(ExactReal(2.0) * convert($T, ExactReal(pi)))
+
+@generated function half_pi(x::T) where {T <: IntervalType}
+    return ExactReal(0.5) * convert(T, ExactReal(pi))
+end
+
+@generated function two_pi(x::T) where {T <: IntervalType}
+    return ExactReal(2.0) * convert(T, ExactReal(pi))
+end
+
+@generated function pi_interval(x::T) where {T <: IntervalType}
+    return convert(T, ExactReal(pi))
+end
+
 
 include("arithmetic.jl")
 include("transformations.jl")

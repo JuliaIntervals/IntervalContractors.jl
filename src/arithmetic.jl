@@ -1,6 +1,6 @@
 
 """
-    plus_rev(a::Interval, b::Interval[, c::Interval])
+    plus_rev(a::IntervalType, b::IntervalType[, c::IntervalType])
 
 Reverse addition. Calculates the preimage of `a = b + c` for `b` and `c`.
 
@@ -12,7 +12,7 @@ The triplet `(a, b_new, c_new)` where
 - `b_new` is the interval hull of the set ``{x ∈ b : ∃ y ∈ c, x + y ∈ a}``
 - `c_new` is the interval hull of the set ``{y ∈ c : ∃ x ∈ b, x + y ∈ a}``
 """
-function plus_rev(a::Interval, b::Interval, c::Interval)  # a = b + c
+function plus_rev(a::IntervalType, b::IntervalType, c::IntervalType)  # a = b + c
     # a = a ⊓ (b + c)  # add this line for plus contractor (as opposed to reverse function)
     b_new = b ⊓ (a - c)
     c_new = c ⊓ (a - b)
@@ -23,7 +23,7 @@ end
 plus_rev(a,b,c) = plus_rev(promote(a,b,c)...)
 
 """
-    minus_rev(a::Interval, b::Interval[, c::Interval])
+    minus_rev(a::IntervalType, b::IntervalType[, c::IntervalType])
 
 Reverse subtraction. Calculates the preimage of `a = b - c` for `b` and `c`.
 
@@ -35,7 +35,7 @@ The triplet `(a, b_new, c_new)` where
 - `b_new` is the interval hull of the set ``{x ∈ b : ∃ y ∈ c, x - y ∈ a}``
 - `c_new` is the interval hull of the set ``{y ∈ c : ∃ x ∈ b, x - y ∈ a}``
 """
-function minus_rev(a::Interval, b::Interval, c::Interval)  # a = b - c
+function minus_rev(a::IntervalType, b::IntervalType, c::IntervalType)  # a = b - c
 
     b_new = b ⊓ (a + c)
     c_new = c ⊓ (b - a)
@@ -45,7 +45,7 @@ end
 
 minus_rev(a,b,c) = minus_rev(promote(a,b,c)...)
 
-function minus_rev(a::Interval, b::Interval)  # a = -b
+function minus_rev(a::IntervalType, b::IntervalType)  # a = -b
     b_new = b ⊓ (-a)
     return (a, b_new)
 end
@@ -54,7 +54,7 @@ end
 """
 Reverse multiplication
 """
-function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
+function mul_rev(a::IntervalType, b::IntervalType, c::IntervalType)  # a = b * c
 
     # ((0.0 ∉ a) || (0.0 ∉ b)) && (c = c ⊓ (a / b))
     # ((0.0 ∉ a) || (0.0 ∉ c)) && (b = b ⊓ (a / c))
@@ -62,16 +62,16 @@ function mul_rev(a::Interval, b::Interval, c::Interval)  # a = b * c
     # a = a ⊓ (b * c)  # ?
 
     if in_interval(0.0, b)
-        temp = c .⊓ extended_div(a, b)
-        c′ = hull(temp[1], temp[2])
+        temp = extended_div(a, b)
+        c′ = hull(c ⊓ temp[1], c ⊓ temp[2])
 
     else
         c′ = c ⊓ (a / b)
     end
 
     if in_interval(0.0, c)
-        temp = b .⊓ extended_div(a, c)
-        b′ = hull(temp[1], temp[2])
+        temp = extended_div(a, c)
+        b′ = hull(b ⊓ temp[1], b ⊓ temp[2])
 
     else
         b′ = b ⊓ (a / c)
@@ -85,7 +85,7 @@ mul_rev(a,b,c) = mul_rev(promote(a,b,c)...)
 """
 Reverse division
 """
-function div_rev(a::Interval, b::Interval, c::Interval)  # a = b / c
+function div_rev(a::IntervalType, b::IntervalType, c::IntervalType)  # a = b / c
 
     b = b ⊓ (a * c)
     c = c ⊓ (b / a)
@@ -96,7 +96,7 @@ end
 div_rev(a,b,c) = div_rev(promote(a,b,c)...)
 
 """
-    inv_rev(a::Interval, b::Interval)
+    inv_rev(a::IntervalType, b::IntervalType)
 
 Reverse inverse. Calculates the interval hull of the preimage of a = b⁻¹
 
@@ -107,7 +107,7 @@ Pair `(a, b_new)` where
 - `a` is unchanged
 - `b_new` is the interval hull of the set ``{x ∈ b : x⁻¹ ∈ a}``
 """
-function inv_rev(a::Interval, b::Interval)  # a = inv(b)
+function inv_rev(a::IntervalType, b::IntervalType)  # a = inv(b)
 
     b_new = b ⊓ inv(a)
 
@@ -117,7 +117,7 @@ end
 inv_rev(a,b) = inv_rev(promote(a,b)...)
 
 """
-    power_rev(a::Interval, b::Interval, n::Integer)
+    power_rev(a::IntervalType, b::IntervalType, n::Integer)
 
 Reverse power. Calculates the preimage of `a = bⁿ`.  See section 10.5.4 of the
 IEEE 1788-2015 standard for interval arithmetic.
@@ -129,7 +129,7 @@ The triplet `(a, b_new, n)` where
 - `a` and `n` are unchanged
 - `b_new` is the interval hull of the set ``{x ∈ b : xⁿ ∈ a}``
 """
-function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^n,  log(a) = inf(n)g(b),  b = a^(1/n)
+function power_rev(a::IntervalType{T}, b::IntervalType{T}, n::Integer) where T  # a = b^n,  log(a) = inf(n)g(b),  b = a^(1/n)
 
     if iszero(n)
         in_interval(1.0, a) && return (a, entireinterval(T) ⊓ b, n)
@@ -161,9 +161,9 @@ function power_rev(a::Interval{T}, b::Interval{T}, n::Integer) where T  # a = b^
     return (a, b, n)
 end
 
-power_rev(a::Interval{T}, n::Integer) where {T} = power_rev(a, entireinterval(T), n)
+power_rev(a::IntervalType{T}, n::Integer) where {T} = power_rev(a, entireinterval(T), n)
 
-function power_rev(a::Interval, b::Interval, c::Interval)  # a = b^c
+function power_rev(a::IntervalType, b::IntervalType, c::IntervalType)  # a = b^c
 
     if isinteger(c)
         temp = power_rev(a, b, Int(inf(c)))  # use version with integer
@@ -180,7 +180,7 @@ power_rev(a, b, c) = power_rev(promote(a, b, c)...)
 
 
 """
-    sqrt_rev(a::Interval, b::Interval)
+    sqrt_rev(a::IntervalType, b::IntervalType)
 
 Reverse square root. Calculates the preimage of `a = √b`.
 
@@ -191,7 +191,7 @@ The pair `(a, b_new)` where
 - `a` is unchanged
 - `b_new` is the interval hull of the set ``{x ∈ b : √x ∈ a}``
 """
-function sqrt_rev(a::Interval, b::Interval)  # a = sqrt(b)
+function sqrt_rev(a::IntervalType, b::IntervalType)  # a = sqrt(b)
 
     b_new = b ⊓ (a^2)
 
@@ -204,7 +204,7 @@ sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
 # IEEE-1788 style
 
 """
-    sqr_rev(c::Interval[, x::Interval])
+    sqr_rev(c::IntervalType[, x::IntervalType])
 
 Reverse square. Calculates the preimage of `a = x²`. If `x` is not provided, then
 byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
@@ -227,7 +227,7 @@ function sqr_rev(c, x = entireinterval(c))   # c = x^2;  refine x
 end
 
 """
-    abs_rev(c::Interval[, x::Interval])
+    abs_rev(c::IntervalType[, x::IntervalType])
 
 Reverse absolute value. Calculates the preimage of `a = |x|`. If `x` is not provided, then
 byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
@@ -252,7 +252,7 @@ end
 """
 Reverse sign
 """
-function sign_rev(a::Interval, b::Interval)  # a = sqrt(b)
+function sign_rev(a::IntervalType, b::IntervalType)  # a = sqrt(b)
 
     (a == 1.0) && b = b ⊓ (interval(0, Inf))
     (a == 0.0) && b = b ⊓ (0.interval(0, 0).0)
@@ -266,7 +266,7 @@ sign_rev(a,b) = sign_rev(promote(a,b)...)
 ## IEEE-1788 versions:
 
 """
-    mul_rev_IEEE1788(b::Interval, c::Interval[, x::Interval])
+    mul_rev_IEEE1788(b::IntervalType, c::IntervalType[, x::IntervalType])
 
 Reverse multiplication. Computes the preimage of ``c = x * b`` with respect to `x`.
 If `x` is not provided, then by default ``[-Inf, Inf]`` is used.
@@ -279,7 +279,7 @@ See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 mul_rev_IEEE1788(b, c, x = entireinterval(b)) = mul_rev(c, x, b)[2]
 
 """
-    pow_rev1(b::Interval, c::Interval[, x::Interval])
+    pow_rev1(b::IntervalType, c::IntervalType[, x::IntervalType])
 
 Reverse power 1. Computes the preimage of ``c=xᵇ`` with respect to `x`. If `x` is not provided,
 then byt default ``[-Inf, Inf]`` is used.. See section 10.5.4 of the
@@ -294,7 +294,7 @@ function pow_rev1(b, c, x)   # c = x^b
 end
 
 """
-    pow_rev2(b::Interval, c::Interval[, x::Interval])
+    pow_rev2(b::IntervalType, c::IntervalType[, x::IntervalType])
 
 Reverse power 2. Computes the preimage of ``c = aˣ`` with respect to `x`. If `x` is not provided, then
 byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
@@ -308,7 +308,7 @@ function pow_rev2(a, c, x)   # c = a^x
 end
 
 """
-    mul_rev_to_pair(b::Interval, c::Interval)
+    mul_rev_to_pair(b::IntervalType, c::IntervalType)
 
 Computes the division c / b, but returns a pair of intervals instead of a single interval.
 If the set corresponding to c / b is composed of two disjoint intervals, then it returns the
@@ -326,4 +326,4 @@ julia> mul_rev_to_pair(interval(1, 2), interval(3, 4))
 ([1.5, 4], emptyinterval())
 
 """
-mul_rev_to_pair(b::Interval, c::Interval) = extended_div(c, b)
+mul_rev_to_pair(b::IntervalType, c::IntervalType) = extended_div(c, b)
