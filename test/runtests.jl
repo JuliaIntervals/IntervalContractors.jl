@@ -52,7 +52,7 @@ end
     @test eq(plus_rev(x, y, z),
         (bareinterval(0, 1), bareinterval(0, 1), bareinterval(0, 1)))
 
-    @test eq(sin_rev(bareinterval(0..1), bareinterval(3..4)),
+    @test eq(sin_rev(bareinterval(0, 1), bareinterval(3, 4)),
         (bareinterval(0, 1), bareinterval(3, 3.1415926535897936)))
 end
 
