@@ -85,7 +85,7 @@ function cos_main(X::IntervalBox)
 end
 
 # TODO: Be careful with the pi constants if using e.g. BigFloats
-cos_reverse = symmetrise(cos_main, reflect_x(0.0))
+cos_reverse = symmetrise(cos_main, reflect_x(zero))
 
 """
     cos!(X::IntervalBox)
@@ -128,7 +128,7 @@ function tan_main(X::IntervalBox)
 
     x, y = X
 
-    h = sup(half_pi)
+    h = sup(half_pi(x))
 
     x_range = _build_interval(x, -h, h)
 
@@ -143,7 +143,7 @@ function tan_main(X::IntervalBox)
 
 end
 
-tan!(X::IntervalBox) = periodise(tan_main, interval(π))(X)
+tan!(X::IntervalBox) = periodise(tan_main, pi_interval)(X)
 
 """
     tan_rev(c::IntervalType[, x::IntervalType])

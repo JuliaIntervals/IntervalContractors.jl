@@ -2,6 +2,8 @@ using IntervalContractors
 using IntervalArithmetic
 using Test
 
+using IntervalContractors: IntervalType
+
 # cache current power mode:
 orig_power_mode = IntervalArithmetic.power_mode()
 
@@ -37,7 +39,8 @@ approx_eq(x::IntervalType, y::IntervalType) =
     end
 
     @testset "Exponents with integer values but not types" begin
-        @test all(eq.(power_rev(entireinterval(), -interval(4, 4), 2.0),  (entireinterval(), interval(-4, -4), 2.0)))
+        @test eq(power_rev(entireinterval(), interval(-4, 4), interval(2.0)),
+                (entireinterval(), interval(-4, 4), interval(2.0)))
     end
 end
 
