@@ -1,5 +1,3 @@
-__precompile__(true)
-
 module IntervalContractors
 
 export plus_rev, minus_rev, inv_rev,
@@ -15,14 +13,28 @@ export plus_rev, minus_rev, inv_rev,
         mul_rev_IEEE1788, mul_rev_to_pair,
         pow_rev1, pow_rev2
 
-using IntervalArithmetic
+using IntervalArithmetic, IntervalArithmetic.Symbols
+using IntervalBoxes
 
-const half_pi = IntervalArithmetic.half_pi(Float64)  # interval
-const two_pi = IntervalArithmetic.two_pi(Float64)  # interval
+const IntervalType{T} = Union{Interval{T}, BareInterval{T}}
 
-#
-# Base.:∪(f::Function, g::Function) = X -> ( f(X) ∪ g(X) )
-# Base.:∩(f::Function, g::Function) = X -> ( f(X) ∩ g(X) )  # or f(g(X)) for contractors
+# @generated
+# half_pi(::Type{T}) where {T <: IntervalType} = :(ExactReal(0.5) * convert($T, ExactReal(pi)))
+# @generated
+# two_pi(::Type{T}) where {T <: IntervalType} = :(ExactReal(2.0) * convert($T, ExactReal(pi)))
+
+@generated function half_pi(x::T) where {T <: IntervalType}
+    return ExactReal(0.5) * convert(T, ExactReal(pi))
+end
+
+@generated function two_pi(x::T) where {T <: IntervalType}
+    return ExactReal(2.0) * convert(T, ExactReal(pi))
+end
+
+@generated function pi_interval(x::T) where {T <: IntervalType}
+    return convert(T, ExactReal(pi))
+end
+
 
 include("arithmetic.jl")
 include("transformations.jl")
@@ -33,7 +45,6 @@ include("inverse_trig.jl")
 include("hyperbolic.jl")
 include("inverse_hyperbolic.jl")
 include("extrema.jl")
-include("decorated.jl")
 
 """
 Dictionary mapping functions to their reverse functions.

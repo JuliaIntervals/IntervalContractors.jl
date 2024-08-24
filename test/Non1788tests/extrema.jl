@@ -1,33 +1,25 @@
 using Test
 
-#Arithmetic library imports
+# Arithmetic library imports
 using IntervalArithmetic
 using IntervalContractors
 
-#Preamble
-setprecision(53)
-setprecision(Interval, Float64)
-
-# Using approximate checks for validaty update later?
-import Base.isapprox
-isapprox(x::Interval,y::Interval) = isapprox(x.lo,y.lo,atol=1E-4) && isapprox(x.hi,y.hi,atol=1E-4)
-
 @testset "max_rev_test" begin
-    @test max_rev(∅, entireinterval(Float64),entireinterval(Float64))[2] == Interval(-∞, ∞)
-    @test max_rev(Interval(0.0, 1.0), ∅,Interval(-2.0, -1.0))[2] == ∅
-    @test max_rev(∅, Interval(0.0, 1.0),Interval(-2.0, -1.0))[2] == ∅
-    @test max_rev(Interval(-2.0, -1.0), entireinterval(Float64),Interval(-3.0, -2.0))[2] == Interval(-∞, -1.0)
-    @test isapprox(max_rev(Interval(1.0, 1.0), entireinterval(Float64),Interval(-2.0, -1.0))[2], Interval(-∞, 1))
-    @test max_rev(entireinterval(Float64), Interval(-2.0, -1.0), Interval(-3.0, -2.0))[2] == Interval(-2.0, -1.0)
-    @test max_rev(Interval(-Inf, 0.0), entireinterval(Float64),Interval(-3.0, -2.0))[2] == Interval(-∞, 0.0)
+    @test eq(max_rev(emptyinterval(), entireinterval(Float64),entireinterval(Float64))[2], interval(-Inf, Inf))
+    @test eq(max_rev(interval(0.0, 1.0), emptyinterval(),interval(-2.0, -1.0))[2], emptyinterval())
+    @test eq(max_rev(emptyinterval(), interval(0.0, 1.0),interval(-2.0, -1.0))[2], emptyinterval())
+    @test eq(max_rev(interval(-2.0, -1.0), entireinterval(Float64),interval(-3.0, -2.0))[2], interval(-Inf, -1.0))
+    @test approx_eq(max_rev(interval(1.0, 1.0), entireinterval(Float64),interval(-2.0, -1.0))[2], interval(-Inf, 1))
+    @test eq(max_rev(entireinterval(Float64), interval(-2.0, -1.0), interval(-3.0, -2.0))[2], interval(-2.0, -1.0))
+    @test eq(max_rev(interval(-Inf, 0.0), entireinterval(Float64),interval(-3.0, -2.0))[2], interval(-Inf, 0.0))
 end
 
 @testset "min_rev_test" begin
-    @test min_rev(∅, entireinterval(Float64),entireinterval(Float64))[2] == Interval(-∞, ∞)
-    @test min_rev(Interval(0.0, 1.0), ∅,Interval(-2.0, -1.0))[2] == ∅                             # should return empty?
-    @test min_rev(∅, Interval(0.0, 1.0),Interval(-2.0, -1.0))[2] == ∅
-    @test min_rev(Interval(-2.0, -1.0), entireinterval(Float64),Interval(-3.0, -2.0))[2] == Interval(-∞, -2.0)
-    @test isapprox(min_rev(Interval(1.0, 1.0), entireinterval(Float64),Interval(-2.0, -1.0))[2], Interval(-∞, -1.0))
-    @test min_rev(entireinterval(Float64), Interval(-2.0, -1.0), Interval(-3.0, -2.0))[2] == Interval(-3.0, -2.0)
-    @test min_rev(Interval(-Inf, 0.0), entireinterval(Float64),Interval(-3.0, -2.0))[2] == Interval(-∞, -2.0)
+    @test eq(min_rev(emptyinterval(), entireinterval(Float64),entireinterval(Float64))[2], interval(-Inf, Inf))
+    @test eq(min_rev(interval(0.0, 1.0), emptyinterval(), interval(-2.0, -1.0))[2], emptyinterval())                             # should return empty?)
+    @test eq(min_rev(emptyinterval(), interval(0.0, 1.0),interval(-2.0, -1.0))[2], emptyinterval())
+    @test eq(min_rev(interval(-2.0, -1.0), entireinterval(Float64),interval(-3.0, -2.0))[2], interval(-Inf, -2.0))
+    @test approx_eq(min_rev(interval(1.0, 1.0), entireinterval(Float64),interval(-2.0, -1.0))[2], interval(-Inf, -1.0))
+    @test eq(min_rev(entireinterval(Float64), interval(-2.0, -1.0), interval(-3.0, -2.0))[2], interval(-3.0, -2.0))
+    @test eq(min_rev(interval(-Inf, 0.0), entireinterval(Float64),interval(-3.0, -2.0))[2], interval(-Inf, -2.0))
 end
