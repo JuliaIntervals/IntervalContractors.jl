@@ -22,7 +22,7 @@ x_mirror is a function that returns an interval giving the position of the mirro
 function reflect_x(x_mirror)
     X -> begin
         x, y = X
-        x = (ExactReal(2) * x_mirror(x)) - x
+        x = (exact(2) * x_mirror(x)) - x
 
         return IntervalBox(x, y)
     end

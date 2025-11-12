@@ -165,7 +165,7 @@ power_rev(a::IntervalType{T}, n::Integer) where {T} = power_rev(a, entireinterva
 
 function power_rev(a::IntervalType, b::IntervalType, c::IntervalType)  # a = b^c
 
-    if isinteger(c)
+    if isthininteger(c)
         temp = power_rev(a, b, Int(inf(c)))  # use version with integer
         return (temp[1], temp[2], interval(temp[3]))
     end
