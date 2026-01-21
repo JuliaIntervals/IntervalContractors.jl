@@ -1,23 +1,16 @@
 using IntervalContractors
 import Documenter
 
-Documenter.makedocs(
+Documenter.DocMeta.setdocmeta!(IntervalContractors, :DocTestSetup, :(using IntervalContractors); recursive=true)
+
+Documenter.makedocs(;
     modules = [IntervalContractors],
-    format = :html,
+    format = Documenter.HTML(; prettyurls=get(ENV, "CI", nothing) == "true"),
     sitename = "IntervalContractors.jl",
-    root = joinpath(dirname(dirname(@__FILE__)), "docs"),
-    pages = Any["Home" => "index.md"],
-    strict = true,
-    linkcheck = true,
-    checkdocs = :exports,
-    authors = "David Sanders"
+    pages = ["Home" => "index.md"]
 )
 
 
-Documenter.deploydocs(
-    julia = "0.6",
-    repo = "github.com/JuliaIntervals/IntervalContractors.jl.git",
-    target = "build",
-    deps = nothing,
-    make = nothing
+Documenter.deploydocs(;
+    repo = "github.com/JuliaIntervals/IntervalContractors.jl.git"
 )

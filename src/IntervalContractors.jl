@@ -19,20 +19,20 @@ using IntervalBoxes
 const IntervalType{T} = Union{Interval{T}, BareInterval{T}}
 
 # @generated
-# half_pi(::Type{T}) where {T <: IntervalType} = :(ExactReal(0.5) * convert($T, ExactReal(pi)))
+# half_pi(::Type{T}) where {T <: IntervalType} = :(exact(0.5) * convert($T, exact(pi)))
 # @generated
-# two_pi(::Type{T}) where {T <: IntervalType} = :(ExactReal(2.0) * convert($T, ExactReal(pi)))
+# two_pi(::Type{T}) where {T <: IntervalType} = :(exact(2.0) * convert($T, exact(pi)))
 
 @generated function half_pi(x::T) where {T <: IntervalType}
-    return ExactReal(0.5) * convert(T, ExactReal(pi))
+    return exact(0.5) * convert(T, exact(pi))
 end
 
 @generated function two_pi(x::T) where {T <: IntervalType}
-    return ExactReal(2.0) * convert(T, ExactReal(pi))
+    return exact(2.0) * convert(T, exact(pi))
 end
 
 @generated function pi_interval(x::T) where {T <: IntervalType}
-    return convert(T, ExactReal(pi))
+    return convert(T, exact(pi))
 end
 
 

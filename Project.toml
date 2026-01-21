@@ -1,15 +1,15 @@
 name = "IntervalContractors"
 uuid = "15111844-de3b-5229-b4ba-526f2f385dc9"
-version = "0.5.0"
+version = "0.6.0"
 
 [deps]
 IntervalArithmetic = "d1acc4aa-44c8-5952-acd4-ba5d80a2a253"
 IntervalBoxes = "43d83c95-ebbb-40ec-8188-24586a1458ed"
 
 [compat]
-IntervalArithmetic = "0.22.12"
-IntervalBoxes = "0.2"
-julia = "1"
+IntervalArithmetic = "1"
+IntervalBoxes = "0.3.0"
+julia = "1.10"
 
 [extras]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"

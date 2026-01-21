@@ -4,11 +4,11 @@ using Test
 
 using IntervalContractors: IntervalType
 
-# cache current power mode:
-orig_power_mode = IntervalArithmetic.power_mode()
+# assume that default power mode is "fast"
+@assert IntervalArithmetic.default_power() == IntervalArithmetic.PowerMode{:fast}()
 
 # set power mode to "slow" (using MPFR for correct rounding):
-IntervalArithmetic.power_mode() = IntervalArithmetic.PowerMode{:slow}()
+IntervalArithmetic.configure(power=:slow)
 
 eq(a::IntervalType, b::IntervalType) = isequal_interval(bareinterval(a), bareinterval(b))
 
@@ -57,4 +57,4 @@ end
 end
 
 # reset power mode:
-IntervalArithmetic.power_mode() = orig_power_mode
+IntervalArithmetic.configure(power=:fast)
