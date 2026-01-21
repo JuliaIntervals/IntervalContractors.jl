@@ -1,14 +1,8 @@
-# IntervalContractors
+<h1 align="center">
+IntervalBoxes
 
-[![CI status][gh_badge]][gh_url]
-[![codecov badge][codecov_badge]][codecov_url]
-
-[gh_badge]: https://github.com/JuliaIntervals/IntervalContractors.jl/workflows/CI/badge.svg
-[gh_url]: https://github.com/JuliaIntervals/IntervalArithmetic.jl/actions/workflows/CI.yml
-
-[codecov_badge]: http://codecov.io/github/JuliaIntervals/IntervalContractors.jl/coverage.svg?branch=master
-[codecov_url]: http://codecov.io/github/JuliaIntervals/IntervalContractors.jl?branch=master
-
+[![Build Status](https://github.com/JuliaIntervals/IntervalBoxes.jl/workflows/CI/badge.svg)](https://github.com/JuliaIntervals/IntervalBoxes.jl/actions/workflows/CI.yml)
+</h1>
 
 ## About `IntervalContractors.jl`
 
