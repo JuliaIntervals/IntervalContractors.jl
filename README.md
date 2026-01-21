@@ -1,7 +1,7 @@
 <h1 align="center">
-IntervalBoxes
+IntervalContractors
 
-[![Build Status](https://github.com/JuliaIntervals/IntervalBoxes.jl/workflows/CI/badge.svg)](https://github.com/JuliaIntervals/IntervalBoxes.jl/actions/workflows/CI.yml)
+[![Build Status](https://github.com/JuliaIntervals/IntervalContractors.jl/workflows/CI/badge.svg)](https://github.com/JuliaIntervals/IntervalContractors.jl/actions/workflows/CI.yml)
 </h1>
 
 ## About `IntervalContractors.jl`
