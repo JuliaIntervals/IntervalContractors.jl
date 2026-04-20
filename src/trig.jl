@@ -166,8 +166,3 @@ function tan_rev(y::IntervalType, x::IntervalType = entireinterval(y))
 
     return X_new[2], X_new[1]   # return in order y, x
 end
-
-
-# build an interval of the corresponding type:
-_build_interval(x::Interval, a, b) = interval(a, b)
-_build_interval(x::BareInterval, a, b) = bareinterval(a, b)

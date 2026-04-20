@@ -2,7 +2,7 @@ module IntervalContractors
 
 export plus_rev, minus_rev, inv_rev,
        mul_rev, div_rev, power_rev,
-       max_rev, min_rev,
+       sign_rev, max_rev, min_rev,
         sqr_rev, sqrt_rev, abs_rev,
         exp_rev, exp2_rev, exp10_rev, expm1_rev,
         log_rev, log2_rev, log10_rev, log1p_rev,
@@ -35,6 +35,10 @@ end
     return convert(T, exact(pi))
 end
 
+# build an interval of the same flavor (Interval vs BareInterval) as `x`
+_build_interval(x::Interval, a, b) = interval(a, b)
+_build_interval(x::BareInterval, a, b) = bareinterval(a, b)
+
 
 include("arithmetic.jl")
 include("transformations.jl")
@@ -64,7 +68,7 @@ for f in (  :sqrt, :sqr, :abs,
             :asin, :acos, :atan,
             :sinh, :cosh, :tanh,
             :asinh, :acosh, :atanh,
-            :inv, :max, :min)
+            :inv, :sign, :max, :min)
     reverse_operations[f] = Symbol(f, "_rev")
 end
 
