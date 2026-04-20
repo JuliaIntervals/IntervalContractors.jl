@@ -35,10 +35,13 @@ end
     return convert(T, exact(pi))
 end
 
+# build an interval of the same flavor (Interval vs BareInterval) as `x`
+_build_interval(x::Interval, a, b) = interval(a, b)
+_build_interval(x::BareInterval, a, b) = bareinterval(a, b)
+
 
 include("arithmetic.jl")
 include("transformations.jl")
-include("powers.jl")
 include("exponential.jl")
 include("trig.jl")
 include("inverse_trig.jl")

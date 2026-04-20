@@ -42,7 +42,7 @@ sin!(X::IntervalBox) = periodise(sin_main, two_pi)(X) ⊔ periodise(sin_reverse,
     sin_rev(c::IntervalType[, x::IntervalType])
 
 Reverse sine. Calculates the preimage of `a = sin(x)`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -102,7 +102,7 @@ cos!(X::IntervalBox) = periodise(cos_main, two_pi)(X) ⊔ periodise(cos_reverse,
     cos_rev(c::IntervalType[, x::IntervalType])
 
 Reverse cosine. Calculates the preimage of `a = cos(x)`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -149,7 +149,7 @@ tan!(X::IntervalBox) = periodise(tan_main, pi_interval)(X)
     tan_rev(c::IntervalType[, x::IntervalType])
 
 Reverse tangent. Calculates the preimage of `a = tan(x)`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -166,8 +166,3 @@ function tan_rev(y::IntervalType, x::IntervalType = entireinterval(y))
 
     return X_new[2], X_new[1]   # return in order y, x
 end
-
-
-# build an interval of the corresponding type:
-_build_interval(x::Interval, a, b) = interval(a, b)
-_build_interval(x::BareInterval, a, b) = bareinterval(a, b)

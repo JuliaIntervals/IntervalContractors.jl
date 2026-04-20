@@ -207,7 +207,7 @@ sqrt_rev(a,b) = sqrt_rev(promote(a,b)...)
     sqr_rev(c::IntervalType[, x::IntervalType])
 
 Reverse square. Calculates the preimage of `a = x²`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -230,7 +230,7 @@ end
     abs_rev(c::IntervalType[, x::IntervalType])
 
 Reverse absolute value. Calculates the preimage of `a = |x|`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -248,20 +248,42 @@ function abs_rev(y, x = entireinterval(y))   # y = abs(x); refine x
 
     return (y, hull(x1, x2))
 end
-#=
-"""
-Reverse sign
-"""
-function sign_rev(a::IntervalType, b::IntervalType)  # a = sqrt(b)
 
-    (a == 1.0) && b = b ⊓ (interval(0, Inf))
-    (a == 0.0) && b = b ⊓ (0.interval(0, 0).0)
-    (a == -1.0) && b = b ⊓ (-interval(Inf, 0).0)
+"""
+    sign_rev(a::IntervalType, b::IntervalType)
 
-    return a, b
+Reverse sign. Calculates the preimage of `a = sign(b)`.
+
+`sign` maps real numbers to `{-1, 0, 1}`, so the preimage of `a` is determined
+by which of those three values lies in `a`:
+
+- `1 ∈ a`  contributes the positive reals `(0, ∞)` (enclosed as `[0, ∞)`).
+- `0 ∈ a`  contributes `{0}`.
+- `-1 ∈ a` contributes the negative reals `(-∞, 0)` (enclosed as `(-∞, 0]`).
+
+### Output
+
+The pair `(a, b_new)` where
+
+- `a` is unchanged
+- `b_new` is the interval hull of the set ``{x ∈ b : sign(x) ∈ a}``
+"""
+function sign_rev(a::IntervalType, b::IntervalType = entireinterval(a))  # a = sign(b)
+
+    has_neg = in_interval(-1, a)
+    has_zer = in_interval(0, a)
+    has_pos = in_interval(1, a)
+
+    (has_neg || has_zer || has_pos) || return a, emptyinterval(b)
+
+    lo = has_neg ? -Inf : 0.0
+    hi = has_pos ?  Inf : 0.0
+
+    return a, b ⊓ _build_interval(b, lo, hi)
 end
-sign_rev(a,b) = sign_rev(promote(a,b)...)
-=#
+
+sign_rev(a, b) = sign_rev(promote(a, b)...)
+
 
 ## IEEE-1788 versions:
 
@@ -282,14 +304,14 @@ mul_rev_IEEE1788(b, c, x = entireinterval(b)) = mul_rev(c, x, b)[2]
     pow_rev1(b::IntervalType, c::IntervalType[, x::IntervalType])
 
 Reverse power 1. Computes the preimage of ``c=xᵇ`` with respect to `x`. If `x` is not provided,
-then byt default ``[-Inf, Inf]`` is used.. See section 10.5.4 of the
+then by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the
 IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
 - `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, tʸ ∈ c}
 """
-function pow_rev1(b, c, x)   # c = x^b
+function pow_rev1(b, c, x = entireinterval(b))   # c = x^b
     return x ⊓ c^(1/b)  # replace by 1//b
 end
 
@@ -297,13 +319,13 @@ end
     pow_rev2(b::IntervalType, c::IntervalType[, x::IntervalType])
 
 Reverse power 2. Computes the preimage of ``c = aˣ`` with respect to `x`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
 - `x_new` the interval hull of the set ``{t ∈ x : ∃ y ∈ b, tʸ ∈ c}
 """
-function pow_rev2(a, c, x)   # c = a^x
+function pow_rev2(a, c, x = entireinterval(a))   # c = a^x
     return x ⊓ (log(c) / log(a))
 end
 
