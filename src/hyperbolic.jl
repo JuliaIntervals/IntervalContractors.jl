@@ -2,7 +2,7 @@
     sinh_rev(c::IntervalType[, x::IntervalType])
 
 Reverse hyperbolic sine. Calculates the preimage of `a = sinh(x)`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -20,8 +20,8 @@ end
 """
     cosh_rev(c::IntervalType[, x::IntervalType])
 
-Reverse square root. Calculates the preimage of `a = cosh(x)`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+Reverse hyperbolic cosine. Calculates the preimage of `a = cosh(x)`. If `x` is not provided, then
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 
@@ -40,8 +40,8 @@ end
 """
     tanh_rev(c::IntervalType[, x::IntervalType])
 
-Reverse square root. Calculates the preimage of `a = tanh(x)`. If `x` is not provided, then
-byt default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
+Reverse hyperbolic tangent. Calculates the preimage of `a = tanh(x)`. If `x` is not provided, then
+by default ``[-Inf, Inf]`` is used. See section 10.5.4 of the IEEE 1788-2015 standard for interval arithmetic.
 
 ### Output
 

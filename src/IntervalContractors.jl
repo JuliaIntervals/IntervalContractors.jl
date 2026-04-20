@@ -2,7 +2,7 @@ module IntervalContractors
 
 export plus_rev, minus_rev, inv_rev,
        mul_rev, div_rev, power_rev,
-       sign_rev, max_rev, min_rev,
+       max_rev, min_rev,
         sqr_rev, sqrt_rev, abs_rev,
         exp_rev, exp2_rev, exp10_rev, expm1_rev,
         log_rev, log2_rev, log10_rev, log1p_rev,
@@ -38,7 +38,6 @@ end
 
 include("arithmetic.jl")
 include("transformations.jl")
-include("powers.jl")
 include("exponential.jl")
 include("trig.jl")
 include("inverse_trig.jl")
@@ -65,7 +64,7 @@ for f in (  :sqrt, :sqr, :abs,
             :asin, :acos, :atan,
             :sinh, :cosh, :tanh,
             :asinh, :acosh, :atanh,
-            :inv, :sign, :max, :min)
+            :inv, :max, :min)
     reverse_operations[f] = Symbol(f, "_rev")
 end
 

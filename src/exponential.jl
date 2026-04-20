@@ -1,12 +1,3 @@
-function exp!(X::IntervalBox)
-    x, y = X
-
-    y = y ⊓ exp(x)
-    x = x ⊓ log(y)
-
-    return IntervalBox(x, y)
-end
-
 """
 Reverse function for `exp`.
 """
@@ -46,15 +37,6 @@ function expm1_rev(y::IntervalType, x::IntervalType)
     return y_new, x_new
 end
 
-
-function log!(X::IntervalBox)  # y = log(x)
-    x, y = X
-
-    x = x ⊓ exp(y)
-    y = y ⊓ log(x)
-
-    return IntervalBox(x, y)
-end
 
 """
 Reverse function for `log`: ``y = \\log(x)``

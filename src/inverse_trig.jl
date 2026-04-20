@@ -1,13 +1,3 @@
-function asin!(X::IntervalBox)
-    x, y = X
-
-    h = inf(half_pi(y))
-    y_new = y ⊓ interval(-h, h)  # range of asin
-    x_new = sin(y_new)
-
-    return IntervalBox(x_new, y_new)
-end
-
 """
 Reverse `asin`.
 """
@@ -15,7 +5,7 @@ function asin_rev(y::IntervalType, x::IntervalType = entireinterval(y))  # y = a
     h = inf(half_pi(y))
     y_new = y ⊓ interval(-h, h)  # range of asin
 
-    x_new = sin(y_new)
+    x_new = x ⊓ sin(y_new)
 
     return y_new, x_new  # return in order y, x
 end
